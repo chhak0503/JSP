@@ -9,4 +9,17 @@
     <welcome-file>default.jsp</welcome-file>
     <welcome-file>default.htm</welcome-file>
   </welcome-file-list>
+  
+  <context-param>
+  	<description>로깅여부</description>
+  	<param-name>logEnable</param-name>
+  	<param-value>true</param-value>  
+  </context-param>
+  
+  <context-param>
+  	<description>로깅단계</description>
+  	<param-name>logLevel</param-name>
+  	<param-value>5</param-value>  
+  </context-param>
+  
 </web-app>
