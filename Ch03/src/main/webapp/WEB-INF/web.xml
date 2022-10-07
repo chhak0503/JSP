@@ -22,4 +22,16 @@
   	<param-value>5</param-value>  
   </context-param>
   
+  <!-- 404 에러 페이지 등록 -->
+  <error-page>
+  	<error-code>404</error-code>
+  	<location>/exception/404.jsp</location>
+  </error-page>
+  
+  <!-- 500 에러 페이지 등록 -->
+  <error-page>
+  	<error-code>500</error-code>
+  	<location>/exception/500.jsp</location>
+  </error-page>
+  
 </web-app>
