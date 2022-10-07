@@ -13,6 +13,15 @@
 	<body>
 		<h3>useBean 액션태그</h3>
 		
+		<h4>사용자 입력</h4>
+		<form action="./proc/addUser.jsp" method="get">
+			<input type="text" name="name" placeholder="이름 입력"/><br/>
+			<input type="number" name="age" placeholder="나이 입력"/><br/>
+			<input type="text" name="hp" placeholder="휴대폰 입력"/><br/>			
+			<input type="text" name="addr" placeholder="주소 입력"/><br/>
+			<input type="submit" value="등록하기"/>
+		</form>
+		
 		<h4>회원가입</h4>
 		<form action="./proc/registerProc.jsp" method="post">
 			<table border="1">
