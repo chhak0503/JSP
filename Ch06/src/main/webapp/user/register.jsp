@@ -7,6 +7,9 @@
 	</head>
 	<body>
 		<h3>user 등록하기</h3>
+		
+		<a href="./list.jsp">user 목록</a>
+		
 		<form action="./registerProc.jsp" method="post">
 			<table border="1">
 				<tr>
