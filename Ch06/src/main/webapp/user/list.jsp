@@ -72,10 +72,20 @@
 				<td><%= ub.getAge() %></td>
 				<td>
 					<a href="./modify.jsp?uid=<%= ub.getUid() %>">수정</a>
-					<a href="#">삭제</a>
-				</td>				
+					<a href="./delete.jsp?uid=<%= ub.getUid() %>">삭제</a>
+				</td>
 			</tr>
 			<% } %>
 		</table>		
 	</body>
 </html>
+
+
+
+
+
+
+
+
+
+
