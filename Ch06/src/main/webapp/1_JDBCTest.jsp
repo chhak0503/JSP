@@ -11,9 +11,9 @@
 		 -->
 	</head>
 	<body>
-		<h3>JDBC 실습</h3>
-		
-		<a href="./user/register.jsp">User 실습하기</a>
+		<h3>CRUD 실습</h3>
+		<a href="./user/register.jsp">User 실습하기</a><br/>
+		<a href="./member/register.jsp">Member 실습하기</a><br/>
 		
 	</body>
 </html>
