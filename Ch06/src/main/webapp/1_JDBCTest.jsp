@@ -14,6 +14,7 @@
 		<h3>CRUD 실습</h3>
 		<a href="./user/register.jsp">User 실습하기</a><br/>
 		<a href="./member/register.jsp">Member 실습하기</a><br/>
+		<a href="./student/register.jsp">Student 실습하기</a><br/>
 		
 	</body>
 </html>
