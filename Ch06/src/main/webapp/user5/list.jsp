@@ -11,7 +11,7 @@
 List<User5Bean> users = null;
 
 	try{
-		Connection conn = DBCP.getConnection();
+		Connection conn = DBCP.getConnection("dbcp_java1db");
 		
 		Statement stmt = conn.createStatement();
 		ResultSet rs = stmt.executeQuery("SELECT * FROM `user5`");

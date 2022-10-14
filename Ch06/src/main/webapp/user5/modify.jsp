@@ -11,7 +11,7 @@
 	User5Bean ub = null;
 	
 	try{
-		Connection conn = DBCP.getConnection();
+		Connection conn = DBCP.getConnection("dbcp_java1db");
 		String sql = "select * from `user5` where `uid`=?";
 		PreparedStatement psmt = conn.prepareStatement(sql);
 		psmt.setString(1, uid);
