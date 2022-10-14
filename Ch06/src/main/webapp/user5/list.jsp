@@ -1,16 +1,17 @@
+<%@page import="config.DBCP"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="bean.User5Bean"%>
 <%@page import="java.util.List"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.Statement"%>
 <%@page import="java.sql.Connection"%>
-<%@page import="config.DB"%>
+<%@page import="config.JDBC"%>
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 <%
-	List<User5Bean> users = null;
+List<User5Bean> users = null;
 
 	try{
-		Connection conn = DB.getDBCP();
+		Connection conn = DBCP.getConnection();
 		
 		Statement stmt = conn.createStatement();
 		ResultSet rs = stmt.executeQuery("SELECT * FROM `user5`");
@@ -72,7 +73,7 @@
 				<td><%= ub.getAddr() %></td>
 				<td><%= ub.getHp() %></td>
 				<td>
-					<a href="#">수정</a>	
+					<a href="./modify.jsp">수정</a>	
 					<a href="#">삭제</a>	
 				</td>
 			</tr>
