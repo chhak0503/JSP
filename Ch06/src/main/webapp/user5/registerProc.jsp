@@ -19,11 +19,11 @@
 	try{
 		// 1단계 - JNDI 서비스 객체생성
 		Context initCtx = new InitialContext();
-		Context ctx = (Context)initCtx.lookup("java:comp/env");
+		Context ctx = (Context)initCtx.lookup("java:comp/env"); // JNDI 서비스를 사용하기 위한 기본 이름
 		
 		// 2단계 - 커넥션 풀에서 커넥션 가져오기
-		DataSource ds = (DataSource) ctx.lookup("dbcp_java1db");
-		Connection conn = ds.getConnection();
+		DataSource ds = (DataSource) ctx.lookup("dbcp_java1db"); // 커넥션 풀 가져오기
+		Connection conn = ds.getConnection(); // 커넥션 가져오기
 		
 		// 3단계
 		String sql = "INSERT INTO `user5` VALUES (?,?,?,?,?,?,?)";
