@@ -1,8 +1,71 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="./_header.jsp" %>
 
+<script>
+
+	// 데이터 검증에 사용할 정규표현식
+	var regEmail = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+	var regHp	 = /^\d{3}-\d{3,4}-\d{4}$/;
+	var regPass  = /^.*(?=^.{5,15}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$/;
+	
+	// 폼 데이터 검증 결과 상태변수
+	let isUidOk   = false;
+	let isPassOk  = false;
+	let isNameOk  = false;
+	let isNickOk  = false;
+	let isEmailOk = false;
+	let isHpOk    = false;
+	
+	
+	$(function(){
+		
+		// 비밀번호 일치여부 확인
+		$('input[name=pass2]').focusout(function(){			
+			let pass1 = $('input[name=pass1]').val();
+			let pass2 = $(this).val();
+			
+			if(pass1 == pass2){
+								
+				if(regPass.test(pass2)){
+					isPassOk = true;
+					$('.resultPass').css('color', 'green').text('비밀번호가 일치합니다.');	
+				}else{
+					isPassOk = false;
+					$('.resultPass').css('color', 'red').text('영문, 숫자, 특수문자 조합 최소 5자 이상 이어야 합니다.');
+				}				
+				
+			}else{
+				isPassOk = false;
+				$('.resultPass').css('color', 'red').text('비밀번호가 일치하지 않습니다.');
+			}			
+		});
+		
+		
+		
+		
+		
+		
+		// 폼 전송이 시작될 때 실행되는 폼 이벤트(폼 전송 버튼을 클릭했을 때) 
+		$('.register > form').submit(function(){
+			////////////////////////////////////
+			// 폼 데이터 유효성 검증(Validation)
+			////////////////////////////////////
+			// 아이디 검증
+			// 비밀번호 검증
+			// 이름 검증
+			// 별명 검증
+			// 이메일 검증
+			// 휴대폰 검증
+			
+			return false;
+		});
+		
+		
+		
+	});
+</script>
 <main id="user" class="register">
-    <form action="#">
+    <form action="/JBoard1/user/proc/registerProc.jsp" method="post">
         <table border="1">
             <caption>사이트 이용정보 입력</caption>
             <tr>
@@ -27,7 +90,6 @@
                 </td>
             </tr>
         </table>
-
         <table border="1">
             <caption>개인정보 입력</caption>
             <tr>
