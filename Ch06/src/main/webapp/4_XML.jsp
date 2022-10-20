@@ -47,7 +47,7 @@
 
 	                        users.each(function(){
 
-	                            let tags = "<tr>";
+	                            let tags  = "<tr>";
 									tags += "<td>"+$(this).find('uid').text()+"</td>";
 									tags += "<td>"+$(this).find('name').text()+"</td>";
 									tags += "<td>"+$(this).find('hp').text()+"</td>";
