@@ -29,8 +29,39 @@
 				$(document).on('click', 'input[type=submit]', function(e){
 					e.preventDefault();
 					// 데이터 가져오기
+					let uid  = $('input[name=uid]').val();
+					let name = $('input[name=name]').val();
+					let hp   = $('input[name=hp]').val();
+					let age  = $('input[name=age]').val();
+					
 					// JSON 데이터 생성
-					// 데이터 전송					
+					let jsonData = {
+							"uid":uid,
+							"name":name,
+							"hp":hp,
+							"age":age
+					};
+					
+					console.log(jsonData);
+					
+					// 데이터 전송
+					$.ajax({
+						url: './json/register.jsp',
+						method: 'post',
+						data: jsonData,
+						dataType: 'json',
+						success: function(data){
+							console.log(data);
+							
+							if(data.result == 1){
+								alert('데이터 입력 성공!');
+							}else{
+								alert('데이터 입력 실패!');
+							}
+							
+						}
+					});
+					
 				});
 				
 			});
