@@ -22,6 +22,7 @@
 						dataType: 'json',
 						success: function(data){
 							console.log(data);
+							
 							$('p > span:eq(0)').text(data.uid);
 	                        $('p > span:eq(1)').text(data.name);
 	                        $('p > span:eq(2)').text(data.hp);
