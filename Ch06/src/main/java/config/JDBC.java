@@ -16,7 +16,7 @@ public class JDBC {
 	}
 	private JDBC() {}
 	
-	private final String HOST = "jdbc:mysql://127.0.0.1:3306/java1_college";
+	private final String HOST = "jdbc:mysql://127.0.0.1:3306/java1db";
 	private final String USER = "root";
 	private final String PASS = "1234";
 	
