@@ -4,9 +4,11 @@
 <script>
 
 	// 데이터 검증에 사용할 정규표현식
-	var regEmail = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
-	var regHp	 = /^\d{3}-\d{3,4}-\d{4}$/;
-	var regPass  = /^.*(?=^.{5,15}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$/;
+	let regUid   = /^[a-z]+[a-z0-9]{4,19}$/g;
+	let regName  = /^[가-힣]{2,4}$/;
+	let regEmail = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+	let regHp	 = /^\d{3}-\d{3,4}-\d{4}$/;
+	let regPass  = /^.*(?=^.{5,15}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$/;
 	
 	// 폼 데이터 검증 결과 상태변수
 	let isUidOk   = false;
@@ -19,11 +21,25 @@
 	
 	$(function(){
 		
-		// 아이디 중복체크
+		// 아이디 유효성 검증 & 중복체크
+		$('input[name=uid]').keydown(function(){
+			isUidOk = false;
+		});
+		
 		$('#btnUidCheck').click(function(){
 			
 			let uid = $('input[name=uid]').val();
 			//alert(uid);
+			
+			if(isUidOk){
+				return;
+			}
+			
+			if(!uid.match(regUid)){
+				isUidOk = false;
+				$('.resultUid').css('color', 'red').text('아이디가 유효하지 않습니다.');
+				return;
+			}
 			
 			let jsonData = {"uid":uid};
 			
@@ -35,8 +51,10 @@
 				success:function(data){
 					//console.log(data);
 					if(data.result == 0){
+						isUidOk = true;
 						$('.resultUid').css('color', 'green').text('사용 가능한 아이디 입니다.');
 					}else{
+						isUidOk = false;
 						$('.resultUid').css('color', 'red').text('이미 사용중인 아이디 입니다.');
 					}
 				}
@@ -50,7 +68,7 @@
 			
 			if(pass1 == pass2){
 								
-				if(regPass.test(pass2)){
+				if(pass2.match(regPass)){
 					isPassOk = true;
 					$('.resultPass').css('color', 'green').text('비밀번호가 일치합니다.');	
 				}else{
@@ -64,9 +82,44 @@
 			}			
 		});
 		
+		// 이름 유효성 검증
+		$('input[name=name]').focusout(function(){
+			
+			let name = $(this).val();
+			
+			if(!name.match(regName)){
+				isNameOk = false;
+				$('.resultName').css('color', 'red').text('이름은 한글 2자 이상 이어야 합니다.');
+			}else{
+				isNameOk = true;
+				$('.resultName').text('');
+			}
+		});
 		
-		
-		
+		// 별명 유효성 검사 & 중복체크
+		$('#btnNickCheck').click(function(){
+			
+			let nick = $('input[name=nick]').val();
+			
+			let jsonData = {"nick":nick};
+			
+			$.ajax({
+				url: './proc/checkNick.jsp',
+				type: 'get',
+				data: jsonData,
+				dataType: 'json',
+				success: function(data){
+					
+					if(data.result == 0){
+						isNickOk = true;
+						$('.resultNick').css('color', 'green').text('사용 가능한 별명 입니다.');
+					}else{
+						isNickOk = false;
+						$('.resultNick').css('color', 'red').text('이미 사용중인 별명 입니다.');
+					}
+				}
+			});
+		});
 		
 		
 		// 폼 전송이 시작될 때 실행되는 폼 이벤트(폼 전송 버튼을 클릭했을 때) 
@@ -120,7 +173,8 @@
             <tr>
                 <th>이름</th>
                 <td>
-                    <input type="text" name="name" placeholder="이름 입력"/>                        
+                    <input type="text" name="name" placeholder="이름 입력"/>
+                    <span class="resultName"></span>
                 </td>
             </tr>
             <tr>
@@ -128,7 +182,7 @@
                 <td>
                     <p>공백없이 한글, 영문, 숫자 입력</p>
                     <input type="text" name="nick" placeholder="별명 입력"/>
-                    <button type="button"><img src="/JBoard1/img/chk_id.gif" alt="중복확인"/></button>
+                    <button type="button" id="btnNickCheck"><img src="/JBoard1/img/chk_id.gif" alt="중복확인"/></button>
                     <span class="resultNick"></span>
                 </td>
             </tr>                    
