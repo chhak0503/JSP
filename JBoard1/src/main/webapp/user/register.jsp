@@ -19,6 +19,30 @@
 	
 	$(function(){
 		
+		// 아이디 중복체크
+		$('#btnUidCheck').click(function(){
+			
+			let uid = $('input[name=uid]').val();
+			//alert(uid);
+			
+			let jsonData = {"uid":uid};
+			
+			$.ajax({
+				url: './proc/checkUid.jsp',
+				method: 'get',
+				data: jsonData,
+				dataType: 'json',
+				success:function(data){
+					//console.log(data);
+					if(data.result == 0){
+						$('.resultUid').css('color', 'green').text('사용 가능한 아이디 입니다.');
+					}else{
+						$('.resultUid').css('color', 'red').text('이미 사용중인 아이디 입니다.');
+					}
+				}
+			});
+		});		
+		
 		// 비밀번호 일치여부 확인
 		$('input[name=pass2]').focusout(function(){			
 			let pass1 = $('input[name=pass1]').val();
@@ -47,6 +71,7 @@
 		
 		// 폼 전송이 시작될 때 실행되는 폼 이벤트(폼 전송 버튼을 클릭했을 때) 
 		$('.register > form').submit(function(){
+			
 			////////////////////////////////////
 			// 폼 데이터 유효성 검증(Validation)
 			////////////////////////////////////
@@ -72,7 +97,7 @@
                 <th>아이디</th>
                 <td>
                     <input type="text" name="uid" placeholder="아이디 입력"/>
-                    <button type="button"><img src="/JBoard1/img/chk_id.gif" alt="중복확인"/></button>
+                    <button type="button" id="btnUidCheck"><img src="/JBoard1/img/chk_id.gif" alt="중복확인"/></button>
                     <span class="resultUid"></span>
                 </td>
             </tr>
