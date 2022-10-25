@@ -1,3 +1,4 @@
+<%@page import="kr.co.jboard1.db.Sql"%>
 <%@page import="java.sql.PreparedStatement"%>
 <%@page import="java.sql.Connection"%>
 <%@page import="kr.co.jboard1.db.DBCP"%>
@@ -19,21 +20,7 @@
 	// 데이터베이스 작업
 	try{
 		Connection conn = DBCP.getConnection();
-				
-		String sql = "insert into `board_user` set ";
-	       sql += "`uid`=?,";
-	       sql += "`pass`=SHA2(?, 256),";
-	       sql += "`name`=?,";
-	       sql += "`nick`=?,";
-	       sql += "`email`=?,";
-	       sql += "`hp`=?,";
-	       sql += "`zip`=?,";
-	       sql += "`addr1`=?,";
-	       sql += "`addr2`=?,";
-	       sql += "`regip`=?,";
-	       sql += "`rdate`=NOW()";
-			       
-		PreparedStatement psmt = conn.prepareStatement(sql);
+		PreparedStatement psmt = conn.prepareStatement(Sql.INSERT_USER);
 		psmt.setString(1, uid);
 		psmt.setString(2, pass1);
 		psmt.setString(3, name);

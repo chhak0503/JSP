@@ -1,3 +1,4 @@
+<%@page import="kr.co.jboard1.db.Sql"%>
 <%@page import="kr.co.jboard1.bean.UserBean"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.PreparedStatement"%>
@@ -13,9 +14,7 @@
 	
 	try{
 		Connection conn = DBCP.getConnection();
-		
-		String sql = "select * from `board_user` where `uid`=? and `pass`=SHA2(?, 256)";
-		PreparedStatement psmt = conn.prepareStatement(sql);
+		PreparedStatement psmt = conn.prepareStatement(Sql.SELECT_USER);
 		psmt.setString(1, uid);
 		psmt.setString(2, pass);
 		
