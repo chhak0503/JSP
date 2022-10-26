@@ -1,7 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="./_header.jsp" %>
 <main id="board" class="write">
-    <form action="#">
+    <form action="/JBoard1/proc/writeProc.jsp" method="post">
+    	<input type="hidden" name="uid" value="<%= sessUser.getUid() %>"/>
         <table border="0">
             <caption>글쓰기</caption>
             <tr>

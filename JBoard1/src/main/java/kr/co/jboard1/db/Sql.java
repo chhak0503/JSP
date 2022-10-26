@@ -22,5 +22,32 @@ public class Sql {
 	public static final String SELECT_TERMS      = "select * from `board_terms`";
 	
 	// board
+	public static final String INSERT_ARTICLE = "insert into `board_article` set "
+												+ "`title`=?,"
+												+ "`content`=?,"
+												+ "`uid`=?,"
+												+ "`regip`=?,"
+												+ "`rdate`=NOW()";
 	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
