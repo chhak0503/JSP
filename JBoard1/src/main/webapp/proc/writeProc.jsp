@@ -30,6 +30,10 @@
 	
 	try{
 		Connection conn = DBCP.getConnection();
+		
+		// 트랜젝션 시작
+		conn.setAutoCommit(false);
+		
 		Statement stmt = conn.createStatement();
 		PreparedStatement psmt = conn.prepareStatement(Sql.INSERT_ARTICLE);
 		
@@ -41,6 +45,9 @@
 		
 		psmt.executeUpdate(); // INSERT
 		ResultSet rs = stmt.executeQuery(Sql.SELECT_MAX_NO); // SELECT
+		
+		// 작업확정
+		conn.commit(); 
 		
 		if(rs.next()){
 			parent = rs.getInt(1);
