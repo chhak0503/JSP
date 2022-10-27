@@ -29,6 +29,7 @@
 			article.setUid(rs.getString(9));
 			article.setRegip(rs.getString(10));
 			article.setRdate(rs.getString(11));
+			article.setNick(rs.getString(12));
 			
 			articles.add(article);
 		}
@@ -55,8 +56,8 @@
         <tr>
             <td><%= article.getNo() %></td>
             <td><a href="/JBoard1/view.jsp"><%= article.getTitle() %>[<%= article.getComment() %>]</a></td>
-            <td><%= article.getUid() %></td>
-            <td><%= article.getRdate() %></td>
+            <td><%= article.getNick() %></td>
+            <td><%= article.getRdate().substring(2, 10) %></td>
             <td><%= article.getHit() %></td>
         </tr>  
         <% } %>             
