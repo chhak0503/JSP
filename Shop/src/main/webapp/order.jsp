@@ -16,6 +16,7 @@
 		String sql  = "SELECT a.*, b.`name`, c.`prodName` FROM `order` AS a ";
 			   sql += "JOIN `customer` AS b ON a.orderId = b.custId ";
 			   sql += "JOIN `product` AS c ON a.orderProduct = c.prodNo";
+			   
 		ResultSet rs = stmt.executeQuery(sql);
 		
 		while(rs.next()){
