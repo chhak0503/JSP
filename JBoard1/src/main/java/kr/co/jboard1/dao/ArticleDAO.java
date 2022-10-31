@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import kr.co.jboard1.bean.ArticleBean;
+import kr.co.jboard1.bean.FileBean;
 import kr.co.jboard1.db.DBCP;
 import kr.co.jboard1.db.Sql;
 
@@ -98,6 +99,37 @@ public class ArticleDAO {
 		
 		return articles;
 	}
+	
+	public FileBean selectFile(String fno) {
+		
+		FileBean fb = null;
+		
+		try{
+			Connection conn = DBCP.getConnection();
+			PreparedStatement psmt = conn.prepareStatement(Sql.SELECT_FILE);
+			psmt.setString(1, fno);
+			
+			ResultSet rs = psmt.executeQuery();
+			
+			if(rs.next()){
+				fb = new FileBean();
+				fb.setFno(rs.getInt(1));
+				fb.setParent(rs.getInt(2));
+				fb.setNewName(rs.getString(3));
+				fb.setOriName(rs.getString(4));
+				fb.setDownload(rs.getInt(5));
+				fb.setRdate(rs.getString(6));
+			}
+			
+			rs.close();
+			psmt.close();
+			conn.close();
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return fb;
+	}
+	
 	public void updateArticle() {}
 	public void deleteArticle() {}
 	

@@ -30,7 +30,7 @@
         <% if(article.getFile() > 0){ %>
         <tr>
             <th>파일</th>
-            <td><a href="#"><%= article.getOriName() %></a>&nbsp;<span><%= article.getDownload() %></span>회 다운로드</td>
+            <td><a href="/JBoard1/proc/download.jsp?fno=<%= article.getFno() %>"><%= article.getOriName() %></a>&nbsp;<span><%= article.getDownload() %></span>회 다운로드</td>
         </tr>
         <% } %>
         <tr>
