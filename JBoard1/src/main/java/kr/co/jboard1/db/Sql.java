@@ -42,6 +42,7 @@ public class Sql {
 												+ "JOIN `board_user` AS b ON a.uid = b.uid "
 												+ "ORDER BY `no` DESC "
 												+ "LIMIT ?, 10";
+	public static final String SELECT_ARTICLE = "select * from `board_article` where `no`=?";
 	
 }
 
