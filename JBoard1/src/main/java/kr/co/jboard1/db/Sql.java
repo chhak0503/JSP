@@ -52,6 +52,7 @@ public class Sql {
 	public static final String SELECT_FILE = "select * from `board_file` where `fno`=?";
 	
 	public static final String UPDATE_ARTICLE_HIT = "UPDATE `board_article` SET `hit` = `hit` + 1 WHERE `no`=?";
+	public static final String UPDATE_FILE_DOWNLOAD = "UPDATE `board_file` SET `download` = `download` + 1 WHERE `fno`=?";  
 	
 }
 

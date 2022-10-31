@@ -171,6 +171,20 @@ public class ArticleDAO {
 			 e.printStackTrace();
 		}
 	}
+	
+	public void updateFileDownload(String fno) {
+		try{
+			Connection conn = DBCP.getConnection();
+			PreparedStatement psmt = conn.prepareStatement(Sql.UPDATE_FILE_DOWNLOAD);
+			psmt.setString(1, fno);
+			psmt.executeUpdate();
+
+			psmt.close();
+			conn.close();
+		}catch(Exception e){
+			 e.printStackTrace();
+		}
+	}
 }
 
 
