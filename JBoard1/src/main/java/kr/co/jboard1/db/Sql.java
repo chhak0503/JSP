@@ -49,6 +49,8 @@ public class Sql {
 												+ "ON	a.`no` = b.`parent` "
 												+ "WHERE `no`=?";
 	
+	public static final String UPDATE_ARTICLE_HIT = "UPDATE `board_article` SET `hit` = `hit` + 1 WHERE `no`=?";
+	
 }
 
 

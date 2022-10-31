@@ -10,8 +10,14 @@
 	request.setCharacterEncoding("UTF-8");
 	String no = request.getParameter("no");
 
-	ArticleBean article = ArticleDAO.getInstance().selectArticle(no);
-
+	// DAO 객체 가져오기
+	ArticleDAO dao = ArticleDAO.getInstance();
+	
+	// 글 조회수 카운트 +1
+	dao.updateArticleHit(no);
+	
+	// 글 가져오기
+	ArticleBean article = dao.selectArticle(no);
 %>
 <%@ include file="./_header.jsp" %>
 <main id="board" class="view">
@@ -24,7 +30,7 @@
         <% if(article.getFile() > 0){ %>
         <tr>
             <th>파일</th>
-            <td><a href="#"><%= article.getOriName() %></a> <span><%= article.getDownload() %></span>회 다운로드</td>
+            <td><a href="#"><%= article.getOriName() %></a>&nbsp;<span><%= article.getDownload() %></span>회 다운로드</td>
         </tr>
         <% } %>
         <tr>

@@ -126,7 +126,19 @@ public class ArticleDAO {
 		return total;		
 	}
 	
-	
+	public void updateArticleHit(String no) {
+		try{
+			Connection conn = DBCP.getConnection();
+			PreparedStatement psmt = conn.prepareStatement(Sql.UPDATE_ARTICLE_HIT);
+			psmt.setString(1, no);
+			psmt.executeUpdate();
+
+			psmt.close();
+			conn.close();
+		}catch(Exception e){
+			 e.printStackTrace();
+		}
+	}
 }
 
 
