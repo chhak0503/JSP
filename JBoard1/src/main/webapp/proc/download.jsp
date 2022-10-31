@@ -1,3 +1,6 @@
+<%@page import="java.io.BufferedOutputStream"%>
+<%@page import="java.io.FileInputStream"%>
+<%@page import="java.io.BufferedInputStream"%>
 <%@page import="kr.co.jboard1.dao.ArticleDAO"%>
 <%@page import="kr.co.jboard1.bean.FileBean"%>
 <%@page import="java.sql.ResultSet"%>
@@ -32,7 +35,23 @@
 	String savePath = application.getRealPath("/file");
 	File file = new File(savePath+"/"+fb.getNewName());
 	
+	BufferedInputStream bis = new BufferedInputStream(new FileInputStream(file));
+	BufferedOutputStream bos = new BufferedOutputStream(response.getOutputStream());
 	
+	while(true){
+		
+		int data = bis.read();
+		
+		if(data == -1){
+			break;
+		}
+		
+		bos.write(data);
+	}
 	
-	
+	bos.close();
+	bis.close();
 %>
+
+
+
