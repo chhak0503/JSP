@@ -1,7 +1,6 @@
 package kr.co.jboard1.db;
 
 public class Sql {
-	
 	// user
 	public static final String INSERT_USER      = "insert into `board_user` set "
 												+ "`uid`=?,"
@@ -35,6 +34,13 @@ public class Sql {
 											+ "`newName`=?,"
 											+ "`oriName`=?,"
 											+ "`rdate`=NOW()";
+	
+	public static final String INSERT_COMMENT = "insert into `board_article` set "
+												+ "`parent`=?,"
+												+ "`content`=?,"
+												+ "`uid`=?,"
+												+ "`regip`=?,"
+												+ "`rdate`=NOW()";
 	
 	public static final String SELECT_MAX_NO = "select max(`no`) from `board_article`";
 	public static final String SELECT_COUNT_TOTAL = "SELECT COUNT(`no`) FROM `board_article`";	

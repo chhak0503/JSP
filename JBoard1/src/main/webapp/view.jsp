@@ -63,7 +63,9 @@
     <!-- 댓글쓰기 -->
     <section class="commentForm">
         <h3>댓글쓰기</h3>
-        <form action="#">
+        <form action="/JBoard1/proc/commentWriteProc.jsp" method="post">
+        	<input type="hidden" name="parent" value="<%= no %>">
+        	<input type="hidden" name="uid" value="<%= sessUser.getUid() %>">
             <textarea name="content" placeholder="댓글내용 입력"></textarea>
             <div>
                 <a href="#" class="btn btnCancel">취소</a>
