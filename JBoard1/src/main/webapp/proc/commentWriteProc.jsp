@@ -20,13 +20,18 @@
 	comment.setUid(uid);
 	comment.setRegip(regip);
 	
-	ArticleDAO.getInstance().insertComment(comment);
+	ArticleBean article = ArticleDAO.getInstance().insertComment(comment);
 	
 	//response.sendRedirect("/JBoard1/view.jsp?no="+parent+"&pg="+pg);
 	
 	// JSON 출력
 	JsonObject json = new JsonObject();
 	json.addProperty("result", 1);
+	json.addProperty("no", article.getNo());
+	json.addProperty("parent", article.getParent());
+	json.addProperty("nick", article.getNick());
+	json.addProperty("date", article.getRdate());
+	json.addProperty("content", article.getContent());
 	
 	String jsonData = json.toString();
 	out.print(jsonData);

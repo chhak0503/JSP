@@ -34,8 +34,9 @@
 			let pg 		= $(this).children('input[name=pg]').val();
 			let parent 	= $(this).children('input[name=parent]').val();
 			let uid 	= $(this).children('input[name=uid]').val();
-			let content = $(this).children('textarea[name=content]').val();
-			
+			let textarea = $(this).children('textarea[name=content]');
+			let content  = textarea.val();
+						
 			let jsonData = {
 				"pg":pg,
 				"parent":parent,
@@ -52,17 +53,21 @@
 				dataType: 'json',
 				success: function(data){
 					
+					console.log(data);
+					
 					let article = "<article>";
-						article += "<span class='nick'>별명</span>";
-						article += "<span class='date'>22-11-01</span>";
-						article += "<p class='content'>방금 작성한 댓글 입니다.</p>";
+						article += "<span class='nick'>"+data.nick+"</span>";
+						article += "<span class='date'>"+data.date+"</span>";
+						article += "<p class='content'>"+data.content+"</p>";
 						article += "<div>";
 						article += "<a href='#' class='remove'>삭제</a>";
 						article += "<a href='#' class='modify'>수정</a>";
 						article += "</div>";
 						article += "</article>";
 					
+					$('.commentList > .empty').hide();
 					$('.commentList').append(article);
+					textarea.val('');
 				}
 			});
 			
