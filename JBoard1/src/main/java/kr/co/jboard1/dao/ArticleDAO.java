@@ -21,7 +21,77 @@ public class ArticleDAO {
 	private ArticleDAO() {}
 	
 	// 기본 CRUD
-	public void insertArticle() {}
+	public int insertArticle(ArticleBean article) {
+		int parent = 0;
+		try{
+			Connection conn = DBCP.getConnection();
+			
+			// 트랜젝션 시작
+			conn.setAutoCommit(false);
+			
+			Statement stmt = conn.createStatement();
+			PreparedStatement psmt = conn.prepareStatement(Sql.INSERT_ARTICLE);
+			
+			psmt.setString(1, article.getTitle());
+			psmt.setString(2, article.getContent());
+			psmt.setInt(3, article.getFname() == null ? 0 : 1);
+			psmt.setString(4, article.getUid());
+			psmt.setString(5, article.getRegip());
+			
+			psmt.executeUpdate(); // INSERT
+			ResultSet rs = stmt.executeQuery(Sql.SELECT_MAX_NO); // SELECT
+			
+			// 작업확정
+			conn.commit(); 
+			
+			if(rs.next()){
+				parent = rs.getInt(1);
+			}
+			
+			rs.close();
+			stmt.close();
+			psmt.close();
+			conn.close();
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		
+		return parent;
+	}
+	
+	public void insertFile(int parent, String newName, String fname) {
+		try{
+			Connection conn = DBCP.getConnection();
+			PreparedStatement psmt = conn.prepareStatement(Sql.INSERT_FILE);
+			psmt.setInt(1, parent);
+			psmt.setString(2, newName);
+			psmt.setString(3, fname);
+			
+			psmt.executeUpdate();
+			psmt.close();
+			conn.close();
+			
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+	}
+	
+	public void insertComment(ArticleBean comment) {
+		try{
+			Connection conn = DBCP.getConnection();
+			PreparedStatement psmt = conn.prepareStatement(Sql.INSERT_COMMENT);
+			psmt.setInt(1, comment.getParent());
+			psmt.setString(2, comment.getContent());
+			psmt.setString(3, comment.getUid());
+			psmt.setString(4, comment.getRegip());
+			psmt.executeUpdate();
+			
+			psmt.close();
+			conn.close();
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+	}
 	
 	public ArticleBean selectArticle(String no) {
 		ArticleBean article = null;

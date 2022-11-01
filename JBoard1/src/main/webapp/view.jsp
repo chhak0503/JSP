@@ -19,6 +19,11 @@
 	
 	// 글 가져오기
 	ArticleBean article = dao.selectArticle(no);
+	
+	// 댓글 가져오기
+	
+	
+	
 %>
 <%@ include file="./_header.jsp" %>
 <main id="board" class="view">
