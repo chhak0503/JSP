@@ -9,6 +9,7 @@
 <%
 	request.setCharacterEncoding("UTF-8");
 	String no = request.getParameter("no");
+	String pg = request.getParameter("pg");
 
 	// DAO 객체 가져오기
 	ArticleDAO dao = ArticleDAO.getInstance();
@@ -42,7 +43,7 @@
     <div>
         <a href="#" class="btn btnRemove">삭제</a>
         <a href="/JBoard1/modify.jsp" class="btn btnModify">수정</a>
-        <a href="/JBoard1/list.jsp" class="btn btnList">목록</a>
+        <a href="/JBoard1/list.jsp?pg=<%= pg %>" class="btn btnList">목록</a>
     </div>
 
     <!-- 댓글목록 -->
@@ -64,6 +65,7 @@
     <section class="commentForm">
         <h3>댓글쓰기</h3>
         <form action="/JBoard1/proc/commentWriteProc.jsp" method="post">
+        	<input type="hidden" name="pg" value="<%= pg %>">
         	<input type="hidden" name="parent" value="<%= no %>">
         	<input type="hidden" name="uid" value="<%= sessUser.getUid() %>">
             <textarea name="content" placeholder="댓글내용 입력"></textarea>
