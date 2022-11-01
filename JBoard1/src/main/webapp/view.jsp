@@ -25,6 +25,52 @@
 	List<ArticleBean> comments = dao.selectComments(no);
 %>
 <%@ include file="./_header.jsp" %>
+<script>
+
+	$(document).ready(function(){
+		
+		$('.commentForm > form').submit(function(){
+			
+			let pg 		= $(this).children('input[name=pg]').val();
+			let parent 	= $(this).children('input[name=parent]').val();
+			let uid 	= $(this).children('input[name=uid]').val();
+			let content = $(this).children('textarea[name=content]').val();
+			
+			let jsonData = {
+				"pg":pg,
+				"parent":parent,
+				"uid":uid,
+				"content":content
+			};
+			
+			console.log(jsonData);
+			
+			$.ajax({
+				url : '/JBoard1/proc/commentWriteProc.jsp',
+				method: 'POST',
+				data: jsonData,
+				dataType: 'json',
+				success: function(data){
+					
+					let article = "<article>";
+						article += "<span class='nick'>별명</span>";
+						article += "<span class='date'>22-11-01</span>";
+						article += "<p class='content'>방금 작성한 댓글 입니다.</p>";
+						article += "<div>";
+						article += "<a href='#' class='remove'>삭제</a>";
+						article += "<a href='#' class='modify'>수정</a>";
+						article += "</div>";
+						article += "</article>";
+					
+					$('.commentList').append(article);
+				}
+			});
+			
+			return false;
+		});
+	});
+</script>
+
 <main id="board" class="view">
     <table>
         <caption>글보기</caption>
@@ -75,7 +121,7 @@
     <!-- 댓글쓰기 -->
     <section class="commentForm">
         <h3>댓글쓰기</h3>
-        <form action="/JBoard1/proc/commentWriteProc.jsp" method="post">
+        <form action="#" method="post">
         	<input type="hidden" name="pg" value="<%= pg %>">
         	<input type="hidden" name="parent" value="<%= no %>">
         	<input type="hidden" name="uid" value="<%= sessUser.getUid() %>">

@@ -1,10 +1,11 @@
+<%@page import="com.google.gson.JsonObject"%>
 <%@page import="kr.co.jboard1.bean.ArticleBean"%>
 <%@page import="kr.co.jboard1.dao.ArticleDAO"%>
 <%@page import="java.sql.PreparedStatement"%>
 <%@page import="kr.co.jboard1.db.Sql"%>
 <%@page import="java.sql.Connection"%>
 <%@page import="kr.co.jboard1.db.DBCP"%>
-<%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page contentType="application/json;charset=UTF-8" pageEncoding="UTF-8"%>
 <%
 	request.setCharacterEncoding("UTF-8");
 	String pg      = request.getParameter("pg");
@@ -21,5 +22,13 @@
 	
 	ArticleDAO.getInstance().insertComment(comment);
 	
-	response.sendRedirect("/JBoard1/view.jsp?no="+parent+"&pg="+pg);
+	//response.sendRedirect("/JBoard1/view.jsp?no="+parent+"&pg="+pg);
+	
+	// JSON 출력
+	JsonObject json = new JsonObject();
+	json.addProperty("result", 1);
+	
+	String jsonData = json.toString();
+	out.print(jsonData);
+	
 %>
