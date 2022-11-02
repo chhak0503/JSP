@@ -29,6 +29,30 @@
 
 	$(document).ready(function(){
 		
+		// 삭제하기
+		$(document).on('click', '.remove', function(e){
+			e.preventDefault();
+			
+			let result = confirm('정말 삭제 하시겠습니까?');
+			
+			if(result){
+				
+				let no = $(this).attr('data-no');
+				
+				$.ajax({
+					url: '/JBoard1/proc/commentDeleteProc.jsp?no='+no,
+					type: 'GET',
+					dataType: 'json',
+					success: function(data){
+						
+						if(data.result > 0){
+							alert('댓글이 삭제 되었습니다.');
+						}
+						
+					}
+				});
+			}
+		});
 		
 		// 수정하기
 		$(document).on('click', '.modify', function(e){
@@ -104,8 +128,8 @@
 						article += "<span class='date'>"+data.date+"</span>";
 						article += "<p class='content'>"+data.content+"</p>";
 						article += "<div>";
-						article += "<a href='#' class='remove'>삭제</a>";
-						article += "<a href='#' class='modify'>수정</a>";
+						article += "<a href='#' class='remove' data-no='"+data.no+"'>삭제</a>";
+						article += "<a href='#' class='modify' data-no='"+data.no+"'>수정</a>";
 						article += "</div>";
 						article += "</article>";
 					

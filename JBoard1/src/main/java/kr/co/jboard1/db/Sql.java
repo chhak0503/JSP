@@ -70,6 +70,8 @@ public class Sql {
 	
 	public static final String UPDATE_COMMENT = "UPDATE `board_article` SET `content`=?, `rdate`=NOW() WHERE `no`=?";
 	
+	public static final String DELETE_COMMENT = "delete from `board_article` where `no`=?";
+	
 }
 
 
