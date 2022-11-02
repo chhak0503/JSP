@@ -29,6 +29,45 @@
 
 	$(document).ready(function(){
 		
+		
+		// 수정하기
+		$(document).on('click', '.modify', function(e){
+			e.preventDefault();
+			
+			let txt = $(this).text();
+			let p = $(this).parent().prev();
+			
+			if(txt == '수정'){
+				// 수정모드
+				$(this).text('수정완료');				
+				p.attr('contentEditable', true);
+				p.focus();
+			}else{
+				// 수정완료
+				$(this).text('수정');
+				p.attr('contentEditable', false);	
+				
+				let content = p.text();
+				
+				let jsonData = {
+					"content": content
+				};
+				
+				$.ajax({
+					url: '/JBoard1/proc/commentModifyProc.jsp',
+					type: 'POST',
+					data: jsonData,
+					dataType: 'json',
+					success: function(data){
+						
+					}
+				});
+			}
+			
+			
+		});
+		
+		// 댓글쓰기
 		$('.commentForm > form').submit(function(){
 			
 			let pg 		= $(this).children('input[name=pg]').val();
