@@ -11,6 +11,8 @@
 	// json 출력
 	JsonObject json = new JsonObject();
 	json.addProperty("result", result);
+	json.addProperty("no", no);
+	json.addProperty("content", content);
 	
 	out.print(json.toString());
 %>

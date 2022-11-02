@@ -47,9 +47,11 @@
 				$(this).text('수정');
 				p.attr('contentEditable', false);	
 				
+				let no = $(this).attr('data-no');
 				let content = p.text();
 				
 				let jsonData = {
+					"no": no,
 					"content": content
 				};
 				
@@ -60,6 +62,9 @@
 					dataType: 'json',
 					success: function(data){
 						
+						if(data.result > 0){
+							alert('댓글이 수정되었습니다.');
+						}
 					}
 				});
 			}
@@ -150,8 +155,8 @@
             <span class="date"><%= comment.getRdate() %></span>                    
             <p class="content"><%= comment.getContent() %></p>
             <div>
-                <a href="#" class="remove">삭제</a>
-                <a href="#" class="modify">수정</a>
+                <a href="#" class="remove" data-no="<%= comment.getNo() %>">삭제</a>
+                <a href="#" class="modify" data-no="<%= comment.getNo() %>">수정</a>
             </div>
         </article>
         <% } %>
