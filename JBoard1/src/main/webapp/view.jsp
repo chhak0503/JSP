@@ -33,6 +33,7 @@
 		$(document).on('click', '.remove', function(e){
 			e.preventDefault();
 			
+			let tag = $(this);
 			let result = confirm('정말 삭제 하시겠습니까?');
 			
 			if(result){
@@ -47,8 +48,10 @@
 						
 						if(data.result > 0){
 							alert('댓글이 삭제 되었습니다.');
+							
+							// 화면삭제
+							tag.closest('article').hide();
 						}
-						
 					}
 				});
 			}
