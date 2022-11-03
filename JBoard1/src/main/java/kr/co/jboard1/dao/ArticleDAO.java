@@ -283,7 +283,20 @@ public class ArticleDAO {
 			e.printStackTrace();
 		}
 	}
-	public void deleteArticle() {}
+	public void deleteArticle(String no) {
+		try {
+			Connection conn = DBCP.getConnection();
+			PreparedStatement psmt = conn.prepareStatement(Sql.DELETE_ARTICLE);
+			psmt.setString(1, no);
+			psmt.setString(2, no);
+			
+			psmt.executeUpdate();
+			psmt.close();
+			conn.close();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 	
 	// 전체 게시물 카운트
 	public int selectCountTotal() {
