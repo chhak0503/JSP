@@ -167,8 +167,10 @@
     </table>
 
     <div>
+    	<% if(sessUser.getUid().equals(article.getUid())){ %>
         <a href="/JBoard1/proc/deleteProc.jsp?no=<%= article.getNo() %>&pg=<%= pg %>" class="btn btnRemove">삭제</a>
         <a href="/JBoard1/modify.jsp?no=<%= article.getNo() %>&pg=<%= pg %>" class="btn btnModify">수정</a>
+        <% } %>
         <a href="/JBoard1/list.jsp?pg=<%= pg %>" class="btn btnList">목록</a>
     </div>
 
@@ -181,10 +183,12 @@
             <span class="nick"><%= comment.getNick() %></span>
             <span class="date"><%= comment.getRdate() %></span>                    
             <p class="content"><%= comment.getContent() %></p>
+            <% if(sessUser.getUid().equals(comment.getUid())){ %>
             <div>
                 <a href="#" class="remove" data-no="<%= comment.getNo() %>">삭제</a>
                 <a href="#" class="modify" data-no="<%= comment.getNo() %>">수정</a>
             </div>
+            <% } %>
         </article>
         <% } %>
             
