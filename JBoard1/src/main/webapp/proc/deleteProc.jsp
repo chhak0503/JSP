@@ -5,8 +5,22 @@
 	String pg = request.getParameter("pg");
 	String no = request.getParameter("no");
 	
+	ArticleDAO dao = ArticleDAO.getInstance();
 	
-	ArticleDAO.getInstance().deleteArticle(no);
-
+	// 글삭제 + 댓글삭제
+	dao.deleteArticle(no);
+	
+	// 파일삭제(테이블)
+	String fileName = dao.deleteFile(no);
+	
+	// 파일삭제(디렉토리)
+	if(fileName != null){
+		
+		String path = application.getRealPath("/file");
+		
+		
+	}
+	
+	
 	response.sendRedirect("/JBoard1/list.jsp?pg="+pg);
 %>

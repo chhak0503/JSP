@@ -57,6 +57,7 @@ public class Sql {
 												+ "WHERE `no`=?";
 	
 	public static final String SELECT_FILE = "select * from `board_file` where `fno`=?";
+	public static final String SELECT_FILE_WITH_PARENT = "select * from `board_file` where `parent`=?";
 	public static final String SELECT_COMMENTS = "SELECT a.*, b.nick FROM `board_article` AS a "
 												+ "JOIN `board_user` AS b USING (`uid`) "
 												+ "WHERE `parent`=? ORDER BY `no` ASC";
@@ -76,6 +77,7 @@ public class Sql {
 	
 	public static final String DELETE_ARTICLE = "delete from `board_article` where `no`=? or `parent`=?";
 	public static final String DELETE_COMMENT = "delete from `board_article` where `no`=?";
+	public static final String DELETE_FILE = "delete from `board_file` where `parent`=?";
 	
 }
 

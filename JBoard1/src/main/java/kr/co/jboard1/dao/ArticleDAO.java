@@ -298,6 +298,40 @@ public class ArticleDAO {
 		}
 	}
 	
+	public String deleteFile(String parent) {
+		
+		String newName = null;
+		
+		try {
+			Connection conn = DBCP.getConnection();
+			
+			conn.setAutoCommit(false);
+			
+			PreparedStatement psmt1 = conn.prepareStatement(Sql.SELECT_FILE_WITH_PARENT);
+			PreparedStatement psmt2 = conn.prepareStatement(Sql.DELETE_FILE);
+			psmt1.setString(1, parent);
+			psmt2.setString(1, parent);
+			
+			ResultSet rs = psmt1.executeQuery();
+			psmt2.executeUpdate();
+			
+			conn.commit();
+			
+			if(rs.next()) {
+				newName = rs.getString(3);
+			}
+			
+			psmt1.close();
+			psmt2.close();			
+			conn.close();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return newName;
+	}
+	
+	
 	// 전체 게시물 카운트
 	public int selectCountTotal() {
 		
