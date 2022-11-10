@@ -3,11 +3,11 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>user::list</title>
+		<title>user1::list</title>
 	</head>
 	<body>
-		<h3>user 목록</h3>
-		<a href="/Ch09/user1/register.do">user 등록하기</a>
+		<h3>user1 목록</h3>
+		<a href="/Ch09/user1/register.do">user1 등록하기</a>
 		<table border="1">
 			<tr>
 				<th>아이디</th>

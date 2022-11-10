@@ -3,12 +3,12 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>user::register</title>
+		<title>user1::register</title>
 	</head>
 	<body>
-		<h3>user 등록하기</h3>
+		<h3>user1 등록하기</h3>
 		
-		<a href="/Ch09/user1/list.do">user 목록</a>
+		<a href="/Ch09/user1/list.do">user1 목록</a>
 		
 		<form action="#" method="post">
 			<table border="1">

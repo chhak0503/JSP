@@ -3,12 +3,12 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>user::modify</title>
+		<title>user1::modify</title>
 	</head>
 	<body>
-		<h3>user 수정하기</h3>
-		<a href="/Ch09/user1/list.do">user 목록</a>
-		<form action="./modifyProc.jsp" method="post">
+		<h3>user1 수정하기</h3>
+		<a href="/Ch09/user1/list.do">user1 목록</a>
+		<form action="#" method="post">
 			<table border="1">
 				<tr>
 					<td>아이디</td>
