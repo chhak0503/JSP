@@ -3,7 +3,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>hello</title>
+		<title>welcome</title>
 		<!-- 
 			날짜 : 2022/11/10
 			이름 : 김철학
@@ -11,6 +11,11 @@
 		 -->
 	</head>
 	<body>
-		<h3>1.MVC 모델</h3>		
+		<h3>1.MVC 모델</h3>
+		<h1>welcome</h1>		
+		
+		<a href="./hello.do">hello</a>
+		<a href="./welcome.do">welcome</a>
+		<a href="./greeting.do">greeting</a>
 	</body>
 </html>
