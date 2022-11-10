@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import service.WelcomeService;
+
 @WebServlet("/welcome.do")
 public class WelcomeController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -28,7 +30,11 @@ public class WelcomeController extends HttpServlet {
 	}
 	
 	private void requestProc(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		RequestDispatcher dispatcher = req.getRequestDispatcher("/welcome.jsp");
+		
+		WelcomeService service = WelcomeService.getInstance();
+		String view = service.requestProc(req, resp);
+		
+		RequestDispatcher dispatcher = req.getRequestDispatcher(view);
 		dispatcher.forward(req, resp);
 	}
 }
