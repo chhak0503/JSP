@@ -12,7 +12,7 @@
 	</head>
 	<body>
 		<h3>1.MVC 모델</h3>
-		<h1>greeting</h1>		
+		<h1>greeting</h1>
 		
 		<a href="./hello.do">hello</a>
 		<a href="./welcome.do">welcome</a>
