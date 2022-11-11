@@ -10,9 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import dao.User1Dao;
-import service.HelloService;
-import service.user1.ListService;
-import service.user1.ModifyService;
 import vo.User1Vo;
 
 @WebServlet("/user1/modify.do")
@@ -24,41 +21,31 @@ public class ModifyController extends HttpServlet {
 	}
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		requestProc(req, resp);
+		String uid = req.getParameter("uid");
+		User1Vo vo = User1Dao.getInstance().selectUser(uid);
+		
+		req.setAttribute("vo", vo);
+		
+		// 포워드
+		RequestDispatcher dispatcher = req.getRequestDispatcher("/user1/modify.jsp");
+		dispatcher.forward(req, resp);
 	}
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		requestProc(req, resp);
-	}
-	
-	private void requestProc(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		String uid  = req.getParameter("uid");
+		String name = req.getParameter("name");
+		String hp   = req.getParameter("hp");
+		String age  = req.getParameter("age");
 		
-		if(req.getMethod().equals("GET")) {
-			String uid = req.getParameter("uid");
-			User1Vo vo = User1Dao.getInstance().selectUser(uid);
-			
-			req.setAttribute("vo", vo);
-			
-			// 포워드
-			RequestDispatcher dispatcher = req.getRequestDispatcher("/user1/modify.jsp");
-			dispatcher.forward(req, resp);	
-		}else {
-			
-			String uid  = req.getParameter("uid");
-			String name = req.getParameter("name");
-			String hp   = req.getParameter("hp");
-			String age  = req.getParameter("age");
-			
-			User1Vo vo = new User1Vo();
-			vo.setUid(uid);
-			vo.setName(name);
-			vo.setHp(hp);
-			vo.setAge(age);
-			
-			User1Dao.getInstance().updateUser(vo);
-			
-			// 리다이렉트
-			resp.sendRedirect("/Ch09/user1/list.do");
-		}
+		User1Vo vo = new User1Vo();
+		vo.setUid(uid);
+		vo.setName(name);
+		vo.setHp(hp);
+		vo.setAge(age);
+		
+		User1Dao.getInstance().updateUser(vo);
+		
+		// 리다이렉트
+		resp.sendRedirect("/Ch09/user1/list.do");
 	}
 }
