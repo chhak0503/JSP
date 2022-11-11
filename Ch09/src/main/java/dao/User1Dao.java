@@ -1,5 +1,8 @@
 package dao;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import db.DBHelper;
 import vo.User1Vo;
 
@@ -28,7 +31,34 @@ public class User1Dao extends DBHelper {
 		}
 	}
 	public void selectUser() {}
-	public void selectUsers() {}
+	
+	public List<User1Vo> selectUsers() {
+		
+		List<User1Vo> users = new ArrayList<>();
+		
+		try {
+			conn = getConnection();
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery("select * from `user1`");
+			
+			while(rs.next()) {
+				User1Vo vo = new User1Vo();
+				vo.setUid(rs.getString(1));
+				vo.setName(rs.getString(2));
+				vo.setHp(rs.getString(3));
+				vo.setAge(rs.getInt(4));
+				users.add(vo);
+			}
+			
+			close();
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return users;
+	}
+	
 	public void updateUser() {}
 	public void deleteUser() {}
 }

@@ -39,6 +39,7 @@ public class RegisterController extends HttpServlet {
 			RegisterService service = RegisterService.getInstance();
 			String view = service.requestProc(req, resp);
 			
+			// View forward
 			RequestDispatcher dispatcher = req.getRequestDispatcher(view);
 			dispatcher.forward(req, resp);
 			
