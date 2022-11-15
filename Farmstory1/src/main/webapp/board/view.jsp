@@ -1,21 +1,11 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>글보기</title>    
-    <link rel="stylesheet" href="./css/style.css"/>
-</head>
-<body>
-    <div id="wrapper">
-        <header>
-            <h3>Board System v1.0</h3>
-            <p>
-                <span class="nick">길동이</span>님 반갑습니다.
-                <a href="#" class="logout">[로그아웃]</a>
-            </p>
-        </header>
+<%@ include file="/_header.jsp" %>
+<%
+	String group = request.getParameter("group");
+	String cate  = request.getParameter("cate");
 
+	pageContext.include("./_"+group+".jsp");
+%>
         <main id="board" class="view">
             
             <table>
@@ -36,8 +26,8 @@
 
             <div>
                 <a href="#" class="btn btnRemove">삭제</a>
-                <a href="./modify.html" class="btn btnModify">수정</a>
-                <a href="./list.html" class="btn btnList">목록</a>
+                <a href="./modify.jsp?group=<%= group %>&cate=<%= cate %>" class="btn btnModify">수정</a>
+                <a href="./list.jsp?group=<%= group %>&cate=<%= cate %>" class="btn btnList">목록</a>
             </div>
 
             <!-- 댓글목록 -->
@@ -67,10 +57,8 @@
                 </form>
             </section>
         </main>
+        </article>
+    </section>
+</div>
 
-        <footer>
-            <p>ⓒCopyleft by chhak.or.kr</p>
-        </footer>    
-    </div>
-</body>
-</html>
+<%@ include file="../_footer.jsp" %>
