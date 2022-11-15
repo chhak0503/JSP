@@ -6,6 +6,8 @@
 }
 ul, ol {list-style: none;}
 a {text-decoration: none; color: #111;}
+input, textarea {outline: none;}
+
 
 #wrapper {
     width: 980px;

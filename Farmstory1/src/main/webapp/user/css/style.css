@@ -1,0 +1,177 @@
+/* 로그인 */
+#user.login {
+    width: 360px;
+    height: auto;
+    border: 1px solid #cfded8;
+    margin: 100px auto;
+}
+#user.login > form {
+    position: relative;
+    width: 100%;
+    height: auto;            
+}
+#user.login > form > table {
+    margin-left: 50px;
+    margin-top: 26px;
+}
+#user.login > form > table tr {}
+#user.login > form > table tr > td {}
+#user.login > form > table tr > td > img {width: 20px;}
+#user.login > form > table tr > td > input {
+    width: 164px;
+    height: 24px;
+    border: 1px solid #e4eaec;
+    background: #f7f7f7;
+    margin-top: 4px;
+    margin-left: 6px;            
+}
+#user.login > form > .btnLogin {
+    position: absolute;
+    right: 46px;
+    top: 6px;
+    width: 64px;
+    height: 58px;
+    border: 1px solid #bebebe;
+    background: #fdfdfd;
+}
+#user.login > .info {
+    width: 100%;
+    height: 104px;
+    background: #f5f6fa;
+    border-top: 1px solid #cfded8;
+    margin-top: 32px;
+    padding: 16px;
+    box-sizing: border-box;
+}
+#user.login > .info > h3 {}
+#user.login > .info > p {
+    margin: 10px 0;
+}
+#user.login > .info > a {
+    float: right;
+}
+
+/* 약관 */
+#user.terms {
+    width: 600px;
+    height: auto;            
+    margin: 60px auto;
+    overflow: hidden;
+}
+#user.terms > table {
+    width: 100%;
+    height: auto;
+    border-spacing: 0;
+    border-top: 2px solid #111;
+}
+#user.terms > table caption {
+    text-align: left;
+    font-weight: bold;
+    padding: 10px 0;
+}
+#user.terms > table tr {}
+#user.terms > table tr > td {
+    border: 1px solid #e9e9e9;
+    border-top: none;
+    padding: 6px;
+    box-sizing: border-box;
+}
+#user.terms > table textarea {
+    width: 100%;
+    height: 200px;
+    resize: none;
+    border: 1px solid #e4eaec;
+    background-color: #f7f7f7;
+    padding: 6px;
+    box-sizing: border-box;
+}
+#user.terms > table label {
+    float: right;
+    margin: 6px 0;
+}
+#user.terms > table input[type=checkbox] {}
+
+#user.terms > p {
+    float: right;
+    margin-top: 10px;
+}
+#user.terms > p > a {
+    display: inline-block;
+    width: 42px;
+    height: 30px;
+    border: 1px solid #bebebe;
+    text-align: center;
+    line-height: 30px;
+}
+#user.terms > p > a.next {
+    background: #e9e9e9;
+}
+
+/* 회원가입 */
+#user.register {
+    width: 600px;
+    height: auto;            
+    margin: 60px auto;
+    overflow: hidden;
+}
+#user.register > form {}
+#user.register table {
+    width: 100%;
+    height: auto;
+    border-collapse: collapse;
+    border-spacing: 0;
+    border: 1px solid #e9e9e9;
+    border-top: 2px solid #111;
+    margin-bottom: 16px;
+}
+#user.register table caption {
+    text-align: left;
+    font-weight: bold;
+    margin-bottom: 6px;
+}
+#user.register table tr {}
+#user.register table tr > th {
+    width: 106px;
+    height: 38px;
+    background: #f5f8f9;
+}
+#user.register table tr > td {
+    padding: 6px;
+    box-sizing: border-box;
+}
+#user.register table input {
+    width: 160px;
+    height: 22px;
+    border: 1px solid #e4eaec;
+    background: #f7f7f7;
+    text-indent: 6px;
+}
+#user.register table input[name=addr1] {
+    display: block;
+    margin: 5px 0;
+    width: 360px;
+}
+#user.register table input[name=addr2] {
+    width: 360px;
+}
+#user.register table button {
+    border: none;
+    background: none;
+    vertical-align: middle;
+}
+
+#user.register > form > div {
+    float: right;
+}
+#user.register > form > div > .btnCancel {
+    display: inline-block;
+    padding: 8px;
+    border: 1px solid #bebebe;
+    background: #fdfdfd;
+}
+#user.register > form > div > .btnRegister {
+    display: inline-block;
+    padding: 8px;
+    border: 1px solid #bebebe;
+    background: #e9e9e9;
+}
