@@ -8,7 +8,7 @@
 %>
         <main id="board" class="write">
             
-            <form action="/Farmstory1/board/proc/writeProc.jsp" method="post">
+            <form action="/Farmstory1/board/proc/writeProc.jsp" method="post" enctype="multipart/form-data">
             	<input type="hidden" name="group" value="<%= group %>"/>
             	<input type="hidden" name="cate" value="<%= cate %>"/>
             	<input type="hidden" name="uid" value="<%= sessUser.getUid() %>"/>
@@ -24,7 +24,7 @@
                     </tr>
                     <tr>
                         <th>파일</th>
-                        <td><input type="file" name="file"/></td>
+                        <td><input type="file" name="fname"/></td>
                     </tr>
                 </table>
 

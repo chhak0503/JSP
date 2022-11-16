@@ -15,6 +15,38 @@ public class ArticleBean {
 	
 	// 추가필드
 	private String nick;
+	private String fname;
+	private int fno;
+	private String oriName;
+	private int download;
+	
+	public int getFno() {
+		return fno;
+	}
+	public void setFno(int fno) {
+		this.fno = fno;
+	}
+	
+	public String getOriName() {
+		return oriName;
+	}
+	public void setOriName(String oriName) {
+		this.oriName = oriName;
+	}
+	
+	public int getDownload() {
+		return download;
+	}
+	public void setDownload(int download) {
+		this.download = download;
+	}
+	
+	public String getFname() {
+		return fname;
+	}
+	public void setFname(String fname) {
+		this.fname = fname;
+	}
 	
 	public String getNick() {
 		return nick;
@@ -34,6 +66,9 @@ public class ArticleBean {
 	}
 	public void setParent(int parent) {
 		this.parent = parent;
+	}
+	public void setParent(String parent) {
+		this.parent = Integer.parseInt(parent);
 	}
 	public int getComment() {
 		return comment;
