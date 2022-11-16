@@ -22,6 +22,7 @@ public class Sql {
 	
 	// board
 	public static final String INSERT_ARTICLE = "insert into `board_article` set "
+												+ "`cate`=?,"
 												+ "`title`=?,"
 												+ "`content`=?,"
 												+ "`file`=?,"

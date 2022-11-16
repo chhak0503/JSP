@@ -32,7 +32,9 @@
 			        <a href="#" class="num">3</a>
 			        <a href="#" class="next">다음</a>
 			    </div>
+			    
 			    <a href="./write.jsp?group=<%= group %>&cate=<%= cate %>" class="btnWrite">글쓰기</a>
+			    
 			</main>
 		</article>
     </section>
