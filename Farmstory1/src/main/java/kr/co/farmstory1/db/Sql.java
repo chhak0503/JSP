@@ -47,7 +47,7 @@ public class Sql {
 	public static final String SELECT_COUNT_TOTAL = "SELECT COUNT(`no`) FROM `board_article` where `parent`=0";	
 	public static final String SELECT_ARTICLES = "SELECT a.*, b.`nick` FROM `board_article` AS a "
 												+ "JOIN `board_user` AS b ON a.uid = b.uid "
-												+ "WHERE `parent` = 0 "
+												+ "WHERE `parent` = 0 AND `cate`=? "
 												+ "ORDER BY `no` DESC "
 												+ "LIMIT ?, 10";
 	

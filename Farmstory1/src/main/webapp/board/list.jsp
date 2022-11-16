@@ -1,8 +1,15 @@
+<%@page import="kr.co.farmstory1.bean.ArticleBean"%>
+<%@page import="java.util.List"%>
+<%@page import="kr.co.farmstory1.dao.ArticleDAO"%>
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="/_header.jsp" %>
 <%
 	String group = request.getParameter("group");
 	String cate  = request.getParameter("cate");
+	
+	int start = 0;
+	
+	List<ArticleBean> articles = ArticleDAO.getInstance().selectArticles(cate, start);
 
 	pageContext.include("./_"+group+".jsp");
 %>
@@ -16,13 +23,15 @@
 			            <th>날짜</th>
 			            <th>조회</th>
 			        </tr>
+			        <% for(ArticleBean ab : articles){ %>
 			        <tr>
-			            <td>1</td>
-			            <td><a href="./view.jsp?group=<%= group %>&cate=<%= cate %>">테스트 제목입니다.[3]</a></td>
-			            <td>길동이</td>
-			            <td>20-05-12</td>
-			            <td>12</td>
-			        </tr>               
+			            <td><%= ab.getNo() %></td>
+			            <td><a href="./view.jsp?group=<%= group %>&cate=<%= cate %>"><%= ab.getTitle() %>[<%= ab.getComment() %>]</a></td>
+			            <td><%= ab.getNick() %></td>
+			            <td><%= ab.getRdate().substring(2, 10) %></td>
+			            <td><%= ab.getHit() %></td>
+			        </tr>
+			        <% } %>               
 			    </table>
 			
 			    <div class="page">
@@ -32,9 +41,7 @@
 			        <a href="#" class="num">3</a>
 			        <a href="#" class="next">다음</a>
 			    </div>
-			    
 			    <a href="./write.jsp?group=<%= group %>&cate=<%= cate %>" class="btnWrite">글쓰기</a>
-			    
 			</main>
 		</article>
     </section>
