@@ -132,7 +132,6 @@ public class ArticleDAO {
 		return article;
 	}
 
-	
 	public int selectCountTotal(String cate) {
 		
 		int total = 0;
