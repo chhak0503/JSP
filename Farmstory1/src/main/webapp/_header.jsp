@@ -38,9 +38,7 @@
         }else if(success == '101'){
         	alert('먼저 로그인을 하세요.');
         }
-        
     </script>
-
 </head>
 <body>
     <div id="wrapper">
