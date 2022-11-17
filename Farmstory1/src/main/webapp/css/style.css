@@ -15,6 +15,12 @@ input, textarea {outline: none;}
     margin: 0 auto;
 }
 
+.loading {
+	display: block;
+	width: 60px;
+	margin: 20px auto;
+}
+
 /* 헤더영역 */
 header {
     position: relative;

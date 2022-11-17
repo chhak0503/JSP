@@ -5,8 +5,29 @@
 <%@ include file="./_header.jsp" %>
 <%
 	List<ArticleBean> latests = ArticleDAO.getInstance().selectLatest();
-
 %>
+<script>
+	
+	$(function(){
+		
+		// 공지사항 최신글 가져오기
+		$.get('/Farmstory1/board/proc/getLatest.jsp?cate=notice', function(data){			
+			$('#tabs-1 > .loading').remove();
+			
+			for(let latest of data){
+				console.log(latest.title);
+			}
+			
+			//$('#tabs-1').appen
+			
+			
+		});
+		
+		
+	});
+	
+
+</script>
 
 <main>
     <div class="slider">
@@ -118,25 +139,13 @@
                     <li><a href="#tabs-3">자주묻는 질문</a></li>
                 </ul>
                 <div id="tabs-1">
-                    <ul class="txt">
-                        <li><a href="#">· 홈페이지 오픈 기념 이벤트를 진행합니다.</a></li>
-                        <li><a href="#">· 홈페이지 오픈 기념 이벤트를 진행합니다.</a></li>
-                        <li><a href="#">· 홈페이지 오픈 기념 이벤트를 진행합니다.</a></li>
-                    </ul>
+                    <img src="./img/loading.gif" class="loading">
                 </div>
                 <div id="tabs-2">
-                    <ul class="txt">
-                        <li><a href="#">· 홈페이지 이용 관련 불편사항을 들려주세요.</a></li>
-                        <li><a href="#">· 홈페이지 이용 관련 불편사항을 들려주세요.</a></li>
-                        <li><a href="#">· 홈페이지 이용 관련 불편사항을 들려주세요.</a></li>
-                    </ul>
+                    <img src="./img/loading.gif" class="loading">
                 </div>
                 <div id="tabs-3">
-                    <ul class="txt">
-                        <li><a href="#">· 홈페이지를 오픈하였습니다.</a></li>
-                        <li><a href="#">· 홈페이지를 오픈하였습니다.</a></li>
-                        <li><a href="#">· 홈페이지를 오픈하였습니다.</a></li>
-                    </ul>
+                    <img src="./img/loading.gif" class="loading">
                 </div>
             </div>
         </div>
