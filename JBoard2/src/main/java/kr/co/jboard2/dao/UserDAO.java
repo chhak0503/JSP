@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 import kr.co.jboard2.db.DBHelper;
 import kr.co.jboard2.db.Sql;
 import kr.co.jboard2.vo.TermsVO;
+import kr.co.jboard2.vo.UserVO;
 
 public class UserDAO extends DBHelper {
 
@@ -19,7 +20,29 @@ public class UserDAO extends DBHelper {
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	
-	public void insertUser() {}
+	public void insertUser(UserVO vo) {
+		try {
+			logger.info("insertUser...");
+			
+			conn = getConnection();
+			psmt = conn.prepareStatement(Sql.INSERT_USER);
+			psmt.setString(1, vo.getUid());
+			psmt.setString(2, vo.getPass());
+			psmt.setString(3, vo.getName());
+			psmt.setString(4, vo.getNick());
+			psmt.setString(5, vo.getEmail());
+			psmt.setString(6, vo.getHp());
+			psmt.setString(7, vo.getZip());
+			psmt.setString(8, vo.getAddr1());
+			psmt.setString(9, vo.getAddr2());
+			psmt.setString(10, vo.getRegip());
+			psmt.executeUpdate();
+			close();
+			
+		}catch (Exception e) {
+			logger.error(e.getMessage());
+		}
+	}
 	
 	public TermsVO selectTerms() {
 		
@@ -47,6 +70,31 @@ public class UserDAO extends DBHelper {
 		return vo;
 	}
 	
+	public int selectCountUid(String uid) {
+		
+		int result = 0;
+		
+		try {
+			logger.info("selectCheckUid");
+			
+			conn = getConnection();
+			psmt = conn.prepareStatement(Sql.SELECT_COUNT_UID);
+			psmt.setString(1, uid);
+			rs = psmt.executeQuery();
+			
+			if(rs.next()) {
+				result = rs.getInt(1);
+			}
+			
+			close();
+		}catch (Exception e) {
+			logger.error(e.getMessage());
+		}
+		
+		logger.debug("result : " + result);
+		
+		return result;
+	}
 	public void selectUser() {}
 	public void selectUsers() {}
 	public void updateUser() {}
