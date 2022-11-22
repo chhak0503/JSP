@@ -6,22 +6,30 @@
 <script>
 	
 	let isEmailAuthOk = false;
+	let receivedCode = 0;
 
 	// 이메일 인증
 	$(function(){
 		
+		// 이메일 인증코드 발송 클릭
 		$('#btnEmail').click(function(){
 			
+			$(this).hide();			
 			let email = $('input[name=email]').val();
 			console.log('here1 : ' + email);
 			
+			if(email == ''){
+				alert('이미엘을 입력 하세요.');
+				return;
+			}
 			
 			if(isEmailAuthOk){
 				console.log('here2');
-				isEmailAuthOk = true;
 				return;
 			}
-								
+			
+			isEmailAuthOk = true;
+			
 			$('.resultEmail').text('인증코드 전송 중 입니다. 잠시만 기다리세요...');
 			console.log('here3');
 			
@@ -42,6 +50,7 @@
 							isEmailAuthOk = true;
 							$('.resultEmail').text('이메일을 확인 후 인증코드를 입력하세요.');
 							$('.auth').show();
+							receivedCode = data.code;
 							
 						}else{
 							// 메일전송 실패
@@ -52,6 +61,26 @@
 					}
 				});
 			}, 1000);
+		});
+		
+		
+		// 이메일 인증코드 확인 버튼
+		$('#btnEmailConfirm').click(function(){
+			
+			let code = $('input[name=auth]').val();
+			
+			if(code == ''){
+				alert('이메일 확인 후 인증코드를 입력하세요.');
+				return;
+			}
+			
+			if(code == receivedCode){
+				$('input[name=email]').attr('readonly', true);
+				$('.resultEmail').text('이메일이 인증 되었습니다.');				
+				$('.auth').hide();
+			}else{
+				alert('인증코드가 틀립니다.\n다시 확인 하십시요.');
+			}
 		});
 	});
 </script>
@@ -107,7 +136,7 @@
                         <button type="button" id="btnEmail"><img src="../img/chk_auth.gif" alt="인증번호 받기"/></button>
                         <div class="auth">
                             <input type="text" name="auth" placeholder="인증번호 입력"/>
-                            <button type="button"><img src="../img/chk_confirm.gif" alt="확인"/></button>
+                            <button type="button" id="btnEmailConfirm"><img src="../img/chk_confirm.gif" alt="확인"/></button>
                         </div>
                     </td>
                 </tr>
