@@ -30,8 +30,24 @@
         <header>
             <h3>Board System v2.0</h3>
             <p>
-                <span>홍길동</span>님 반갑습니다.
-                <a href="./user/login.html">[로그아웃]</a>
+                <span>${sessUser.nick}</span>님 반갑습니다.
+                <a href="/JBoard2/user/logout.do">[로그아웃]</a>
             </p>
         </header>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
         

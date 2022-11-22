@@ -6,7 +6,6 @@
             <input type="text" name="search" placeholder="제목 키워드, 글쓴이 검색">
             <input type="submit" value="검색">
         </form>
-        
         <table border="0">
             <caption>글목록</caption>
             <tr>
