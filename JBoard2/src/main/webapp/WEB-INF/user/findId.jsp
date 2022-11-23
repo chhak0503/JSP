@@ -10,7 +10,7 @@
 			
 			console.log('here1 : ' + isEmailAuthOk);
 			
-			if(isEmailAuthOk){
+			if(!isEmailAuthOk){
 				console.log('here2');
 				let name = $('input[name=name]').val();
 				let email = $('input[name=email]').val();
@@ -26,6 +26,12 @@
 					data: jsonData,
 					dataType: 'json',
 					success: function(data){
+						
+						if(data.result == 1){
+							location.href = "/JBoard2/user/findIdResult.do";
+						}else{
+							alert('해당하는 사용자가 존재하지 않습니다.\n이름과 이메일을 다시 확인하십시요.');
+						}
 						
 					}
 				});
