@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import kr.co.jboard2.dao.UserDAO;
+
 @WebServlet("/user/findId.do")
 public class FindIdController extends HttpServlet  {
 	private static final long serialVersionUID = 1L;
@@ -25,5 +27,11 @@ public class FindIdController extends HttpServlet  {
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	
+		String name  = req.getParameter("name");
+		String email = req.getParameter("email");
+		
+		UserDAO.getInstance().selectUserForFindId();
+	
 	}
 }

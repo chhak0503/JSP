@@ -161,6 +161,12 @@ public class UserDAO extends DBHelper {
 	}
 	
 	public void selectUsers() {}
+	
+	public void selectUserForFindId() {
+		
+	}
+	
+	
 	public void updateUser() {}
 	public void deleteUser() {}
 }
