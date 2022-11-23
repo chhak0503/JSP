@@ -7,7 +7,7 @@
                         <caption>비밀번호 변경</caption>                        
                         <tr>
                             <td>아이디</td>
-                            <td>honggildong</td>
+                            <td>${uid}</td>
                         </tr>
                         <tr>
                             <td>새 비밀번호</td>
