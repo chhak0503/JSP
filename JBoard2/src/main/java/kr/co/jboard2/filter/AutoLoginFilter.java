@@ -20,14 +20,14 @@ import kr.co.jboard2.dao.UserDAO;
 import kr.co.jboard2.vo.UserVO;
 
 @WebFilter("/*")
-public class LoginFilter implements Filter {
+public class AutoLoginFilter implements Filter {
 	
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		
-		logger.info("LoginFilter...");
+		logger.info("AutoLoginFilter...");
 		
 		HttpServletRequest req = (HttpServletRequest)request;
 		HttpSession sess = req.getSession();
