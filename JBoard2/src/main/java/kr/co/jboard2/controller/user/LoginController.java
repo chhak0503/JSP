@@ -25,38 +25,8 @@ public class LoginController extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
-		HttpSession sess = req.getSession();
-		sess.removeAttribute("sessUserForfindId");
-		
-		// 자동로그인 여부에 따라 로그인 처리
-		Cookie[] cookies = req.getCookies();
-		
-		if(cookies != null) {
-			
-			for(Cookie cookie : cookies) {
-				
-				if(cookie.getName().equals("SESSID")) {
-					
-					String sessId = cookie.getValue();					
-					UserVO vo = UserDAO.getInstance().selectUserBySessId(sessId);
-					
-					if(vo != null) {
-						// 로그인 처리
-						sess.setAttribute("sessUser", vo);						
-					}
-				}
-			}
-		}
-		
-		// 로그인 여부에 따라 페이지 이동
-		UserVO sessUser = (UserVO) sess.getAttribute("sessUser");
-		
-		if(sessUser != null) {
-			resp.sendRedirect("/JBoard2/list.do");
-		}else {
-			RequestDispatcher dispatcher = req.getRequestDispatcher("/WEB-INF/user/login.jsp");
-			dispatcher.forward(req, resp);	
-		}
+		RequestDispatcher dispatcher = req.getRequestDispatcher("/WEB-INF/user/login.jsp");
+		dispatcher.forward(req, resp);	
 	}
 	
 	@Override

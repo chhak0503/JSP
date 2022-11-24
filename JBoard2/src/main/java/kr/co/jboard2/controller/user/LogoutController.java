@@ -10,6 +10,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.oreilly.servlet.CookieNotFoundException;
+
+import kr.co.jboard2.dao.UserDAO;
+
 @WebServlet("/user/logout.do")
 public class LogoutController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -19,27 +23,22 @@ public class LogoutController extends HttpServlet {
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		HttpSession session = req.getSession();
+		
+		String uid = req.getParameter("uid");
 		
 		// 세션 제거
+		HttpSession session = req.getSession();
 		session.removeAttribute("sessUser");
 		session.invalidate();
 		
-		// 쿠키 제거
-		Cookie[] cookies = req.getCookies();
+		// 쿠키 제거 <- 김지홍씨 감사합니다.
+		Cookie cookie = new Cookie("SESSID", null);
+		cookie.setPath("/");
+		cookie.setMaxAge(0);
+		resp.addCookie(cookie);
 		
-		if(cookies != null) {
-			for(Cookie cookie : cookies) {
-				
-				if(cookie.getName().equals("SESSID")) {
-					
-					cookie.setPath("/");
-					cookie.setMaxAge(0);
-					
-					resp.addCookie(cookie);					
-				}				
-			}
-		}
+		// 데이터베이스 세션 로그아웃
+		UserDAO.getInstance().updateUserForSessionOut(uid);
 		
 		resp.sendRedirect("/JBoard2/user/login.do?success=201");
 	}
