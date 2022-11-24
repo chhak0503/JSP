@@ -14,7 +14,7 @@
                 </tr>
             </table>
             <input type="submit" value="로그인" class="btnLogin"/>
-            <label><input type="checkbox" name="saveUid">자동 로그인</label>
+            <label><input type="checkbox" name="auto">자동 로그인</label>
         </form>
         <div>
             <h3>회원 로그인 안내</h3>
