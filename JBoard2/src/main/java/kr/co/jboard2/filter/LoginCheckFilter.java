@@ -7,6 +7,7 @@ import java.util.List;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
@@ -33,8 +34,9 @@ public class LoginCheckFilter implements Filter {
 		uriList = new ArrayList<>();
 		uriList.add("/JBoard2/list.do");
 		uriList.add("/JBoard2/write.do");
-		uriList.add("/JBoard2/modify.do");
 		uriList.add("/JBoard2/view.do");
+		uriList.add("/JBoard2/modify.do");
+		uriList.add("/JBoard2/delete.do");
 	}
 	
 	@Override
@@ -43,24 +45,25 @@ public class LoginCheckFilter implements Filter {
 		logger.info("LoginCheckFilter...0");
 		
 		HttpServletRequest req = (HttpServletRequest) request;
+		HttpServletResponse resp = (HttpServletResponse) response;
 		String uri = req.getRequestURI();
-
-		HttpSession sess = req.getSession();
-		UserVO sessUser = (UserVO)sess.getAttribute("sessUser");
 		
 		logger.debug("LoginCheckFilter...1");
 		
 		if(uriList.contains(uri)) {
 			
+			HttpSession sess = req.getSession();
+			UserVO sessUser = (UserVO)sess.getAttribute("sessUser");
+			
 			logger.debug("LoginCheckFilter...2");
-			if(sessUser == null) {
+			if(sessUser == null) { // 로그인을 안했으면
 				logger.debug("LoginCheckFilter...3");
 				((HttpServletResponse) response).sendRedirect("/JBoard2/user/login.do");
 				return;
 			}
 		}
 		
-		logger.debug("LoginCheckFilter...6");
-		chain.doFilter(request, response);
+		logger.debug("LoginCheckFilter...4");
+		chain.doFilter(request, response);		
 	}
 }

@@ -171,11 +171,11 @@ public class ArticleDAO extends DBHelper {
 		List<ArticleVO> articles = new ArrayList<>();	
 		
 		try{
-			Connection conn = getConnection();
-			PreparedStatement psmt = conn.prepareStatement(Sql.SELECT_ARTICLES);
+			conn = getConnection();
+			psmt = conn.prepareStatement(Sql.SELECT_ARTICLES);
 			psmt.setInt(1, start);
 			
-			ResultSet rs = psmt.executeQuery();
+			rs = psmt.executeQuery();
 			
 			while(rs.next()){
 				ArticleVO article = new ArticleVO();
@@ -194,10 +194,7 @@ public class ArticleDAO extends DBHelper {
 				
 				articles.add(article);
 			}
-			
-			rs.close();
-			psmt.close();
-			conn.close();		
+			close();
 		}catch(Exception e){
 			e.printStackTrace();
 		}
@@ -345,17 +342,15 @@ public class ArticleDAO extends DBHelper {
 		int total = 0;
 		
 		try {
-			Connection conn = getConnection();
-			Statement stmt = conn.createStatement();
+			conn = getConnection();
+			stmt = conn.createStatement();
 			
-			ResultSet rs = stmt.executeQuery(Sql.SELECT_COUNT_TOTAL);
+			rs = stmt.executeQuery(Sql.SELECT_COUNT_TOTAL);
 			
 			if(rs.next()) {
 				total = rs.getInt(1);
 			}
-			rs.close();
-			stmt.close();
-			conn.close();		
+			close();
 			
 		}catch (Exception e) {
 			e.printStackTrace();
