@@ -36,9 +36,11 @@ public class WriteController extends HttpServlet {
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		
 		// multipart 전송 데이터 수신
-		MultipartRequest mr = service.uploadFile(req);
+		ServletContext ctx = req.getServletContext();
+		String path = ctx.getRealPath("/file");
+		
+		MultipartRequest mr = service.uploadFile(req, path);
 		String title   = mr.getParameter("title");
 		String content = mr.getParameter("content");
 		String uid     = mr.getParameter("uid");
@@ -55,10 +57,9 @@ public class WriteController extends HttpServlet {
 		int parent = service.insertArticle(article);
 		
 		// 파일을 첨부했으면 파일처리
-		if(fname != null){
-			
+		if(fname != null){			
 			// 파일명 수정
-			String newName = service.renameFile(uid, fname);
+			String newName = service.renameFile(article, path);
 			
 			// 파일 테이블 저장
 			service.insertFile(parent, newName, fname);

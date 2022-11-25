@@ -32,25 +32,21 @@ public enum ArticleService {
 	public void updateArticle() {}
 	public void deleteArticle() {}
 	
-	public MultipartRequest uploadFile(HttpServletRequest req) throws IOException {
-		ServletContext ctx = req.getServletContext();
-		String savePath = ctx.getRealPath("/file");
-		
+	public MultipartRequest uploadFile(HttpServletRequest req, String path) throws IOException {
 		int maxSize = 1024 * 1024 * 10; // 최대 파일 업로드 허용량 10MB
-		
-		return new MultipartRequest(req, savePath, maxSize, "UTF-8", new DefaultFileRenamePolicy());
+		return new MultipartRequest(req, path, maxSize, "UTF-8", new DefaultFileRenamePolicy());
 	}
 	
-	public String renameFile(String uid, String fname, String path) {
+	public String renameFile(ArticleVO vo, String path) {
 		// 파일명 수정
-		int idx = fname.lastIndexOf(".");
-		String ext = fname.substring(idx);
+		int idx = vo.getFname().lastIndexOf(".");
+		String ext = vo.getFname().substring(idx);
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss_");
 		String now = sdf.format(new Date());
-		String newName = now+uid+ext; // 20221026111323_chhak0503.txt 
+		String newName = now+vo.getUid()+ext; // 20221026111323_chhak0503.txt 
 		
-		File oriFile = new File(path+"/"+fname);
+		File oriFile = new File(path+"/"+vo.getFname());
 		File newFile = new File(path+"/"+newName);
 		
 		oriFile.renameTo(newFile);
