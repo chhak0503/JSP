@@ -19,7 +19,6 @@ import org.slf4j.LoggerFactory;
 import kr.co.jboard2.dao.UserDAO;
 import kr.co.jboard2.vo.UserVO;
 
-@WebFilter("/*")
 public class AutoLoginFilter implements Filter {
 	
 	Logger logger = LoggerFactory.getLogger(this.getClass());

@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:choose>
 	<c:when test="${empty sessUser}">
-		<jsp:forward page="/user/login.do"/>
+		<jsp:forward page="/user/login.do"/>	
 	</c:when>
 	<c:otherwise>
 		<jsp:forward page="/list.do"/>
