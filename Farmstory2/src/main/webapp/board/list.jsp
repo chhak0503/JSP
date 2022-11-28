@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 <jsp:include page="/WEB-INF/_header.jsp"/>
+<jsp:include page="./_${group}.jsp"/>
 <main id="board">
     <section class="list">                
         <form action="#">
@@ -18,7 +19,7 @@
             </tr>                    
             <tr>
                 <td>1</td>
-                <td><a href="./view.do">테스트 제목입니다.[3]</a></td>
+                <td><a href="./view.do?group=${group}&cate=${cate}">테스트 제목입니다.[3]</a></td>
                 <td>길동이</td>
                 <td>20-05-12</td>
                 <td>12</td>
@@ -33,8 +34,11 @@
             <a href="#" class="next">다음</a>
         </div>
 
-        <a href="./write.do" class="btn btnWrite">글쓰기</a>
+        <a href="./write.do?group=${group}&cate=${cate}" class="btn btnWrite">글쓰기</a>
         
     </section>
 </main>
+</article>
+    </section>
+</div>
 <jsp:include page="/WEB-INF/_footer.jsp"/>

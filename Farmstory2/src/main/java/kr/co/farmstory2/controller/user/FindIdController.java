@@ -1,4 +1,4 @@
-package kr.co.farmstory2.controller.board;
+package kr.co.farmstory2.controller.user;
 
 import java.io.IOException;
 
@@ -9,8 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet("/board/view.do")
-public class ViewController extends HttpServlet {
+@WebServlet("/user/findId.do")
+public class FindIdController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 	
@@ -21,13 +21,7 @@ public class ViewController extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
-		String group = req.getParameter("group");
-		String cate = req.getParameter("cate");
-		
-		req.setAttribute("group", group);
-		req.setAttribute("cate", cate);
-		
-		RequestDispatcher dispatcher = req.getRequestDispatcher("/board/view.jsp");
+		RequestDispatcher dispatcher = req.getRequestDispatcher("/user/findId.jsp");
 		dispatcher.forward(req, resp);		
 	}
 	

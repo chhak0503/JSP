@@ -21,6 +21,13 @@ public class ListController extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
+		String group = req.getParameter("group");
+		String cate = req.getParameter("cate");
+		
+		req.setAttribute("group", group);
+		req.setAttribute("cate", cate);
+		
+		
 		RequestDispatcher dispatcher = req.getRequestDispatcher("/board/list.jsp");
 		dispatcher.forward(req, resp);		
 	}
