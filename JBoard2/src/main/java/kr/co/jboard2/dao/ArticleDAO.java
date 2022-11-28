@@ -399,10 +399,11 @@ public class ArticleDAO extends DBHelper {
 	public int selectCountTotalForSearch(String keyword) {
 		int total = 0;
 		try {
+			logger.info("selectCountTotalForSearch...");
 			conn = getConnection();
 			psmt = conn.prepareStatement(Sql.SELECT_COUNT_TOTAL_FOR_SEARCH);
-			psmt.setString(1, keyword);
-			psmt.setString(2, keyword);
+			psmt.setString(1, "%"+keyword+"%");
+			psmt.setString(2, "%"+keyword+"%");
 			rs = psmt.executeQuery();
 			
 			if(rs.next()) {
@@ -411,8 +412,10 @@ public class ArticleDAO extends DBHelper {
 			close();
 			
 		}catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
+		
+		logger.debug("total : " + total);
 		
 		return total;		
 	}

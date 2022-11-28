@@ -57,8 +57,8 @@ public class Sql {
 															+ "JOIN `board_user` AS b "
 															+ "ON a.uid = b.uid "
 															+ "WHERE `parent`=0 AND "
-															+ "(`title` LIKE '%?%' OR "
-															+ "`nick` LIKE '%?%')";
+															+ "(`title` LIKE ? OR "
+															+ "`nick` LIKE ?)";
 	
 	public static final String SELECT_ARTICLES = "SELECT a.*, b.`nick` FROM `board_article` AS a "
 												+ "JOIN `board_user` AS b ON a.uid = b.uid "
