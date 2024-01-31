@@ -9,12 +9,14 @@
 		<h3>Get 요청 결과</h3>
 		<%
 			// 전송 데이터 수신
+			String params  = request.getQueryString();
 			String uid  = request.getParameter("uid");
 			String name = request.getParameter("name");
 			String age  = request.getParameter("age");
 		%>
 		
 		<p>
+			파라미터 : <%= params %><br>
 			아이디 : <%= uid %><br>
 			이름 : <%= name %><br>
 			나이 : <%= age %><br>

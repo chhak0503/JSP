@@ -9,4 +9,34 @@
     <welcome-file>default.jsp</welcome-file>
     <welcome-file>default.htm</welcome-file>
   </welcome-file-list>
+  
+  <!-- 환경 변수 설정 -->
+  <context-param>
+  	<description>파라미터1</description>
+  	<param-name>PARAM1</param-name>
+  	<param-value>1</param-value>  	
+  </context-param>
+  
+  <context-param>
+  	<description>파라미터2</description>
+  	<param-name>PARAM2</param-name>
+  	<param-value>2</param-value>  	
+  </context-param>
+  
+  <!-- 에러 페이지 설정 -->
+  <error-page>
+  	<error-code>404</error-code>
+  	<location>/error/404.jsp</location>
+  </error-page>
+  
+  <error-page>
+  	<error-code>500</error-code>
+  	<location>/error/500.jsp</location>
+  </error-page>
+  
 </web-app>
+
+
+
+
+
