@@ -67,7 +67,7 @@
 				<td><%= dto.getAge() %></td>
 				<td>
 					<a href="./modify.jsp?uid=<%= dto.getUid() %>">수정</a>
-					<a href="#">삭제</a>
+					<a href="./delete.jsp?uid=<%= dto.getUid() %>">삭제</a>
 				</td>
 			</tr>
 			<% } %>
