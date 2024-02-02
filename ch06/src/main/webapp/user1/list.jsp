@@ -66,7 +66,7 @@
 				<td><%= dto.getHp() %></td>
 				<td><%= dto.getAge() %></td>
 				<td>
-					<a href="#">수정</a>
+					<a href="./modify.jsp?uid=<%= dto.getUid() %>">수정</a>
 					<a href="#">삭제</a>
 				</td>
 			</tr>
@@ -74,3 +74,10 @@
 		</table>
 	</body>
 </html>
+
+
+
+
+
+
+
