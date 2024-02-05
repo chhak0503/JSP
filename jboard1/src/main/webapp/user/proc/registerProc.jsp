@@ -13,6 +13,8 @@
 	String nick  = request.getParameter("nick");
 	String email = request.getParameter("email");
 	String hp    = request.getParameter("hp");
+	String regip = request.getRemoteAddr();
+	
 
 	try {
 		Context ctx = (Context) new InitialContext().lookup("java:comp/env");
@@ -20,13 +22,24 @@
 		Connection conn = ds.getConnection();
 		
 		PreparedStatement psmt = conn.prepareStatement(SQL.INSERT_USER);
+		psmt.setString(1, uid);
+		psmt.setString(2, pass1);
+		psmt.setString(3, name);
+		psmt.setString(4, nick);
+		psmt.setString(5, email);
+		psmt.setString(6, hp);
+		psmt.setString(7, regip);
 		
+		psmt.executeUpdate();
 		
+		psmt.close();
+		conn.close();
 		
 	}catch(Exception e){
 		e.printStackTrace();
 	}
 	
-	
-	
+	response.sendRedirect("/jboard1/user/login.jsp");
 %>
+
+

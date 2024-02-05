@@ -1,3 +1,4 @@
+<%@page import="kr.co.jboard1.db.SQL"%>
 <%@page import="javax.sql.DataSource"%>
 <%@page import="javax.naming.InitialContext"%>
 <%@page import="javax.naming.Context"%>
@@ -17,7 +18,7 @@
 		Connection conn = ds.getConnection();
 		
 		Statement stmt = conn.createStatement();
-		ResultSet rs = stmt.executeQuery("SELECT * FROM `terms`");
+		ResultSet rs = stmt.executeQuery(SQL.SELECT_TERMS);
 		
 		if(rs.next()){
 			dto = new TermsDTO();
