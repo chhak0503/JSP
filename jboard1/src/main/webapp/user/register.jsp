@@ -8,7 +8,7 @@
                 <tr>
                     <td>아이디</td>
                     <td>
-                        <input type="text" name="uid" placeholder="아이디 입력"/>
+                        <input type="text" name="uid" required placeholder="아이디 입력"/>
                         <button><img src="../images/chk_id.gif" alt=""></button>
                         <span class="resultId"></span>
                     </td>
@@ -16,7 +16,7 @@
                 <tr>
                     <td>비밀번호</td>
                     <td>
-                        <input type="password" name="pass1" placeholder="비밀번호 입력"/>                            
+                        <input type="password" name="pass1" required placeholder="비밀번호 입력"/>                            
                     </td>
                 </tr>
                 <tr>
@@ -32,27 +32,27 @@
                 <tr>
                     <td>이름</td>
                     <td>
-                        <input type="text" name="name" placeholder="이름 입력"/>                            
+                        <input type="text" name="name" required placeholder="이름 입력"/>                            
                     </td>
                 </tr>
                 <tr>
                     <td>별명</td>
                     <td>
                         <p>공백없이 한글, 영문, 숫자만 입력가능</p>
-                        <input type="text" name="nick" placeholder="별명 입력"/>
+                        <input type="text" name="nick" required placeholder="별명 입력"/>
                         <span class="resultNick"></span>                            
                     </td>
                 </tr>
                 <tr>
                     <td>E-Mail</td>
                     <td>
-                        <input type="email" name="email" placeholder="이메일 입력"/>
+                        <input type="email" name="email" required placeholder="이메일 입력"/>
                     </td>
                 </tr>
                 <tr>
                     <td>휴대폰</td>
                     <td>
-                        <input type="text" name="hp" placeholder="- 포함 13자리 입력" minlength="13" maxlength="13" />
+                        <input type="text" name="hp" required placeholder="- 포함 13자리 입력" minlength="13" maxlength="13" />
                     </td>
                 </tr>
                 <tr>
@@ -71,7 +71,6 @@
                     </td>
                 </tr>
             </table>
-
             <div>
                 <a href="#" class="btnCancel">취소</a>
                 <input type="submit"   class="btnSubmit" value="회원가입"/>
