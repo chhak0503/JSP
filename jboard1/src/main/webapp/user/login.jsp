@@ -20,8 +20,12 @@
             <p>
                 아직 회원이 아니시면 회원으로 가입하세요.
             </p>
-            <a href="#">회원가입</a>
+            <!-- 
+            	화면설계(HTML)는 상대경로 지정 : ./ ../
+            	화면구현(JSP)는 절대경로 지정 : '/컨텍스트루트' 로 시작 
+            -->
+            <a href="/jboard1/user/terms.jsp">회원가입</a>
         </div>
     </section>
 </main>
-<%@ include file="./_footer.jsp" %>        
+<%@ include file="./_footer.jsp" %>

@@ -2,7 +2,7 @@
 <%@ include file="./_header.jsp" %>
 <main>
     <section class="register">
-        <form action="#">
+        <form action="/jboard1/user/proc/registerProc.jsp" method="post">
             <table border="1">
                 <caption>사이트 이용정보 입력</caption>
                 <tr>
