@@ -9,7 +9,6 @@
 		response.sendRedirect("/jboard1/user/login.jsp?code=102");
 		return;
 	}
-
 %>
 <!DOCTYPE html>
 <html lang="en">

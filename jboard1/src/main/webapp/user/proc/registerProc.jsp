@@ -1,3 +1,5 @@
+<%@page import="kr.co.jboard1.dao.UserDAO"%>
+<%@page import="kr.co.jboard1.dto.UserDTO"%>
 <%@page import="java.sql.PreparedStatement"%>
 <%@page import="kr.co.jboard1.db.SQL"%>
 <%@page import="java.sql.Connection"%>
@@ -15,30 +17,20 @@
 	String hp    = request.getParameter("hp");
 	String regip = request.getRemoteAddr();
 	
-
-	try {
-		Context ctx = (Context) new InitialContext().lookup("java:comp/env");
-		DataSource ds = (DataSource) ctx.lookup("jdbc/jboard");
-		Connection conn = ds.getConnection();
-		
-		PreparedStatement psmt = conn.prepareStatement(SQL.INSERT_USER);
-		psmt.setString(1, uid);
-		psmt.setString(2, pass1);
-		psmt.setString(3, name);
-		psmt.setString(4, nick);
-		psmt.setString(5, email);
-		psmt.setString(6, hp);
-		psmt.setString(7, regip);
-		
-		psmt.executeUpdate();
-		
-		psmt.close();
-		conn.close();
-		
-	}catch(Exception e){
-		e.printStackTrace();
-	}
+	// 회원 객체 생성
+	UserDTO user = new UserDTO();
+	user.setUid(uid);
+	user.setPass(pass1);
+	user.setName(name);
+	user.setNick(nick);
+	user.setEmail(email);
+	user.setHp(hp);
+	user.setRegip(regip);
 	
+	// 회원 등록
+	UserDAO.getInstance().insertUser(user);
+	
+	// 로그인 이동
 	response.sendRedirect("/jboard1/user/login.jsp");
 %>
 

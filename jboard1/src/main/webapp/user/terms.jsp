@@ -1,3 +1,4 @@
+<%@page import="kr.co.jboard1.dao.UserDAO"%>
 <%@page import="kr.co.jboard1.db.SQL"%>
 <%@page import="javax.sql.DataSource"%>
 <%@page import="javax.naming.InitialContext"%>
@@ -9,30 +10,7 @@
 <%@page import="java.sql.DriverManager"%>
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 <%
-	TermsDTO dto = null;
-	
-	try {
-		Context initCtx = new InitialContext();
-		Context ctx = (Context) initCtx.lookup("java:comp/env");
-		DataSource ds = (DataSource) ctx.lookup("jdbc/jboard");
-		Connection conn = ds.getConnection();
-		
-		Statement stmt = conn.createStatement();
-		ResultSet rs = stmt.executeQuery(SQL.SELECT_TERMS);
-		
-		if(rs.next()){
-			dto = new TermsDTO();
-			dto.setTerms(rs.getString(1));
-			dto.setPrivacy(rs.getString(2));
-		}
-		
-		rs.close();
-		stmt.close();
-		conn.close();
-		
-	}catch(Exception e){
-		e.printStackTrace();
-	}
+	TermsDTO dto = UserDAO.getInstance().selectTerms();
 %>
 <%@ include file="./_header.jsp" %>
 <main>
