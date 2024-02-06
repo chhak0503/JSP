@@ -17,4 +17,25 @@ public class SQL {
 	
 	public static final String SELECT_USER_FOR_LOGIN = "SELECT * FROM `User` WHERE `uid`=? AND `pass`=SHA2(?, 256)";
 	
+	
+	public static final String INSERT_ARTICLE = "INSERT INTO `Article` SET "
+												+ "`title`=?,"
+												+ "`content`=?,"
+												+ "`writer`=?,"
+												+ "`regip`=?,"
+												+ "`rdate`=NOW()";
+	
+	
 }
+
+
+
+
+
+
+
+
+
+
+
+
