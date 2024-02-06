@@ -72,7 +72,7 @@
                 </tr>
             </table>
             <div>
-                <a href="#" class="btnCancel">취소</a>
+                <a href="/jboard1/user/login.jsp" class="btnCancel">취소</a>
                 <input type="submit"   class="btnSubmit" value="회원가입"/>
             </div>    
         </form>

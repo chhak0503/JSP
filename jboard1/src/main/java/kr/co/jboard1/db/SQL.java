@@ -15,4 +15,6 @@ public class SQL {
 										   + "`regip`=?,"
 										   + "`rdate`=NOW()";
 	
+	public static final String SELECT_USER_FOR_LOGIN = "SELECT * FROM `User` WHERE `uid`=? AND `pass`=SHA2(?, 256)";
+	
 }
