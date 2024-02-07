@@ -3,12 +3,38 @@
 <%@page import="kr.co.jboard1.dao.ArticleDAO"%>
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 <%
+	request.setCharacterEncoding("UTF-8");
+	String pg = request.getParameter("pg");
+
 	ArticleDAO dao = ArticleDAO.getInstance();
-	List<ArticleDTO> articles = dao.selectArticles();
 
+	// 전체 글 갯수
+	int total = dao.selectCountTotal();
+	
+	// 마지막 페이지 번호 계산
+	int lastPageNum = 0;
+	
+	if(total % 10 == 0){
+		lastPageNum = (total / 10);		
+	}else {
+		lastPageNum = (total / 10) + 1;
+	}
+	
+	// 현재 페이지 번호
+	int currentPg = 1;
+	
+	if(pg != null){
+		currentPg = Integer.parseInt(pg);
+	}
+	
+	// limit 시작값 계산
+	int start = (currentPg - 1) * 10;
+		
+	
+
+	// 글 조회
+	List<ArticleDTO> articles = dao.selectArticles(start);
 %>
-
-
 <%@ include file="./_header.jsp" %>
 <main>
     <section class="list">
@@ -37,9 +63,11 @@
         <!-- 페이지 네비게이션 -->
         <div class="paging">
             <a href="#" class="prev">이전</a>
-            <a href="#" class="num current">1</a>                
-            <a href="#" class="num">2</a>                
-            <a href="#" class="num">3</a>                
+            
+            <% for(int n=1 ; n<=lastPageNum ; n++){ %>
+            <a href="/jboard1/list.jsp?pg=<%= n %>" class="num"><%= n %></a>
+            <% } %>
+
             <a href="#" class="next">다음</a>
         </div>
 

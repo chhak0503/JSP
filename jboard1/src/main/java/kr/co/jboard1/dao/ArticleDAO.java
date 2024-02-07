@@ -36,12 +36,14 @@ public class ArticleDAO extends DBHelper {
 		return null;
 	}
 	
-	public List<ArticleDTO> selectArticles() {
+	public List<ArticleDTO> selectArticles(int start) {
 		
 		List<ArticleDTO> articles = new ArrayList<>();
 		try {
 			conn = getConnection();
 			psmt = conn.prepareStatement(SQL.SELECT_ARTICLES);
+			psmt.setInt(1, start);
+			
 			rs = psmt.executeQuery();
 			
 			while(rs.next()) {
@@ -74,6 +76,42 @@ public class ArticleDAO extends DBHelper {
 	public void deleteArticle(int no) {
 		
 	}
+	
+	// 사용자 정의 CRUD 메서드
+	public int selectCountTotal() {
+		
+		int total = 0;
+		
+		try {
+			conn = getConnection();
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery(SQL.SELECT_COUNT_TOTAL);
+			if(rs.next()) {
+				total = rs.getInt(1);
+			}
+			closeAll();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return total;
+	}
 		
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
