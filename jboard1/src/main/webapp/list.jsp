@@ -38,6 +38,10 @@
 	if(pageGroupEnd > lastPageNum){
 		pageGroupEnd = lastPageNum;
 	}
+	
+	// 페이지 시작번호 계산
+	int pageStartNum = total - start;
+	
 
 	// 글 조회
 	List<ArticleDTO> articles = dao.selectArticles(start);
@@ -57,7 +61,7 @@
                 </tr>
                 <% for(ArticleDTO article : articles){ %>
                 <tr>
-                    <td><%= article.getNo() %></td>
+                    <td><%= pageStartNum-- %></td>
                     <td><a href="/jboard1/view.jsp?no=<%= article.getNo() %>"><%= article.getTitle() %></a>&nbsp;[<%= article.getComment() %>]</td>
                     <td><%= article.getNick() %></td>
                     <td><%= article.getRdate().substring(2, 10) %></td>
