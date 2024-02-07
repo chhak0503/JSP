@@ -8,7 +8,7 @@
 
 	ArticleDAO dao = ArticleDAO.getInstance();
 
-	// 전체 글 갯수
+	// 전체 글 갯수 조회
 	int total = dao.selectCountTotal();
 	
 	// 마지막 페이지 번호 계산
@@ -29,8 +29,11 @@
 	
 	// limit 시작값 계산
 	int start = (currentPg - 1) * 10;
-		
 	
+	// 페이지번호 그룹 계산
+	int pageGroupCurrent = (int) Math.ceil(currentPg / 10.0);
+	int pageGroupStart = (pageGroupCurrent - 1) * 10 + 1;
+	int pageGroupEnd   = pageGroupCurrent * 10;
 
 	// 글 조회
 	List<ArticleDTO> articles = dao.selectArticles(start);
@@ -62,13 +65,13 @@
 
         <!-- 페이지 네비게이션 -->
         <div class="paging">
-            <a href="#" class="prev">이전</a>
+            <a href="/jboard1/list.jsp?pg=<%= pageGroupStart - 1 %>" class="prev">이전</a>
             
-            <% for(int n=1 ; n<=lastPageNum ; n++){ %>
+            <% for(int n=pageGroupStart ; n<=pageGroupEnd ; n++){ %>
             <a href="/jboard1/list.jsp?pg=<%= n %>" class="num"><%= n %></a>
             <% } %>
 
-            <a href="#" class="next">다음</a>
+            <a href="/jboard1/list.jsp?pg=<%= pageGroupEnd + 1 %>" class="next">다음</a>
         </div>
 
         <!-- 글쓰기 버튼 -->
