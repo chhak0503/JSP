@@ -34,6 +34,10 @@
 	int pageGroupCurrent = (int) Math.ceil(currentPg / 10.0);
 	int pageGroupStart = (pageGroupCurrent - 1) * 10 + 1;
 	int pageGroupEnd   = pageGroupCurrent * 10;
+	
+	if(pageGroupEnd > lastPageNum){
+		pageGroupEnd = lastPageNum;
+	}
 
 	// 글 조회
 	List<ArticleDTO> articles = dao.selectArticles(start);
@@ -54,7 +58,7 @@
                 <% for(ArticleDTO article : articles){ %>
                 <tr>
                     <td><%= article.getNo() %></td>
-                    <td><a href="#"><%= article.getTitle() %></a>&nbsp;[<%= article.getComment() %>]</td>
+                    <td><a href="/jboard1/view.jsp?no=<%= article.getNo() %>"><%= article.getTitle() %></a>&nbsp;[<%= article.getComment() %>]</td>
                     <td><%= article.getNick() %></td>
                     <td><%= article.getRdate().substring(2, 10) %></td>
                     <td><%= article.getHit() %></td>
@@ -65,13 +69,19 @@
 
         <!-- 페이지 네비게이션 -->
         <div class="paging">
+        
+        	<% if(pageGroupStart > 1){ %>
             <a href="/jboard1/list.jsp?pg=<%= pageGroupStart - 1 %>" class="prev">이전</a>
+            <% } %>
             
             <% for(int n=pageGroupStart ; n<=pageGroupEnd ; n++){ %>
-            <a href="/jboard1/list.jsp?pg=<%= n %>" class="num"><%= n %></a>
+            <a href="/jboard1/list.jsp?pg=<%= n %>" class="num <%= (currentPg == n) ? "current" : "" %>"><%= n %></a>
             <% } %>
 
+			<% if(pageGroupEnd < lastPageNum ){ %>
             <a href="/jboard1/list.jsp?pg=<%= pageGroupEnd + 1 %>" class="next">다음</a>
+            <% } %>
+            
         </div>
 
         <!-- 글쓰기 버튼 -->
