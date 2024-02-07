@@ -5,9 +5,13 @@
 	request.setCharacterEncoding("UTF-8");
 	String no = request.getParameter("no");
 
-	// 글 조회
-	ArticleDTO article = ArticleDAO.getInstance().selectArticle(no);
-
+	ArticleDAO dao = ArticleDAO.getInstance();
+	
+	// 글 조회	
+	ArticleDTO article = dao.selectArticle(no);
+	
+	// 글 조회 카운트 업데이트
+	dao.updateHitCount(no);
 %>
 <%@ include file="./_header.jsp" %>
 <main>

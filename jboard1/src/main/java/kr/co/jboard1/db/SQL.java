@@ -33,6 +33,8 @@ public class SQL {
 												+ "LIMIT ?, 10";
 	
 	public static final String SELECT_ARTICLE = "SELECT * FROM `Article` WHERE `no`=?";
+
+	public static final String UPDATE_HIT_COUNT = "UPDATE `Article` SET `hit` = `hit` + 1 WHERE `no`=?";
 	
 }
 

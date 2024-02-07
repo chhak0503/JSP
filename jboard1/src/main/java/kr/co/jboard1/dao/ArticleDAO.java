@@ -127,6 +127,19 @@ public class ArticleDAO extends DBHelper {
 		return total;
 	}
 		
+	public void updateHitCount(String no) {
+		try {
+			conn = getConnection();
+			psmt = conn.prepareStatement(SQL.UPDATE_HIT_COUNT);
+			psmt.setString(1, no);
+			System.out.println(psmt);
+			
+			psmt.executeUpdate();
+			closeAll();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
 }
 
