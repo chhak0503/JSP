@@ -1,5 +1,6 @@
 package kr.co.jboard1.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import kr.co.jboard1.db.DBHelper;
@@ -36,7 +37,34 @@ public class ArticleDAO extends DBHelper {
 	}
 	
 	public List<ArticleDTO> selectArticles() {
-		return null;
+		
+		List<ArticleDTO> articles = new ArrayList<>();
+		try {
+			conn = getConnection();
+			psmt = conn.prepareStatement(SQL.SELECT_ARTICLES);
+			rs = psmt.executeQuery();
+			
+			while(rs.next()) {
+				ArticleDTO article = new ArticleDTO();
+				article.setNo(rs.getInt(1));
+				article.setParent(rs.getInt(2));
+				article.setComment(rs.getInt(3));
+				article.setCate(rs.getString(4));
+				article.setTitle(rs.getString(5));
+				article.setContent(rs.getString(6));
+				article.setFile(rs.getInt(7));
+				article.setHit(rs.getInt(8));
+				article.setWriter(rs.getString(9));
+				article.setRegip(rs.getString(10));
+				article.setRdate(rs.getString(11));
+				article.setNick(rs.getString(12));
+				articles.add(article);
+			}
+			closeAll();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return articles;
 	}
 	
 	public void updateArticle(ArticleDTO article) {

@@ -1,14 +1,6 @@
 package kr.co.jboard1.dao;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
 import java.util.List;
-
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.sql.DataSource;
 
 import kr.co.jboard1.db.DBHelper;
 import kr.co.jboard1.db.SQL;

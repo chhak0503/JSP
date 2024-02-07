@@ -1,4 +1,14 @@
+<%@page import="kr.co.jboard1.dto.ArticleDTO"%>
+<%@page import="java.util.List"%>
+<%@page import="kr.co.jboard1.dao.ArticleDAO"%>
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
+<%
+	ArticleDAO dao = ArticleDAO.getInstance();
+	List<ArticleDTO> articles = dao.selectArticles();
+
+%>
+
+
 <%@ include file="./_header.jsp" %>
 <main>
     <section class="list">
@@ -12,13 +22,15 @@
                     <th>날짜</th>
                     <th>조회</th>
                 </tr>
+                <% for(ArticleDTO article : articles){ %>
                 <tr>
-                    <td>1</td>
-                    <td><a href="#">테스트 제목입니다.</a>&nbsp;[3]</td>
-                    <td>길동이</td>
-                    <td>20-05-12</td>
-                    <td>12</td>
+                    <td><%= article.getNo() %></td>
+                    <td><a href="#"><%= article.getTitle() %></a>&nbsp;[<%= article.getComment() %>]</td>
+                    <td><%= article.getNick() %></td>
+                    <td><%= article.getRdate().substring(2, 10) %></td>
+                    <td><%= article.getHit() %></td>
                 </tr>
+                <% } %>
             </table>
         </article>
 
