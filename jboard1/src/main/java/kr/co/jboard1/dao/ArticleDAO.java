@@ -108,6 +108,25 @@ public class ArticleDAO extends DBHelper {
 	}
 	
 	// 사용자 정의 CRUD 메서드
+	public void insertComment(ArticleDTO comment) {
+		
+		try {
+			conn = getConnection();
+			psmt = conn.prepareStatement(SQL.INSERT_COMMENT);
+			psmt.setInt(1, comment.getParent());
+			psmt.setString(2, comment.getContent());
+			psmt.setString(3, comment.getWriter());
+			psmt.setString(4, comment.getRegip());
+			System.out.println(psmt);
+			
+			psmt.executeUpdate();
+			closeAll();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
 	public int selectCountTotal() {
 		
 		int total = 0;

@@ -66,8 +66,10 @@
         <!-- 댓글입력폼 -->
         <section class="commentForm">
             <h3>댓글쓰기</h3>
-            <form action="#">
-                <textarea name="comment"></textarea>
+            <form action="/jboard1/proc/commentInsert.jsp" method="post">
+            	<input type="hidden" name="parent" value="<%= no %>">
+            	<input type="hidden" name="writer" value="<%= sessUser.getUid() %>">
+                <textarea name="content"></textarea>
                 <div>
                     <a href="#" class="btnCancel">취소</a>
                     <input type="submit" class="btnWrite" value="작성완료"/>
@@ -77,3 +79,13 @@
     </section>
 </main>
 <%@ include file="./_footer.jsp" %>
+
+
+
+
+
+
+
+
+
+
