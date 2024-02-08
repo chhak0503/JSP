@@ -21,12 +21,24 @@
 <%@ include file="./_header.jsp" %>
 <script>	
 	window.onload = function(){
+		
+		// 댓글작성 취소
 		const btnCancel = document.getElementsByClassName('btnCancel')[0];
 		
 		btnCancel.onclick = function(e){
 			e.preventDefault();			
 			document.frmComment.reset(); // 폼 초기화
-		}	
+		}
+		
+		// 댓글삭제
+		const del = document.querySelectorAll('.del');
+		del.addEventListener('click', function(e){
+			e.preventDefault();
+			
+			alert('del!!!');
+		});
+		
+		
 	}
 </script>
 <main>
@@ -66,14 +78,18 @@
             <% for(ArticleDTO comment : comments){ %>
             <article class="comment">
                 <span>
-                    <span><%= comment.getWriter() %></span>
+                    <span><%= comment.getNick() %></span>
                     <span><%= comment.getRdate().substring(2, 10) %></span>
                 </span>
                 <textarea name="comment" readonly><%= comment.getContent() %></textarea>
+                
+                <% if(comment.getWriter().equals(sessUser.getUid())){ %>
                 <div>
-                    <a href="#">삭제</a>
+                    <a href="/jboard1/proc/commentDelete.jsp?parent=<%= comment.getParent() %>&no=<%= comment.getNo() %>" class="del">삭제</a>
                     <a href="#">수정</a>
                 </div>
+                <% } %>
+                
             </article>
             <% } %>
             

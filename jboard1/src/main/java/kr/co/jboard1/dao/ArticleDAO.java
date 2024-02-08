@@ -155,6 +155,7 @@ public class ArticleDAO extends DBHelper {
 				comment.setWriter(rs.getString(9));
 				comment.setRegip(rs.getString("regip")); // 컬럼명 작성 가능
 				comment.setRdate(rs.getString("rdate"));
+				comment.setNick(rs.getString(12));
 				comments.add(comment);
 			}
 			
@@ -200,6 +201,28 @@ public class ArticleDAO extends DBHelper {
 		}
 	}
 
+	public void deleteComment(String parent, String no) {
+		try {
+			conn = getConnection();
+			conn.setAutoCommit(false);
+			
+			psmt = conn.prepareStatement(SQL.DELETE_COMMENT);
+			psmt.setString(1, no);
+			System.out.println(psmt);
+			
+			psmtEtc1 = conn.prepareStatement(SQL.UPDATE_COMMENT_MINUS);
+			psmtEtc1.setString(1, parent);
+			
+			psmt.executeUpdate();
+			psmtEtc1.executeUpdate();
+			
+			conn.commit();
+			closeAll();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
 }
 
 
