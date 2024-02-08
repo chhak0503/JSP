@@ -112,6 +112,8 @@ public class ArticleDAO extends DBHelper {
 		
 		try {
 			conn = getConnection();
+			conn.setAutoCommit(false); // 트랜잭션 시작
+			
 			psmt = conn.prepareStatement(SQL.INSERT_COMMENT);
 			psmt.setInt(1, comment.getParent());
 			psmt.setString(2, comment.getContent());
@@ -119,13 +121,51 @@ public class ArticleDAO extends DBHelper {
 			psmt.setString(4, comment.getRegip());
 			System.out.println(psmt);
 			
+			psmtEtc1 = conn.prepareStatement(SQL.UPDATE_COMMENT_PLUS);
+			psmtEtc1.setInt(1, comment.getParent());
+			System.out.println(psmtEtc1);			
+			
 			psmt.executeUpdate();
+			psmtEtc1.executeUpdate();
+			
+			conn.commit(); // 트랜잭션 종료
 			closeAll();
+			
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 	
+	public List<ArticleDTO> selectComments(String parent) {
+		
+		List<ArticleDTO> comments = new ArrayList<>();
+		
+		try {
+			conn = getConnection();
+			psmt = conn.prepareStatement(SQL.SELECT_COMMENTS);
+			psmt.setString(1, parent);
+			
+			rs = psmt.executeQuery();
+			
+			while(rs.next()) {
+				ArticleDTO comment = new ArticleDTO();
+				comment.setNo(rs.getInt(1));
+				comment.setParent(rs.getInt(2));
+				comment.setContent(rs.getString(6));
+				comment.setWriter(rs.getString(9));
+				comment.setRegip(rs.getString("regip")); // 컬럼명 작성 가능
+				comment.setRdate(rs.getString("rdate"));
+				comments.add(comment);
+			}
+			
+			closeAll();
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return comments;
+	}
 	
 	public int selectCountTotal() {
 		

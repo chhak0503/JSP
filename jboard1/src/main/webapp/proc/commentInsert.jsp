@@ -18,5 +18,4 @@
 	dao.insertComment(comment);
 	
 	response.sendRedirect("/jboard1/view.jsp?no="+parent);
-	
 %>

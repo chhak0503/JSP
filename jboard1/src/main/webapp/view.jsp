@@ -1,3 +1,4 @@
+<%@page import="java.util.List"%>
 <%@page import="kr.co.jboard1.dto.ArticleDTO"%>
 <%@page import="kr.co.jboard1.dao.ArticleDAO"%>
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
@@ -12,8 +13,22 @@
 	
 	// 글 조회 카운트 업데이트
 	dao.updateHitCount(no);
+	
+	// 댓글 조회
+	List<ArticleDTO> comments = dao.selectComments(no);	
+	
 %>
 <%@ include file="./_header.jsp" %>
+<script>	
+	window.onload = function(){
+		const btnCancel = document.getElementsByClassName('btnCancel')[0];
+		
+		btnCancel.onclick = function(e){
+			e.preventDefault();			
+			document.frmComment.reset(); // 폼 초기화
+		}	
+	}
+</script>
 <main>
     <section class="view">
         <h3>글보기</h3>
@@ -47,26 +62,31 @@
         <!-- 댓글리스트 -->
         <section class="commentList">
             <h3>댓글목록</h3>
+            
+            <% for(ArticleDTO comment : comments){ %>
             <article class="comment">
                 <span>
-                    <span>길동이</span>
-                    <span>20-05-13</span>
+                    <span><%= comment.getWriter() %></span>
+                    <span><%= comment.getRdate().substring(2, 10) %></span>
                 </span>
-                <textarea name="comment" readonly>댓글 샘플입니다.</textarea>
+                <textarea name="comment" readonly><%= comment.getContent() %></textarea>
                 <div>
                     <a href="#">삭제</a>
                     <a href="#">수정</a>
                 </div>
             </article>
-            <p class="empty">
-                등록된 댓글이 없습니다.
-            </p>
+            <% } %>
+            
+            <% if(comments.isEmpty()) { %>
+            <p class="empty">등록된 댓글이 없습니다.</p>
+            <% } %>
+            
         </section>
 
         <!-- 댓글입력폼 -->
         <section class="commentForm">
             <h3>댓글쓰기</h3>
-            <form action="/jboard1/proc/commentInsert.jsp" method="post">
+            <form action="/jboard1/proc/commentInsert.jsp" name="frmComment" method="post">
             	<input type="hidden" name="parent" value="<%= no %>">
             	<input type="hidden" name="writer" value="<%= sessUser.getUid() %>">
                 <textarea name="content"></textarea>
