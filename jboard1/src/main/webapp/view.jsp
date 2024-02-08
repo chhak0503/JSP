@@ -22,6 +22,17 @@
 <script>	
 	window.onload = function(){
 		
+		// 원글삭제
+		const btnDelete = document.querySelector('.btnDelete');
+		
+		btnDelete.onclick = () => {
+			if(confirm('정말 삭제 하시겠습니까?')){
+				return true;
+			}else{
+				return false;
+			}
+		}
+		
 		// 댓글작성 취소
 		const btnCancel = document.getElementsByClassName('btnCancel')[0];
 		
@@ -32,10 +43,20 @@
 		
 		// 댓글삭제
 		const del = document.querySelectorAll('.del');
-		del.addEventListener('click', function(e){
-			e.preventDefault();
+		
+		del.forEach((item)=>{
 			
-			alert('del!!!');
+			item.onclick = function(){
+				
+				const result = confirm('정말 삭제 하시겠습니까?');
+				
+				if(result){
+					return true;	
+				}else{
+					// 표준 이벤트 모델(addEventListener)은 작업취소 안됨
+					return false;
+				}
+			}
 		});
 		
 		
@@ -66,8 +87,11 @@
             </tr>
         </table>
         <div>
-            <a href="#" class="btnDelete">삭제</a>
+        	<% if(article.getWriter().equals(sessUser.getUid())){ %>
+            <a href="/jboard1/proc/deleteProc.jsp?no=<%= article.getNo() %>" class="btnDelete">삭제</a>
             <a href="#" class="btnModify">수정</a>
+            <% } %>
+            
             <a href="/jboard1/list.jsp" class="btnList">목록</a>
         </div>  
         
