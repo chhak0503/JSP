@@ -22,15 +22,33 @@
 <script>	
 	window.onload = function(){
 		
+		// 원글수정
+		const btnModify = document.querySelector('.btnModify');
+		
+		if(btnModify != null){			
+			btnModify.onclick = ()=>{
+				if(confirm('수정 하시겠습니까?')){
+					return true;
+				}else{
+					return false;
+				}
+			}
+		}
+		
+		
 		// 원글삭제
 		const btnDelete = document.querySelector('.btnDelete');
 		
-		btnDelete.onclick = () => {
-			if(confirm('정말 삭제 하시겠습니까?')){
-				return true;
-			}else{
-				return false;
+		if(btnDelete != null){
+			
+			btnDelete.onclick = () => {
+				if(confirm('정말 삭제 하시겠습니까?')){
+					return true;
+				}else{
+					return false;
+				}
 			}
+			
 		}
 		
 		// 댓글작성 취소
@@ -42,8 +60,18 @@
 		}
 		
 		// 댓글삭제
-		const del = document.querySelectorAll('.del');
+		const dels = document.getElementsByClassName('del');
 		
+		for(const del of dels ){
+			
+			
+			del.onclick = function(){
+				alert();
+			}
+			
+		}
+		
+		/*
 		del.forEach((item)=>{
 			
 			item.onclick = function(){
@@ -58,7 +86,7 @@
 				}
 			}
 		});
-		
+		*/
 		// 댓글수정
 		const mod = document.querySelectorAll('.mod');
 		
@@ -86,8 +114,7 @@
 					textarea.style.background = 'transparent';	
 				}
 			}
-		});
-		
+		});		
 	}
 </script>
 <main>
@@ -117,7 +144,7 @@
         <div>
         	<% if(article.getWriter().equals(sessUser.getUid())){ %>
             <a href="/jboard1/proc/deleteProc.jsp?no=<%= article.getNo() %>" class="btnDelete">삭제</a>
-            <a href="#" class="btnModify">수정</a>
+            <a href="/jboard1/modify.jsp?no=<%= article.getNo() %>" class="btnModify">수정</a>
             <% } %>
             
             <a href="/jboard1/list.jsp" class="btnList">목록</a>

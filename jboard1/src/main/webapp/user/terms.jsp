@@ -59,6 +59,17 @@
 	                </td>
 	            </tr>
 	        </table>
+	        <table>
+	            <caption>마켓팅 수신동의(선택)</caption>
+	            <tr>
+	                <td>
+	                    <textarea readonly><%= dto.getSms() %></textarea>
+	                    <p>
+	                        <label><input type="checkbox" name="sms" value="Y" />동의합니다.</label>
+	                    </p>
+	                </td>
+	            </tr>
+	        </table>
         </form>
         <div>
             <a href="/jboard1/user/login.jsp" class="btnCancel">취소</a>

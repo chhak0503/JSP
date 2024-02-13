@@ -13,6 +13,7 @@ public class UserDTO {
 	private String addr1;
 	private String addr2;
 	private String regip;
+	private String sms;
 	private String rdate;
 	private String leaveDate;
 	
@@ -76,6 +77,14 @@ public class UserDTO {
 	public void setAddr2(String addr2) {
 		this.addr2 = addr2;
 	}
+	
+	public String getSms() {
+		return sms;
+	}
+	public void setSms(String sms) {
+		this.sms = sms;
+	}
+	
 	public String getRegip() {
 		return regip;
 	}

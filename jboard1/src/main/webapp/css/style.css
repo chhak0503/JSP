@@ -280,6 +280,32 @@ main {
     right: 0;
 }
 
+
+.list form.search {
+    float: right;
+    margin-top: -14px;
+}
+
+.list form.search > select {
+    width: 80px;
+    height: 26px;
+    border: 1px solid #d7d7d7;
+    outline: none;
+}
+
+.list form.search > input[name=keyword]{
+    width: 200px;
+    height: 26px;
+    text-indent: 6px;
+    border: 1px solid #d7d7d7;
+}
+.list form.search > input[type=submit]{
+    border: 1px solid #d7d7d7;
+    background: #f2f2f2; 
+    color: #111;
+    padding: 6px;
+}
+
 /* 글보기 */
 .view {
     position: relative;
