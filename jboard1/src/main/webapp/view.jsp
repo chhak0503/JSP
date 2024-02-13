@@ -59,6 +59,33 @@
 			}
 		});
 		
+		// 댓글수정
+		const mod = document.querySelectorAll('.mod');
+		mod.forEach((item)=>{
+			item.onclick = function(e){
+				e.preventDefault();
+							
+				if(this.innerText == '수정'){
+					// 수정모드 전환
+					this.innerText = '수정완료';
+					const textarea = this.parentElement.previousElementSibling;
+					textarea.readOnly = false;
+					textarea.style.background = 'white';
+					textarea.focus();
+					
+				}else{
+					// 수정완료 클릭
+					
+					
+					// 수정모드 해제
+					this.innerText = '수정';
+					const textarea = this.parentElement.previousElementSibling;
+					textarea.readOnly = true;
+					textarea.style.background = 'transparent';
+					
+				}
+			}
+		});
 		
 	}
 </script>
@@ -100,21 +127,22 @@
             <h3>댓글목록</h3>
             
             <% for(ArticleDTO comment : comments){ %>
-            <article class="comment">
-                <span>
-                    <span><%= comment.getNick() %></span>
-                    <span><%= comment.getRdate().substring(2, 10) %></span>
-                </span>
-                <textarea name="comment" readonly><%= comment.getContent() %></textarea>
-                
-                <% if(comment.getWriter().equals(sessUser.getUid())){ %>
-                <div>
-                    <a href="/jboard1/proc/commentDelete.jsp?parent=<%= comment.getParent() %>&no=<%= comment.getNo() %>" class="del">삭제</a>
-                    <a href="#">수정</a>
-                </div>
-                <% } %>
-                
-            </article>
+            <form action="/jboard1/proc/commentUpdate.jsp" method="post">
+	            <article class="comment">
+	                <span>
+	                    <span><%= comment.getNick() %></span>
+	                    <span><%= comment.getRdate().substring(2, 10) %></span>
+	                </span>
+	                <textarea name="comment" readonly><%= comment.getContent() %></textarea>
+	                
+	                <% if(comment.getWriter().equals(sessUser.getUid())){ %>
+	                <div>
+	                    <a href="/jboard1/proc/commentDelete.jsp?parent=<%= comment.getParent() %>&no=<%= comment.getNo() %>" class="del">삭제</a>
+	                    <a href="#" class="mod">수정</a>
+	                </div>
+	                <% } %>                
+	            </article>
+            </form>
             <% } %>
             
             <% if(comments.isEmpty()) { %>
