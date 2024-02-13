@@ -61,10 +61,11 @@
 		
 		// 댓글수정
 		const mod = document.querySelectorAll('.mod');
+		
 		mod.forEach((item)=>{
 			item.onclick = function(e){
 				e.preventDefault();
-							
+				
 				if(this.innerText == '수정'){
 					// 수정모드 전환
 					this.innerText = '수정완료';
@@ -75,14 +76,14 @@
 					
 				}else{
 					// 수정완료 클릭
-					
+					const form = this.closest('form'); // 상위 노드 중 가장 가까운 form 태그 선택 
+					form.submit();
 					
 					// 수정모드 해제
 					this.innerText = '수정';
 					const textarea = this.parentElement.previousElementSibling;
 					textarea.readOnly = true;
-					textarea.style.background = 'transparent';
-					
+					textarea.style.background = 'transparent';	
 				}
 			}
 		});
@@ -128,12 +129,14 @@
             
             <% for(ArticleDTO comment : comments){ %>
             <form action="/jboard1/proc/commentUpdate.jsp" method="post">
+            	<input type="hidden" name="no" value="<%= comment.getNo() %>">
+            	<input type="hidden" name="parent" value="<%= comment.getParent() %>">
 	            <article class="comment">
 	                <span>
 	                    <span><%= comment.getNick() %></span>
 	                    <span><%= comment.getRdate().substring(2, 10) %></span>
 	                </span>
-	                <textarea name="comment" readonly><%= comment.getContent() %></textarea>
+	                <textarea name="content" readonly><%= comment.getContent() %></textarea>
 	                
 	                <% if(comment.getWriter().equals(sessUser.getUid())){ %>
 	                <div>
