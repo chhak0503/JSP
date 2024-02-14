@@ -11,7 +11,7 @@
 	ArticleDAO dao = ArticleDAO.getInstance();
 
 	// 전체 글 갯수 조회
-	int total = dao.selectCountTotal();
+	int total = dao.selectCountTotal(searchType, keyword);
 	
 	// 마지막 페이지 번호 계산
 	int lastPageNum = 0;

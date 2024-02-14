@@ -105,23 +105,23 @@ public class ArticleDAO extends DBHelper {
 		
 		List<ArticleDTO> articles = new ArrayList<>();
 		
-		// 동적 쿼리 생성
-		String sql = SQL.SELECT_ARTICLES;
+		// StringBuilder를 이용한 동적 쿼리 생성
+		StringBuilder sql = new StringBuilder(SQL.SELECT_ARTICLES);
 		
 		if(searchType.equals("title")) {
-			sql += SQL.SELECT_ARTICLES_WHERE_TITLE;
+			sql.append(SQL.SELECT_ARTICLES_WHERE_TITLE);
 		}else if(searchType.equals("content")) {
-			sql += SQL.SELECT_ARTICLES_WHERE_CONTENT;
+			sql.append(SQL.SELECT_ARTICLES_WHERE_CONTENT);
 		}else if(searchType.equals("title_content")) {
-			sql += SQL.SELECT_ARTICLES_WHERE_TITLE_CONTENT;
+			sql.append(SQL.SELECT_ARTICLES_WHERE_TITLE_CONTENT);
 		}else if(searchType.equals("writer")) {
-			sql += SQL.SELECT_ARTICLES_WHERE_WRITER;
+			sql.append(SQL.SELECT_ARTICLES_WHERE_WRITER);
 		}
-		sql += SQL.SELECT_ARTICLES_ORDER_LIMIT;
+		sql.append(SQL.SELECT_ARTICLES_ORDER_LIMIT);
 		
 		try {
 			conn = getConnection();
-			psmt = conn.prepareStatement(sql);
+			psmt = conn.prepareStatement(sql.toString());
 			
 			if(searchType.equals("title_content")) {
 				psmt.setString(1, "%" + keyword + "%");
@@ -251,14 +251,40 @@ public class ArticleDAO extends DBHelper {
 		return comments;
 	}
 	
-	public int selectCountTotal() {
+	public int selectCountTotal(String searchType, String keyword) {
 		
 		int total = 0;
 		
+		StringBuilder sql = new StringBuilder(SQL.SELECT_COUNT_TOTAL);
+		
+		if(searchType != null && keyword != null) {
+			
+			if(searchType.equals("title")) {
+				sql.append(SQL.SELECT_ARTICLES_WHERE_TITLE);
+			}else if(searchType.equals("content")) {
+				sql.append(SQL.SELECT_ARTICLES_WHERE_CONTENT);
+			}else if(searchType.equals("title_content")) {
+				sql.append(SQL.SELECT_ARTICLES_WHERE_TITLE_CONTENT);
+			}else if(searchType.equals("writer")) {
+				sql.append(SQL.SELECT_ARTICLES_WHERE_WRITER);
+			}
+		}
+		
 		try {
 			conn = getConnection();
-			stmt = conn.createStatement();
-			rs = stmt.executeQuery(SQL.SELECT_COUNT_TOTAL);
+			psmt = conn.prepareStatement(sql.toString());
+			
+			if(searchType != null && keyword != null) {
+				if(searchType.equals("title_content")) {
+					psmt.setString(1, "%" + keyword + "%");
+					psmt.setString(2, "%" + keyword + "%");
+				}else {
+					psmt.setString(1, "%" + keyword + "%");
+				}
+			}
+			
+			rs = psmt.executeQuery();
+			
 			if(rs.next()) {
 				total = rs.getInt(1);
 			}
