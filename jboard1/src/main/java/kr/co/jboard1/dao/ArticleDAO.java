@@ -69,9 +69,11 @@ public class ArticleDAO extends DBHelper {
 	public List<ArticleDTO> selectArticles(int start) {
 		
 		List<ArticleDTO> articles = new ArrayList<>();
+		
+		
 		try {
 			conn = getConnection();
-			psmt = conn.prepareStatement(SQL.SELECT_ARTICLES);
+			psmt = conn.prepareStatement(SQL.SELECT_ARTICLES + SQL.SELECT_ARTICLES_ORDER_LIMIT);
 			psmt.setInt(1, start);
 			
 			rs = psmt.executeQuery();
@@ -99,22 +101,23 @@ public class ArticleDAO extends DBHelper {
 		return articles;
 	}
 	
-	public List<ArticleDTO> selectArticlesForSearch(String searchType, String keyword) {
-		
+	public List<ArticleDTO> selectArticlesForSearch(String searchType, String keyword, int start) {
 		
 		List<ArticleDTO> articles = new ArrayList<>();
 		
-		String sql = "SELECT * FROM `Article` ";
+		// 동적 쿼리 생성
+		String sql = SQL.SELECT_ARTICLES;
 		
 		if(searchType.equals("title")) {
-			sql += "WHERE `title` like ?";
+			sql += SQL.SELECT_ARTICLES_WHERE_TITLE;
 		}else if(searchType.equals("content")) {
-			sql += "WHERE `content` like ?";
+			sql += SQL.SELECT_ARTICLES_WHERE_CONTENT;
 		}else if(searchType.equals("title_content")) {
-			sql += "WHERE `title` like ? OR `content` like ?";
+			sql += SQL.SELECT_ARTICLES_WHERE_TITLE_CONTENT;
 		}else if(searchType.equals("writer")) {
-			sql += "WHERE `writer` like ?";
-		}				
+			sql += SQL.SELECT_ARTICLES_WHERE_WRITER;
+		}
+		sql += SQL.SELECT_ARTICLES_ORDER_LIMIT;
 		
 		try {
 			conn = getConnection();
@@ -123,8 +126,10 @@ public class ArticleDAO extends DBHelper {
 			if(searchType.equals("title_content")) {
 				psmt.setString(1, "%" + keyword + "%");
 				psmt.setString(2, "%" + keyword + "%");
+				psmt.setInt(3, start);
 			}else {
 				psmt.setString(1, "%" + keyword + "%");
+				psmt.setInt(2, start);
 			}
 			
 			System.out.println(psmt);
@@ -144,7 +149,7 @@ public class ArticleDAO extends DBHelper {
 				article.setWriter(rs.getString(9));
 				article.setRegip(rs.getString(10));
 				article.setRdate(rs.getString(11));
-				//article.setNick(rs.getString(12));
+				article.setNick(rs.getString(12));
 				articles.add(article);
 			}
 			closeAll();

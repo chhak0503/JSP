@@ -7,10 +7,8 @@
 	String pg = request.getParameter("pg");
 	String searchType = request.getParameter("searchType");
 	String keyword    = request.getParameter("keyword");
-	
 
 	ArticleDAO dao = ArticleDAO.getInstance();
-	
 
 	// 전체 글 갯수 조회
 	int total = dao.selectCountTotal();
@@ -50,11 +48,11 @@
 	List<ArticleDTO> articles = null;
 	
 	if(searchType == null && keyword == null){
-		// 글 조회
+		// 전체 글 조회
 		articles = dao.selectArticles(start);
 	}else{	
 		// 검색 조회
-		articles = dao.selectArticlesForSearch(searchType, keyword);
+		articles = dao.selectArticlesForSearch(searchType, keyword, start);
 	}
 %>
 <%@ include file="./_header.jsp" %>
@@ -96,7 +94,7 @@
                 <tr>
                     <td><%= pageStartNum-- %></td>
                     <td><a href="/jboard1/view.jsp?no=<%= article.getNo() %>"><%= article.getTitle() %></a>&nbsp;[<%= article.getComment() %>]</td>
-                    <td><%= article.getWriter() %></td>
+                    <td><%= article.getNick() %></td>
                     <td><%= article.getRdate().substring(2, 10) %></td>
                     <td><%= article.getHit() %></td>
                 </tr>
