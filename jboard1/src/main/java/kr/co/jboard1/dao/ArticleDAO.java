@@ -99,6 +99,63 @@ public class ArticleDAO extends DBHelper {
 		return articles;
 	}
 	
+	public List<ArticleDTO> selectArticlesForSearch(String searchType, String keyword) {
+		
+		
+		List<ArticleDTO> articles = new ArrayList<>();
+		
+		String sql = "SELECT * FROM `Article` ";
+		
+		if(searchType.equals("title")) {
+			sql += "WHERE `title` like ?";
+		}else if(searchType.equals("content")) {
+			sql += "WHERE `content` like ?";
+		}else if(searchType.equals("title_content")) {
+			sql += "WHERE `title` like ? OR `content` like ?";
+		}else if(searchType.equals("writer")) {
+			sql += "WHERE `writer` like ?";
+		}				
+		
+		try {
+			conn = getConnection();
+			psmt = conn.prepareStatement(sql);
+			
+			if(searchType.equals("title_content")) {
+				psmt.setString(1, "%" + keyword + "%");
+				psmt.setString(2, "%" + keyword + "%");
+			}else {
+				psmt.setString(1, "%" + keyword + "%");
+			}
+			
+			System.out.println(psmt);
+			
+			rs = psmt.executeQuery();
+			
+			while(rs.next()) {
+				ArticleDTO article = new ArticleDTO();
+				article.setNo(rs.getInt(1));
+				article.setParent(rs.getInt(2));
+				article.setComment(rs.getInt(3));
+				article.setCate(rs.getString(4));
+				article.setTitle(rs.getString(5));
+				article.setContent(rs.getString(6));
+				article.setFile(rs.getInt(7));
+				article.setHit(rs.getInt(8));
+				article.setWriter(rs.getString(9));
+				article.setRegip(rs.getString(10));
+				article.setRdate(rs.getString(11));
+				//article.setNick(rs.getString(12));
+				articles.add(article);
+			}
+			closeAll();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return articles;
+	}
+	
+	
 	public void updateArticle(ArticleDTO article) {
 		
 		try {

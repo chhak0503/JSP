@@ -5,9 +5,6 @@
 	String chk2 = request.getParameter("chk2");
 	String sms = request.getParameter("sms");
 
-	// 데이터베이스 처리
-	
-	
 	// 세션처리
 	try {
 		

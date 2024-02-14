@@ -5,8 +5,12 @@
 <%
 	request.setCharacterEncoding("UTF-8");
 	String pg = request.getParameter("pg");
+	String searchType = request.getParameter("searchType");
+	String keyword    = request.getParameter("keyword");
+	
 
 	ArticleDAO dao = ArticleDAO.getInstance();
+	
 
 	// 전체 글 갯수 조회
 	int total = dao.selectCountTotal();
@@ -43,31 +47,31 @@
 	int pageStartNum = total - start;
 	
 
-	// 글 조회
-	List<ArticleDTO> articles = dao.selectArticles(start);
+	List<ArticleDTO> articles = null;
+	
+	if(searchType == null && keyword == null){
+		// 글 조회
+		articles = dao.selectArticles(start);
+	}else{	
+		// 검색 조회
+		articles = dao.selectArticlesForSearch(searchType, keyword);
+	}
 %>
 <%@ include file="./_header.jsp" %>
 <script>
 
 	window.onload = function(){
-		
-		const btnSearch = document.search.submit;
-		btnSearch.onclick = ()=>{
-			alert('검색클릭!');
-		}
-		
-		
+		//const btnSearch = document.search.submit;
+		//btnSearch.onclick = ()=>{
+			//alert('검색클릭!');
+		//}
 	}
-
-
 </script>
-
-
 <main>
     <section class="list">
         <h3>글목록</h3>
         <!-- 검색 -->
-       	<form action="/jboard1/proc/searchProc.jsp" class="search" name="search">
+       	<form action="/jboard1/list.jsp" class="search" name="search">
        		<select name="searchType">
        			<option value="title">제목</option>
        			<option value="content">내용</option>
@@ -76,7 +80,7 @@
        		</select>
        		
        		<input type="text" name="keyword" placeholder="검색 키워드 입력">
-       		<input type="submit" name="submit" value="검색">        		
+       		<input type="submit" value="검색">        		
        	</form>
        	
         <article>
@@ -92,7 +96,7 @@
                 <tr>
                     <td><%= pageStartNum-- %></td>
                     <td><a href="/jboard1/view.jsp?no=<%= article.getNo() %>"><%= article.getTitle() %></a>&nbsp;[<%= article.getComment() %>]</td>
-                    <td><%= article.getNick() %></td>
+                    <td><%= article.getWriter() %></td>
                     <td><%= article.getRdate().substring(2, 10) %></td>
                     <td><%= article.getHit() %></td>
                 </tr>
