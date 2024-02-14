@@ -70,11 +70,12 @@ public class ArticleDAO extends DBHelper {
 		
 		List<ArticleDTO> articles = new ArrayList<>();
 		
-		
 		try {
 			conn = getConnection();
 			psmt = conn.prepareStatement(SQL.SELECT_ARTICLES + SQL.SELECT_ARTICLES_ORDER_LIMIT);
 			psmt.setInt(1, start);
+			
+			System.out.println(psmt);
 			
 			rs = psmt.executeQuery();
 			

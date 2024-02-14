@@ -41,7 +41,7 @@ public class SQL {
 	
 	public static final String SELECT_ARTICLES_WHERE_TITLE = "AND `title` like ? ";
 	public static final String SELECT_ARTICLES_WHERE_CONTENT = "AND `content` like ? ";
-	public static final String SELECT_ARTICLES_WHERE_TITLE_CONTENT = "AND `title` like ? OR `content` like ? ";
+	public static final String SELECT_ARTICLES_WHERE_TITLE_CONTENT = "AND (`title` like ? OR `content` like ?) ";
 	public static final String SELECT_ARTICLES_WHERE_WRITER = "AND `nick` like ? ";
 												
 	public static final String SELECT_ARTICLES_ORDER_LIMIT = "ORDER BY `no` DESC LIMIT ?, 10";

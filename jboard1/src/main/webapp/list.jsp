@@ -46,6 +46,7 @@
 	
 
 	List<ArticleDTO> articles = null;
+	String params = "";
 	
 	if(searchType == null && keyword == null){
 		// 전체 글 조회
@@ -53,7 +54,9 @@
 	}else{	
 		// 검색 조회
 		articles = dao.selectArticlesForSearch(searchType, keyword, start);
+		params = "&searchType="+searchType+"&keyword="+keyword;
 	}
+	
 %>
 <%@ include file="./_header.jsp" %>
 <script>
@@ -67,7 +70,7 @@
 </script>
 <main>
     <section class="list">
-        <h3>글목록</h3>
+        <h3><a href="/jboard1/list.jsp">글목록</a></h3>
         <!-- 검색 -->
        	<form action="/jboard1/list.jsp" class="search" name="search">
        		<select name="searchType">
@@ -93,7 +96,7 @@
                 <% for(ArticleDTO article : articles){ %>
                 <tr>
                     <td><%= pageStartNum-- %></td>
-                    <td><a href="/jboard1/view.jsp?no=<%= article.getNo() %>"><%= article.getTitle() %></a>&nbsp;[<%= article.getComment() %>]</td>
+                    <td><a href="/jboard1/view.jsp?no=<%= article.getNo() + params %>"><%= article.getTitle() %></a>&nbsp;[<%= article.getComment() %>]</td>
                     <td><%= article.getNick() %></td>
                     <td><%= article.getRdate().substring(2, 10) %></td>
                     <td><%= article.getHit() %></td>
