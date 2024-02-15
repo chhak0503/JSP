@@ -41,6 +41,38 @@
 							a1.innerText = '수정';							
 							a2.href = './delete.jsp?uid='+user.uid;
 							a2.innerText = '삭제';
+							a2.onclick = function(e){
+								e.preventDefault();
+								
+								const parent = e.target.closest('tr');
+								const url = this.href;
+								const params = url.split('?')[1];
+								const value = params.split('=')[1];
+								console.log(value);
+								
+								fetch('./proc/deleteUser1.jsp?uid='+value)
+									.then(response=>response.json())
+									.then((data)=>{
+										console.log(data);
+										
+										if(data.result > 0){
+											
+											alert('삭제완료');
+											
+											// 태그 동적 삭제
+											parent.remove();											
+										}
+										
+									})
+									.catch((err)=>{
+										console.log(err);
+									});
+								
+								
+								
+							}
+							
+							
 							td6.appendChild(a1);
 							td6.appendChild(a2);							
 							
