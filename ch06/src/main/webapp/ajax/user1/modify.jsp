@@ -9,14 +9,57 @@
 			이름 : 김철학
 			내용 : JSP AJAX 실습하기
 		-->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 		<script>			
 			window.onload = function(){
+				
+				// 문서 객체 생성
+				const formUser = document.getElementsByTagName('form')[0];
+				const btnSubmit = formUser.submit;
+				
+				// 전송버튼
+				btnSubmit.onclick = (e) => {
+					e.preventDefault(); // 기본 폼 전송 취소
+					
+					const uid   = formUser.uid.value;
+					const name  = formUser.name.value;
+					const birth = formUser.birth.value;
+					const hp    = formUser.hp.value;
+					const age   = formUser.age.value;
+					
+					const jsonData = {
+						"uid": uid,
+						"name": name,
+						"birth": birth,
+						"hp": hp,
+						"age": age						
+					};
+					
+					/*
+						- jquery ajax를 이용하면 json 문자열 변환없이 바로 전송 가능
+						- 서버측에서는 request.getParameter 수신 가능
+					*/
+					$.ajax({
+						method: 'POST',
+						url: './proc/putUser1.jsp',
+						data: jsonData,
+						success: function(data){
+							
+							// 자동으로 객체 변환되어 들어옴
+							console.log(data);
+							
+							if(data.result > 0){
+								alert('수정완료');
+								location.href = './list.jsp';
+							}
+						}
+					});
+				}
 				
 				// 현재 페이지 url에서 파라미터 추출
 				const url = location.href;
 				const params = url.split('?')[1];
 				const value = params.split('=')[1];
-				
 				console.log(value);
 				
 				// 서버요청
@@ -35,6 +78,12 @@
 							const resData = JSON.parse(xhr.responseText);
 							console.log(resData);
 							
+							formUser.uid.value = resData.uid;
+							formUser.name.value = resData.name;
+							formUser.birth.value = resData.birth;
+							formUser.age.value = resData.age;
+							formUser.hp.value = resData.hp;
+							
 						}else{
 							// 요청 실패
 							console.log('요청 실패...');
@@ -51,7 +100,7 @@
 			<table border="1">
 				<tr>
 					<td>아이디</td>
-					<td><input type="text" name="uid"></td>
+					<td><input type="text" name="uid" readonly></td>
 				</tr>
 				<tr>
 					<td>이름</td>

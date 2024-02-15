@@ -39,7 +39,7 @@
 							td5.innerText = user.age;
 							a1.href = './modify.jsp?uid='+user.uid;
 							a1.innerText = '수정';							
-							a2.href = '#';
+							a2.href = './delete.jsp?uid='+user.uid;
 							a2.innerText = '삭제';
 							td6.appendChild(a1);
 							td6.appendChild(a2);							
