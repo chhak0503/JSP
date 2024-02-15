@@ -7,6 +7,8 @@
 <%
 	request.setCharacterEncoding("UTF-8");
 	String uid = request.getParameter("uid");
+	
+	System.out.println("uid : " + uid);
 
 	// 수정 데이터 조회
 	String host = "jdbc:mysql://127.0.0.1:3306/studydb";
@@ -39,6 +41,8 @@
 	}catch(Exception e){
 		e.printStackTrace();
 	}
+	
+	System.out.println("dto : " + dto);
 %>
 <!DOCTYPE html>
 <html>

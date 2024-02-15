@@ -12,6 +12,12 @@
 	String birth = request.getParameter("birth");
 	String hp    = request.getParameter("hp");
 	String age   = request.getParameter("age");
+	
+	System.out.println("uid : " + uid);
+	System.out.println("name : " + name);
+	System.out.println("birth : " + birth);
+	System.out.println("hp : " + hp);
+	System.out.println("age : " + age);
 
 	// 데이터베이스 작업
 	String host = "jdbc:mysql://127.0.0.1:3306/studydb";
