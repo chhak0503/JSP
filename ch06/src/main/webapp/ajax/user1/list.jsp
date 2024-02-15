@@ -37,7 +37,7 @@
 							td3.innerText = user.birth;
 							td4.innerText = user.hp;
 							td5.innerText = user.age;
-							a1.href = '#';
+							a1.href = './modify.jsp?uid='+user.uid;
 							a1.innerText = '수정';							
 							a2.href = '#';
 							a2.innerText = '삭제';

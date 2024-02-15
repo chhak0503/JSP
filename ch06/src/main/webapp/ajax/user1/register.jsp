@@ -67,7 +67,6 @@
 			 				console.log(err);
 			 			});
 		 		}
-				
 			}
 		</script>
 	</head>
