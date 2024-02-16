@@ -23,34 +23,16 @@
 		const resultUid     = document.getElementsByClassName('resultUid')[0];		
 		const resultNick    = document.getElementsByClassName('resultNick')[0];		
 		const resultEmail   = document.getElementsByClassName('resultEmail')[0];		
-		const resultHp      = document.getElementsByClassName('resultHp')[0];		
+		const resultHp      = document.getElementsByClassName('resultHp')[0];
+		const url = './proc/checkCountUserProc.jsp';
 		
 		// 아이디 중복체크
 		btnCheckUid.onclick = function(e){
 			e.preventDefault();
 			
 			// 입력한 아이디 가져오기
-			const uid = form.uid.value;
-			console.log('uid : ' + uid);
-			
-			// 입력한 아이디 중복확인을 위해 서버 전송
-			fetch('./proc/checkCountUserProc.jsp?uid='+uid)
-				.then(response => response.json())
-				.then((data)=>{
-					console.log('result : ' + data.result);
-					
-					if(data.result > 0){
-						resultUid.innerText = '이미 사용 중인 아이디 입니다.';
-						resultUid.style.color = 'red';
-					}else {
-						resultUid.innerText = '사용 가능한 아이디 입니다.';
-						resultUid.style.color = 'green';
-					}
-					
-				})
-				.catch((err) => {
-					console.log(err);
-				});
+			const params = '?type=uid&value='+form.uid.value;
+			getCheckResult(url+params, resultUid);
 			
 		}// 아이디 중복체크 끝
 		
@@ -59,23 +41,8 @@
 			e.preventDefault();
 			
 			// 입력한 닉네임 중복확인을 위해 서버 전송
-			fetch('./proc/checkCountUserProc.jsp?nick='+form.nick.value)
-				.then(response => response.json())
-				.then((data)=>{
-					console.log('result : ' + data.result);
-					
-					if(data.result > 0){
-						resultNick.innerText = '이미 사용 중인 닉네임 입니다.';
-						resultNick.style.color = 'red';
-					}else {
-						resultNick.innerText = '사용 가능한 닉네임 입니다.';
-						resultNick.style.color = 'green';
-					}
-					
-				})
-				.catch((err) => {
-					console.log(err);
-				});
+			const params = '?type=nick&value='+form.nick.value;
+			getCheckResult(url+params, resultNick);
 			
 		}// 닉네임 중복체크 끝
 		
@@ -85,22 +52,8 @@
 			e.preventDefault();
 			
 			// 입력한 닉네임 중복확인을 위해 서버 전송
-			fetch('./proc/checkCountUserProc.jsp?email='+form.email.value)
-				.then(response => response.json())
-				.then((data)=>{
-					console.log('result : ' + data.result);
-					
-					if(data.result > 0){
-						resultEmail.innerText = '이미 사용 중인 이메일 입니다.';
-						resultEmail.style.color = 'red';
-					}else {
-						resultEmail.innerText = '사용 가능한 이메일 입니다.';
-						resultEmail.style.color = 'green';
-					}
-				})
-				.catch((err) => {
-					console.log(err);
-				});
+			const params = '?type=email&value='+form.email.value;
+			getCheckResult(url+params, resultEmail);
 			
 		}// 이메일 중복체크 끝
 		
@@ -109,24 +62,30 @@
 			e.preventDefault();
 			
 			// 입력한 닉네임 중복확인을 위해 서버 전송
-			fetch('./proc/checkCountUserProc.jsp?hp='+form.hp.value)
+			const params = '?type=hp&value='+form.hp.value;
+			getCheckResult(url+params, resultHp);
+			
+		}// 휴대폰 중복체크 끝
+		
+		function getCheckResult(url, target){
+			
+			fetch(url)
 				.then(response => response.json())
 				.then((data)=>{
 					console.log('result : ' + data.result);
 					
 					if(data.result > 0){
-						resultHp.innerText = '이미 사용 중인 이메일 입니다.';
-						resultHp.style.color = 'red';
+						target.innerText = '이미 사용 중인 ' + data.type + ' 입니다.';
+						target.style.color = 'red';
 					}else {
-						resultHp.innerText = '사용 가능한 이메일 입니다.';
-						resultHp.style.color = 'green';
+						target.innerText = '사용 가능한 ' + data.type + ' 입니다.';
+						target.style.color = 'green';
 					}
 				})
 				.catch((err) => {
 					console.log(err);
 				});
-			
-		}// 휴대폰 중복체크 끝
+		}
 		
 		
 	}
