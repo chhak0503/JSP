@@ -10,7 +10,7 @@
 %>
 
 <%@ include file="./_header.jsp" %>
-<script src="/jboard1/js/checkCountUser.js"></script>
+<script src="/jboard1/js/validation.js"></script>
 
 <main>
     <section class="register">
