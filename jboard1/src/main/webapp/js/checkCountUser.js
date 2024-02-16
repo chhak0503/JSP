@@ -43,13 +43,22 @@ window.onload = function(){
 			resultUid.style.color = 'red';
 			isUidOk = false;
 			return;	
-		}	
+		}
+		
+		console.log('isUidOk1 : ' + isUidOk);
 		
 		// 서버 전송
 		const params = '?type=uid&value='+uid;
-		isUidOk = getCheckResult(url+params, resultUid);
+		getCheckResult(url+params, resultUid)
+			.then((result)=>{				
+				console.log('result : ' + result);
+				isUidOk = true;
+			})
+			.catch((err)=>{
+				console.error('err : ', err);
+			});
 		
-		console.log('isUidOk : ' + isUidOk);
+		console.log('isUidOk2 : ' + isUidOk);
 		
 	}// 아이디 중복체크 끝
 	
@@ -195,38 +204,37 @@ window.onload = function(){
 	}
 	
 	
-	// 공통 fetch 함수
-	function getCheckResult(url, target) {
+	// 공통 커스텀 fetch 함수
+	async function getCheckResult(url, target) {
 		
 		let result = false;
 		console.log('result1 : ' + result);
 		
-		fetch(url)
-			.then(response => response.json())
-			.then((data)=>{
-				//console.log('result : ' + data.result);
+		try {
+			const response = await fetch(url);
+			const data = await response.json();
+			
+			if(response.ok){
 				
 				if(data.result > 0){
 					target.innerText = '이미 사용 중인 ' + data.type + ' 입니다.';
 					target.style.color = 'red';
 					result = false;
 					console.log('result2 : ' + result);
-					
 				}else {
 					target.innerText = '사용 가능한 ' + data.type + ' 입니다.';
 					target.style.color = 'green';
 					result = true;
 					console.log('result3 : ' + result);
-					
 				}
-			})
-			.catch((err) => {
-				console.log(err);
-			});
-	
-	
-		console.log('result4 : ' + result);
-		return result;	
+				
+				console.log('result4 : ' + result);
+				return result;
+			}
+			
+		}catch(err){
+			throw err;
+		}
 	}
 	
 	
