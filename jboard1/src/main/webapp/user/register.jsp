@@ -10,6 +10,43 @@
 %>
 
 <%@ include file="./_header.jsp" %>
+<script>
+	
+	window.onload = function(){
+		
+		const form = document.querySelector('.register > form');
+		const btnCheckUid = document.getElementById('btnCheckUid');
+		
+		// 아이디 중복 체크
+		btnCheckUid.onclick = function(){
+			
+			// 입력한 아이디 가져오기
+			const uid = form.uid.value;
+			console.log('uid : ' + uid);
+			
+			// 입력한 아이디 중복확인을 위해 서버 전송
+			fetch('./proc/checkUidProc.jsp?uid='+uid)
+				.then(response => response.json())
+				.then((data)=>{
+					console.log('data : ' + data);
+				})
+				.catch((err) => {
+					console.log(err);
+				});
+			
+		}// btnCheckUid onclick end
+		
+		
+		
+		
+		
+	}
+	
+
+
+</script>
+
+
 <main>
     <section class="register">
         <form action="/jboard1/user/proc/registerProc.jsp" method="post">
@@ -20,7 +57,7 @@
                     <td>아이디</td>
                     <td>
                         <input type="text" name="uid" required placeholder="아이디 입력"/>
-                        <button><img src="../images/chk_id.gif" alt=""></button>
+                        <button id="btnCheckUid"><img src="../images/chk_id.gif" alt=""></button>
                         <span class="resultId"></span>
                     </td>
                 </tr>
