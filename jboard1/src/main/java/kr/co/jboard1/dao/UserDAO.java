@@ -66,7 +66,7 @@ public class UserDAO extends DBHelper {
 		}else if(type.equals("email")){
 			sql.append(SQL.WHERE_EMAIL);			
 		}else if(type.equals("hp")){
-			sql.append(SQL.WHERE_HP);			
+			sql.append(SQL.WHERE_HP);
 		}
 		
 		int result = 0;

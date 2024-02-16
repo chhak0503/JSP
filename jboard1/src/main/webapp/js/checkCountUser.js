@@ -24,6 +24,8 @@ window.onload = function(){
 	const btnCheckEmail = document.getElementById('btnCheckEmail');
 	const btnCheckHp    = document.getElementById('btnCheckHp');
 	const resultUid     = document.getElementsByClassName('resultUid')[0];		
+	const resultPass    = document.getElementsByClassName('resultPass')[0];		
+	const resultName    = document.getElementsByClassName('resultName')[0];		
 	const resultNick    = document.getElementsByClassName('resultNick')[0];		
 	const resultEmail   = document.getElementsByClassName('resultEmail')[0];		
 	const resultHp      = document.getElementsByClassName('resultHp')[0];
@@ -45,17 +47,28 @@ window.onload = function(){
 		
 		// 서버 전송
 		const params = '?type=uid&value='+uid;
-		getCheckResult(url+params, resultUid);
+		isUidOk = getCheckResult(url+params, resultUid);
+		
+		console.log('isUidOk : ' + isUidOk);
 		
 	}// 아이디 중복체크 끝
 	
 	// 닉네임 중복체크
 	btnCheckNick.onclick = function(e){
 		e.preventDefault();
+		const nick = form.nick.value;
+		
+		// 닉네임 유효성 검사
+		if(!nick.match(reNick)){
+			resultNick.innerText = '닉네임 형식에 맞지 않습니다.';
+			resultNick.style.color = 'red';
+			isNickOk = false;
+			return;	
+		}	
 		
 		// 입력한 닉네임 중복확인을 위해 서버 전송
-		const params = '?type=nick&value='+form.nick.value;
-		getCheckResult(url+params, resultNick);
+		const params = '?type=nick&value='+nick;
+		isNickOk = getCheckResult(url+params, resultNick);
 		
 	}// 닉네임 중복체크 끝
 	
@@ -64,9 +77,19 @@ window.onload = function(){
 	btnCheckEmail.onclick = function(e){
 		e.preventDefault();
 		
+		const email = form.email.value;
+		
+		// 닉네임 유효성 검사
+		if(!email.match(reEmail)){
+			resultEmail.innerText = '이메일 형식에 맞지 않습니다.';
+			resultEmail.style.color = 'red';
+			isEmailOk = false;
+			return;	
+		}
+		
 		// 입력한 닉네임 중복확인을 위해 서버 전송
-		const params = '?type=email&value='+form.email.value;
-		getCheckResult(url+params, resultEmail);
+		const params = '?type=email&value='+email;
+		isEmailOk = getCheckResult(url+params, resultEmail);
 		
 	}// 이메일 중복체크 끝
 	
@@ -74,12 +97,66 @@ window.onload = function(){
 	btnCheckHp.onclick = function(e){
 		e.preventDefault();
 		
+		const hp = form.hp.value;
+		
+		// 휴대폰 유효성 검사
+		if(!hp.match(reHp)){
+			resultHp.innerText = '휴대폰 형식에 맞지 않습니다.';
+			resultHp.style.color = 'red';
+			isHpOk = false;
+			return;	
+		}
+		
 		// 입력한 닉네임 중복확인을 위해 서버 전송
-		const params = '?type=hp&value='+form.hp.value;
-		getCheckResult(url+params, resultHp);
+		const params = '?type=hp&value='+hp;
+		isHpOk = getCheckResult(url+params, resultHp);
 		
 	}// 휴대폰 중복체크 끝
 	
+	// 비밀번호 유효성 검사
+	form.pass2.addEventListener('focusout', function(){
+		
+		const pass1 = form.pass1.value;
+		const pass2 = form.pass2.value;
+
+		if(pass1 == pass2){
+			
+			if(!pass1.match(rePass)){
+				resultPass.innerText = '비밀번호 형식에 맞지 않습니다.';
+				resultPass.style.color = 'red';
+				isPassOk = false;
+				return;	
+			}else{
+				resultPass.innerText = '사용 가능한 비밀번호 입니다.';
+				resultPass.style.color = 'green';
+				isPassOk = true;
+				return;
+			}
+			
+		}else{
+			resultPass.innerText = '비밀번호가 일치하지 않습니다.';
+			resultPass.style.color = 'red';
+			isPassOk = false;
+			return;	
+		}		
+	});
+	
+	// 이름 유효성 검사
+	form.name.addEventListener('focusout', function(){
+		
+		const name = form.name.value;
+
+		if(!name.match(reName)){
+			resultName.innerText = '이름 형식에 맞지 않습니다.';
+			resultName.style.color = 'red';
+			isNameOk = false;
+			return;	
+		}else{
+			resultName.innerText = '';
+			isNameOk = true;
+			return;
+		}	
+	});
 	
 	// 최종 유효성 검사
 	form.onsubmit = function(){
@@ -119,7 +196,10 @@ window.onload = function(){
 	
 	
 	// 공통 fetch 함수
-	function getCheckResult(url, target){
+	function getCheckResult(url, target) {
+		
+		let result = false;
+		console.log('result1 : ' + result);
 		
 		fetch(url)
 			.then(response => response.json())
@@ -129,14 +209,24 @@ window.onload = function(){
 				if(data.result > 0){
 					target.innerText = '이미 사용 중인 ' + data.type + ' 입니다.';
 					target.style.color = 'red';
+					result = false;
+					console.log('result2 : ' + result);
+					
 				}else {
 					target.innerText = '사용 가능한 ' + data.type + ' 입니다.';
 					target.style.color = 'green';
+					result = true;
+					console.log('result3 : ' + result);
+					
 				}
 			})
 			.catch((err) => {
 				console.log(err);
 			});
+	
+	
+		console.log('result4 : ' + result);
+		return result;	
 	}
 	
 	

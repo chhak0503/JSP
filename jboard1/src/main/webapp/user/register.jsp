@@ -45,7 +45,8 @@
                 <tr>
                     <td>이름</td>
                     <td>
-                        <input type="text" name="name" required placeholder="이름 입력"/>                            
+                        <input type="text" name="name" required placeholder="이름 입력"/>
+						<span class="resultName"></span>
                     </td>
                 </tr>
                 <tr>
