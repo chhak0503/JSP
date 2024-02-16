@@ -9,7 +9,6 @@
 	String email = request.getParameter("email");
 	
 	//System.out.println("uid : " + uid);
-	
 	UserDAO dao = UserDAO.getInstance();
 	
 	int result = 0;

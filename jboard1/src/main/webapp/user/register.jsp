@@ -14,34 +14,122 @@
 	
 	window.onload = function(){
 		
+		// 문서객체 생성
 		const form = document.querySelector('.register > form');
-		const btnCheckUid = document.getElementById('btnCheckUid');
+		const btnCheckUid   = document.getElementById('btnCheckUid');
+		const btnCheckNick  = document.getElementById('btnCheckNick');
+		const btnCheckEmail = document.getElementById('btnCheckEmail');
+		const btnCheckHp    = document.getElementById('btnCheckHp');
+		const resultUid     = document.getElementsByClassName('resultUid')[0];		
+		const resultNick    = document.getElementsByClassName('resultNick')[0];		
+		const resultEmail   = document.getElementsByClassName('resultEmail')[0];		
+		const resultHp      = document.getElementsByClassName('resultHp')[0];		
 		
-		// 아이디 중복 체크
-		btnCheckUid.onclick = function(){
+		// 아이디 중복체크
+		btnCheckUid.onclick = function(e){
+			e.preventDefault();
 			
 			// 입력한 아이디 가져오기
 			const uid = form.uid.value;
 			console.log('uid : ' + uid);
 			
 			// 입력한 아이디 중복확인을 위해 서버 전송
-			fetch('./proc/checkUidProc.jsp?uid='+uid)
+			fetch('./proc/checkCountUserProc.jsp?uid='+uid)
 				.then(response => response.json())
 				.then((data)=>{
-					console.log('data : ' + data);
+					console.log('result : ' + data.result);
+					
+					if(data.result > 0){
+						resultUid.innerText = '이미 사용 중인 아이디 입니다.';
+						resultUid.style.color = 'red';
+					}else {
+						resultUid.innerText = '사용 가능한 아이디 입니다.';
+						resultUid.style.color = 'green';
+					}
+					
 				})
 				.catch((err) => {
 					console.log(err);
 				});
 			
-		}// btnCheckUid onclick end
+		}// 아이디 중복체크 끝
+		
+		// 닉네임 중복체크
+		btnCheckNick.onclick = function(e){
+			e.preventDefault();
+			
+			// 입력한 닉네임 중복확인을 위해 서버 전송
+			fetch('./proc/checkCountUserProc.jsp?nick='+form.nick.value)
+				.then(response => response.json())
+				.then((data)=>{
+					console.log('result : ' + data.result);
+					
+					if(data.result > 0){
+						resultNick.innerText = '이미 사용 중인 닉네임 입니다.';
+						resultNick.style.color = 'red';
+					}else {
+						resultNick.innerText = '사용 가능한 닉네임 입니다.';
+						resultNick.style.color = 'green';
+					}
+					
+				})
+				.catch((err) => {
+					console.log(err);
+				});
+			
+		}// 닉네임 중복체크 끝
 		
 		
+		// 이메일 중복체크
+		btnCheckEmail.onclick = function(e){
+			e.preventDefault();
+			
+			// 입력한 닉네임 중복확인을 위해 서버 전송
+			fetch('./proc/checkCountUserProc.jsp?email='+form.email.value)
+				.then(response => response.json())
+				.then((data)=>{
+					console.log('result : ' + data.result);
+					
+					if(data.result > 0){
+						resultEmail.innerText = '이미 사용 중인 이메일 입니다.';
+						resultEmail.style.color = 'red';
+					}else {
+						resultEmail.innerText = '사용 가능한 이메일 입니다.';
+						resultEmail.style.color = 'green';
+					}
+				})
+				.catch((err) => {
+					console.log(err);
+				});
+			
+		}// 이메일 중복체크 끝
 		
+		// 휴대폰 중복체크
+		btnCheckHp.onclick = function(e){
+			e.preventDefault();
+			
+			// 입력한 닉네임 중복확인을 위해 서버 전송
+			fetch('./proc/checkCountUserProc.jsp?hp='+form.hp.value)
+				.then(response => response.json())
+				.then((data)=>{
+					console.log('result : ' + data.result);
+					
+					if(data.result > 0){
+						resultHp.innerText = '이미 사용 중인 이메일 입니다.';
+						resultHp.style.color = 'red';
+					}else {
+						resultHp.innerText = '사용 가능한 이메일 입니다.';
+						resultHp.style.color = 'green';
+					}
+				})
+				.catch((err) => {
+					console.log(err);
+				});
+			
+		}// 휴대폰 중복체크 끝
 		
 		
 	}
-	
 
 
 </script>
@@ -58,7 +146,7 @@
                     <td>
                         <input type="text" name="uid" required placeholder="아이디 입력"/>
                         <button id="btnCheckUid"><img src="../images/chk_id.gif" alt=""></button>
-                        <span class="resultId"></span>
+                        <span class="resultUid"></span>
                     </td>
                 </tr>
                 <tr>
@@ -88,6 +176,7 @@
                     <td>
                         <p>공백없이 한글, 영문, 숫자만 입력가능</p>
                         <input type="text" name="nick" required placeholder="별명 입력"/>
+                        <button id="btnCheckNick"><img src="../images/chk_id.gif" alt=""></button>
                         <span class="resultNick"></span>                            
                     </td>
                 </tr>
@@ -95,12 +184,16 @@
                     <td>E-Mail</td>
                     <td>
                         <input type="email" name="email" required placeholder="이메일 입력"/>
+                        <button id="btnCheckEmail"><img src="../images/chk_id.gif" alt=""></button>
+                        <span class="resultEmail"></span>   
                     </td>
                 </tr>
                 <tr>
                     <td>휴대폰</td>
                     <td>
                         <input type="text" name="hp" required placeholder="- 포함 13자리 입력" minlength="13" maxlength="13" />
+                        <button id="btnCheckHp"><img src="../images/chk_id.gif" alt=""></button>
+                        <span class="resultHp"></span>
                     </td>
                 </tr>
                 <tr>
