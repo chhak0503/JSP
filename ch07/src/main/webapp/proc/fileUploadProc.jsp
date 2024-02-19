@@ -22,7 +22,7 @@
 	ServletFileUpload upload = new ServletFileUpload(factory);
 	
 	// 인코딩 설정
-	upload.setHeaderEncoding("UTF-8");
+	//upload.setHeaderEncoding("UTF-8");
 	
 	// 최대 파일크기 설정
 	upload.setSizeMax(1024 * 1024 * 10); // 10MB
@@ -53,17 +53,17 @@
 				fileDTO.setsName(savedFileName);
 				
 				// 파일 쓰기
-				File uploadedFile = new File(uploadsPath + "/" + savedFileName);
+				File uploadedFile = new File(uploadsPath + File.separator + savedFileName);
 				item.write(uploadedFile);
-				System.out.println("File upload!");
+				//System.out.println("File upload!");
 			}else{
 				// 일반 데이터 처리
-				String fieldName = item.getFieldName();
-				String value = item.getString("UTF-8"); 
-				System.out.println(fieldName + " : " + value);
+				String fieldName  = item.getFieldName();
+				String fieldvalue = item.getString("UTF-8"); 
+				//System.out.println(fieldName + " : " + value);
 				
 				if(fieldName.equals("title")){
-					fileDTO.setTitle(value);
+					fileDTO.setTitle(fieldvalue);
 				}
 			}
 		}

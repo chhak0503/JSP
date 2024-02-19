@@ -49,6 +49,7 @@
 	<body>
 		<h3>2.파일 다운로드</h3>
 		
+		<a href="./1.fileUploadTest.jsp">파일 업로드</a>
 		<table border="1">
 			<tr>
 				<th>번호</th>
@@ -67,7 +68,7 @@
 				<td><%= file.getsName() %></td>
 				<td><%= file.getRdate().substring(2, 10) %></td>
 				<td>
-					<a href="#">다운로드</a>
+					<a href="./proc/fileDownloadProc.jsp?fno=<%= file.getFno() %>">다운로드</a>
 				</td>
 			</tr>
 			<% } %>

@@ -12,7 +12,7 @@
 	</head>
 	<body>
 		<h3>1.파일업로드</h3>
-		
+		<a href="./2.fileDownloadTest.jsp">파일 다운로드</a>
 		<form action="./proc/fileUploadProc.jsp" method="post" enctype="multipart/form-data">
 			<input type="text" name="title"><br>
 			<input type="text" name="content"><br>
