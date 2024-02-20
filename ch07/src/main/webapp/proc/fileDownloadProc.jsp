@@ -54,7 +54,9 @@
 	String uploadsPath = application.getRealPath("/uploads");
 	
 	File file = new File(uploadsPath + File.separator + fileDTO.getsName());
+	
 	out.clear();
+	out = pageContext.pushBody();
 	
 	BufferedInputStream bis = new BufferedInputStream(new FileInputStream(file));
 	BufferedOutputStream bos = new BufferedOutputStream(response.getOutputStream());

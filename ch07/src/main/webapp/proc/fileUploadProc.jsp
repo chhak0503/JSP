@@ -39,8 +39,7 @@
 			
 			FileItem item = iter.next();
 			
-			if(!item.isFormField()){
-				// 파일 업로드 처리
+			if(!item.isFormField()){// 첨부파일 이면
 				
 				// 확장자 추출
 				String fileName = item.getName();
@@ -55,15 +54,14 @@
 				// 파일 쓰기
 				File uploadedFile = new File(uploadsPath + File.separator + savedFileName);
 				item.write(uploadedFile);
-				//System.out.println("File upload!");
+				
 			}else{
 				// 일반 데이터 처리
 				String fieldName  = item.getFieldName();
-				String fieldvalue = item.getString("UTF-8"); 
-				//System.out.println(fieldName + " : " + value);
+				String fieldValue = item.getString("UTF-8"); 
 				
 				if(fieldName.equals("title")){
-					fileDTO.setTitle(fieldvalue);
+					fileDTO.setTitle(fieldValue);
 				}
 			}
 		}
