@@ -19,6 +19,7 @@ public class GreetingServlet extends HttpServlet {
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		System.out.println("GreetingServlet doGet()...");
 		// HTML 출력
 		resp.setContentType("text/html;charset=utf-8");
 		
