@@ -1,5 +1,6 @@
 package dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import db.DBHelper;
@@ -31,15 +32,64 @@ public class User1DAO extends DBHelper {
 	}
 	
 	public User1DTO selectUser1(String uid) {
-		return null;
+		
+		User1DTO user = null;
+		
+		try {
+			conn = getConnection();
+			psmt = conn.prepareStatement("SELECT * FROM `User1` WHERE `uid`=?");
+			psmt.setString(1, uid);
+			rs = psmt.executeQuery();
+			
+			while(rs.next()) {
+				user = new User1DTO();
+				user.setUid(rs.getString(1));
+				user.setName(rs.getString(2));
+				user.setBirth(rs.getString(3));
+				user.setHp(rs.getString(4));
+				user.setAge(rs.getInt(5));
+			}
+			closeAll();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return user;
 	}
 	
 	public List<User1DTO> selectUser1s() {
-		return null;
+		
+		List<User1DTO> users = new ArrayList<>();
+		
+		try {
+			conn = getConnection();
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery("SELECT * FROM `User1`");
+			
+			while(rs.next()) {
+				User1DTO user = new User1DTO();
+				user.setUid(rs.getString(1));
+				user.setName(rs.getString(2));
+				user.setBirth(rs.getString(3));
+				user.setHp(rs.getString(4));
+				user.setAge(rs.getInt(5));
+				users.add(user);
+			}
+			closeAll();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return users;
 	}
 	
 	public void updateUser1(User1DTO user) {
-		
+		try {
+			
+			
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public void deleteUser1(String uid) {

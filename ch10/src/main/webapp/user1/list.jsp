@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -19,17 +20,20 @@
 				<th>나이</th>
 				<th>관리</th>
 			</tr>
+			<c:forEach var="user" items="${users}">
 			<tr>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
+				<!-- 표현언어에서는 직접 private 속성을 참조할 수 있음 -->
+				<td>${user.getUid()}</td>
+				<td>${user.getName()}</td>
+				<td>${user.birth}</td>
+				<td>${user.hp}</td>
+				<td>${user.age}</td>
 				<td>
-					<a href="/ch10/user1/modify.do">수정</a>
+					<a href="/ch10/user1/modify.do?uid=${user.uid}">수정</a>
 					<a href="#">삭제</a>
 				</td>
 			</tr>
+			</c:forEach>
 		</table>
 	</body>
 </html>
