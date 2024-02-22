@@ -22,6 +22,21 @@
 		<a href="/ch10/user1/list.do">User1 목록</a>
 		<a href="/ch10/user1/register.do">User1 등록</a>
 		
+		<h4>User2 실습</h4>
+		<a href="/ch10/user2/list.do">User2 목록</a>
+		<a href="/ch10/user2/register.do">User2 등록</a>
+		
+		<h4>User3 실습</h4>
+		<a href="/ch10/user3/list.do">User3 목록</a>
+		<a href="/ch10/user3/register.do">User3 등록</a>
+		
+		<h4>User4 실습</h4>
+		<a href="/ch10/user4/list.do">User4 목록</a>
+		<a href="/ch10/user4/register.do">User4 등록</a>
+		
+		<h4>User5 실습</h4>
+		<a href="/ch10/user5/list.do">User5 목록</a>
+		<a href="/ch10/user5/register.do">User5 등록</a>
 	
 		
 	</body>
