@@ -10,7 +10,7 @@
 		
 		<a href="/ch10/index.jsp">처음으로</a>
 		<a href="/ch10/user1/list.do">목록보기</a>
-		<form action="#" method="post">
+		<form action="/ch10/user1/register.do" method="post">
 			<table border="1">
 				<tr>
 					<td>아이디</td>
