@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import dto.User1DTO;
 import service.User1Service;
 
 @WebServlet("/user1/register.do")
@@ -24,8 +25,6 @@ public class RegisterController extends HttpServlet {
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		
-		
 		RequestDispatcher dispatcher = req.getRequestDispatcher("/user1/register.jsp");
 		dispatcher.forward(req, resp);
 	}
@@ -39,10 +38,17 @@ public class RegisterController extends HttpServlet {
 		String hp    = req.getParameter("hp");
 		String age   = req.getParameter("age");
 		
+		User1DTO user = new User1DTO();
+		user.setUid(uid);
+		user.setName(name);
+		user.setBirth(birth);
+		user.setHp(hp);
+		user.setAge(age);
 		
-		service.insertUser1(null);
+		service.insertUser1(user);
 		
-		
+		// 리다이렉트
+		resp.sendRedirect("/ch10/user1/list.do");
 	}
 }
 
