@@ -32,17 +32,23 @@ public class CheckUserController extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
 		String type  = req.getParameter("type");
-		String value = req.getParameter("value");
+		String value = req.getParameter("value");		
 		logger.debug("type : " + type);
 		logger.debug("value : " + value);
 		
 		int result = service.selectCountUser(type, value);
 		logger.debug("result : " + result);
 		
-		// JSON 출력
+		// type이 이메일 이면
+		if(type.equals("email")) {
+			service.sendEmailCode(value);
+		}
+		
+		// JSON 생성
 		JsonObject json = new JsonObject();
 		json.addProperty("result", result);
 		
+		// JSON 출력
 		PrintWriter writer = resp.getWriter();
 		writer.print(json);
 	}

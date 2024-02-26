@@ -26,6 +26,7 @@
 		const btnCheckNick = document.getElementById('btnCheckNick');
 		const btnSendEmail = document.getElementById('btnSendEmail');
 		const btnAuthEmail = document.getElementById('btnAuthEmail');
+		const btnCheckHp   = document.getElementById('btnCheckHp');
 		const btnZip = document.getElementById('btnZip');
 		
 		const resultUid = document.getElementsByClassName('resultUid')[0];
@@ -54,6 +55,16 @@
 			.then((response) => response.json())
 			.then((data)=>{
 				console.log(data);
+				
+				if(data.result > 0){
+					resultUid.innerText = '이미 사용중인 아이디 입니다.';
+					resultUid.style.color = 'red';
+					isUidOk = false;
+				}else{
+					resultUid.innerText = '사용 가능한 아이디 입니다.';
+					resultUid.style.color = 'green';
+					isUidOk = true;
+				}
 			}).catch((err)=>{
 				console.log(err);
 			});
@@ -61,10 +72,149 @@
 		}
 		
 		// 2) 비밀번호 유효성 검사
+		form.pass2.addEventListener('focusout', ()=>{
+			
+			const pass1 = form.pass1.value;
+			const pass2 = form.pass2.value;
+			
+			if(pass1 == pass2){
+				
+				if(!pass1.match(rePass)){
+					resultPass.innerText = '비밀번호 형식에 맞지 않습니다.';
+					resultPass.style.color = 'red';
+					isPassOk = false;
+				}else{
+					resultPass.innerText = '사용 가능한 비밀번호 입니다.';
+					resultPass.style.color = 'green';
+					isPassOk = true;
+				}
+			}else{
+				resultPass.innerText = '비밀번호가 일치하지 않습니다.';
+				resultPass.style.color = 'red';
+				isPassOk = false;
+			}
+		});
+		
 		// 3) 이름 유효성 검사
+		form.name.addEventListener('focusout', ()=>{
+			
+			const value = form.name.value;
+			
+			if(!value.match(reName)){
+				resultName.innerText = '이름 형식에 맞지 않습니다.';
+				resultName.style.color = 'red';
+				isNameOk = false;
+			}else{
+				resultName.innerText = '';				
+				isNameOk = true;
+			}
+		});
+		
 		// 4) 별명 유효성 검사(중복체크 포함)
+		btnCheckNick.onclick = function(){
+			
+			const value = form.nick.value;
+			
+			// 유효성 검사
+			if(!value.match(reNick)){
+				resultNick.innerText = '이름 형식이 맞지 않습니다.';
+				resultNick.style.color = 'red';
+				isNickOk = false;
+				return;
+			}
+			
+			// 중복체크
+			fetch('/jboard2/user/checkUser.do?type=nick&value='+value)
+			.then((response) => response.json())
+			.then((data)=>{
+				console.log(data);
+				
+				if(data.result > 0){
+					resultNick.innerText = '이미 사용중인 닉네임 입니다.';
+					resultNick.style.color = 'red';
+					isNickOk = false;
+				}else{
+					resultNick.innerText = '사용 가능한 닉네임 입니다.';
+					resultNick.style.color = 'green';
+					isNickOk = true;
+				}
+			}).catch((err)=>{
+				console.log(err);
+			});
+			
+		}
+		
 		// 5) 이메일 유효성 검사(인증번호 처리)
-		// 6) 휴대폰 번호 유효성 검사
+		btnSendEmail.onclick = function(){
+			
+			const value = form.email.value;
+			
+			// 유효성 검사
+			if(!value.match(reEmail)){
+				resultEmail.innerText = '이메일 형식이 맞지 않습니다.';
+				resultEmail.style.color = 'red';
+				isEmailOk = false;
+				return;
+			}
+			
+			// 중복체크 & 인증코드 전송
+			fetch('/jboard2/user/checkUser.do?type=email&value='+value)
+			.then((response) => response.json())
+			.then((data)=>{
+				console.log(data);
+				
+				if(data.result > 0){
+					resultEmail.innerText = '이미 사용중인 이메일 입니다.';
+					resultEmail.style.color = 'red';
+					isEmailOk = false;
+				}else{
+					resultEmail.innerText = '사용 가능한 이메일 입니다.';
+					resultEmail.style.color = 'green';
+					isEmailOk = true;
+				}
+			}).catch((err)=>{
+				console.log(err);
+			});
+			
+			
+			
+		}
+		
+		
+		
+		// 6) 휴대폰 번호 유효성 검사(중복체크 포함)
+		btnCheckHp.onclick = function(){
+			
+			const value = form.hp.value;
+			
+			// 유효성 검사
+			if(!value.match(reHp)){
+				resultHp.innerText = '휴대폰 형식이 맞지 않습니다.';
+				resultHp.style.color = 'red';
+				isHpOk = false;
+				return;
+			}
+			
+			// 중복체크
+			fetch('/jboard2/user/checkUser.do?type=hp&value='+value)
+			.then((response) => response.json())
+			.then((data)=>{
+				console.log(data);
+				
+				if(data.result > 0){
+					resultHp.innerText = '이미 사용중인 휴대폰번호 입니다.';
+					resultHp.style.color = 'red';
+					isHpOk = false;
+				}else{
+					resultHp.innerText = '사용 가능한 휴대폰번호 입니다.';
+					resultHp.style.color = 'green';
+					isHpOk = true;
+				}
+			}).catch((err)=>{
+				console.log(err);
+			});
+			
+		}
 		
 		// 최종 전송하기
 		form.onsubmit = function(){
@@ -140,6 +290,7 @@
                     <td>휴대폰</td>
                     <td>
                     	<input type="text" name="hp" placeholder="휴대폰 입력"/>
+                    	<button type="button" id="btnCheckHp"><img src="../img/chk_id.gif" alt="중복확인"/></button>
                     	<span class="resultHp"></span>
                     </td>
                 </tr>
