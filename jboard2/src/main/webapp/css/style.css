@@ -128,26 +128,26 @@ footer > p {
     margin: 60px auto;
     overflow: hidden;
 }
-#user > .terms > table {
+#user > .terms table {
     width: 100%;
     height: auto;
     border-collapse: collapse;
     border-spacing: 0;
     border-top: 2px solid #111;
 }
-#user > .terms > table > caption {
+#user > .terms table > caption {
     text-align: left;
     font-weight: bold;
     padding: 10px 0;
     box-sizing: border-box;
 }
-#user > .terms > table tr {}
-#user > .terms > table tr > td {
+#user > .terms table tr {}
+#user > .terms table tr > td {
     padding: 6px;
     border: 1px solid #e9e9e9;
     box-sizing: border-box;
 }
-#user > .terms > table tr > td > textarea {
+#user > .terms table tr > td > textarea {
     width: 100%;
     height: 200px;
     resize: none;
@@ -156,8 +156,8 @@ footer > p {
     padding: 2px;
     box-sizing: border-box;
 }
-#user > .terms > table tr > td > label {float: right;}
-#user > .terms > table tr > td > label > input[type=checkbox] {}
+#user > .terms table tr > td > label {float: right;}
+#user > .terms table tr > td > label > input[type=checkbox] {}
 
 #user > .terms > div {
     float: right;

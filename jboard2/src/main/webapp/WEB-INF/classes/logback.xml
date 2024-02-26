@@ -31,10 +31,10 @@
   </appender>
 
   <!-- 
-  	개발 레벨 : info
+  	개발 레벨 : debug
   	운영 레벨 : warn 
   -->
-  <root level="info">
+  <root level="debug">
     <appender-ref ref="STDOUT" />
     <appender-ref ref="ROLLING_FILE" />
   </root>
