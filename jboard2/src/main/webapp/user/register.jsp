@@ -3,7 +3,8 @@
 <main id="user">
     <section class="register">
 
-        <form action="#">
+        <form action="/jboard2/user/register.do" method="post">
+        	<input type="hidden" name="sms" value="${sessionScope.sms}"/>
             <table border="1">
                 <caption>사이트 이용정보 입력</caption>
                 <tr>
