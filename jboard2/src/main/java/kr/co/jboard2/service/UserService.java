@@ -11,6 +11,7 @@ import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -49,17 +50,17 @@ public class UserService {
 	}
 	
 	
-	public void sendEmailCode(String receiver) {
+	public void sendEmailCode(HttpSession session, String receiver) {
 		
-		// 인증코드 생성
+		// 인증코드 생성 후 세션 저장
 		int code = ThreadLocalRandom.current().nextInt(100000, 1000000);
+		session.setAttribute("code", String.valueOf(code)); 
 		
 		// 기본정보
 		String sender = "chhak0503@gmail.com";
 		String password = "skht tzwh lukh orvp"; // 앱 비밀번호
 		String title = "jboard2 인증코드 입니다.";
 		String content = "<h1>인증코드는 " + code + "입니다.</h1>";
-		
 		
 		// Gmail SMTP 서버 설정
 		Properties props = new Properties();
@@ -93,6 +94,20 @@ public class UserService {
 		}
 		
 	}
+	
+	public int confirmEmailCode(HttpSession session, String code) {
+		
+		String sessCode = (String) session.getAttribute("code");
+		
+		if(sessCode.equals(code)) {
+			// 성공
+			return 1;
+		}else {
+			// 실패
+			return 0;
+		}		
+	}
+	
 	
 }
 

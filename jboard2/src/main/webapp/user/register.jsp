@@ -26,6 +26,8 @@
 		const btnCheckNick = document.getElementById('btnCheckNick');
 		const btnSendEmail = document.getElementById('btnSendEmail');
 		const btnAuthEmail = document.getElementById('btnAuthEmail');
+		const fieldAuth = document.getElementsByClassName('auth')[0];
+		
 		const btnCheckHp   = document.getElementById('btnCheckHp');
 		const btnZip = document.getElementById('btnZip');
 		
@@ -157,6 +159,8 @@
 				return;
 			}
 			
+			resultEmail.innerText = '이메일 인증코드 전송 중...';
+			
 			// 중복체크 & 인증코드 전송
 			fetch('/jboard2/user/checkUser.do?type=email&value='+value)
 			.then((response) => response.json())
@@ -168,19 +172,42 @@
 					resultEmail.style.color = 'red';
 					isEmailOk = false;
 				}else{
-					resultEmail.innerText = '사용 가능한 이메일 입니다.';
-					resultEmail.style.color = 'green';
-					isEmailOk = true;
+					// 인증코드 입력필드 활성화
+					fieldAuth.style.display = 'block';
+					resultEmail.innerText = '이메일 인증코드 6자리 입력하세요.';
 				}
 			}).catch((err)=>{
 				console.log(err);
 			});
-			
-			
-			
 		}
 		
-		
+		// 이메일 인증코드 전송 버튼 클릭
+		btnAuthEmail.onclick = function(){
+			
+			const value = form.auth.value;
+			
+			fetch('/jboard2/user/checkUser.do', {
+				method: 'POST',
+				body: JSON.stringify({"code": value}) 
+			})
+			.then((response) => response.json())
+			.then((data)=>{
+				console.log(data);
+				
+				if(data.result > 0){
+					resultEmail.innerText = '이메일이 인증 되었습니다.';
+					resultEmail.style.color = 'green';
+					isEmailOk = true;
+				}else{
+					resultEmail.innerText = '이메일이 인증코드가 일치 않습니다.';
+					resultEmail.style.color = 'red';
+					isEmailOk = false;
+				}
+				
+			}).catch((err)=>{
+				console.log(err);
+			});
+		}
 		
 		// 6) 휴대폰 번호 유효성 검사(중복체크 포함)
 		btnCheckHp.onclick = function(){
