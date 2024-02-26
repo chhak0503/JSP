@@ -33,4 +33,25 @@ public class UserService {
 	public void deleteUser(String uid) {
 		dao.deleteUser(uid);
 	}	
+	
+	public int selectCountUser(String type, String value) {
+		return dao.selectCountUser(type, value);
+	}
+	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
