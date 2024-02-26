@@ -1,256 +1,55 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="./_header.jsp" %>
+<script src="/jboard2/js/validation.js"></script>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
-	//유효성 검사에 사용할 상태변수
-	let isUidOk   = false;
-	let isPassOk  = false;
-	let isNameOk  = false;
-	let isNickOk  = false;
-	let isEmailOk = false;
-	let isHpOk    = false;
-	
-	// 유효성 검사에 사용할 정규표현식
-	const reUid   = /^[a-z]+[a-z0-9]{4,19}$/g;
-	const rePass  = /^(?=.*[a-zA-z])(?=.*[0-9])(?=.*[$`~!@$!%*#^?&\\(\\)\-_=+]).{5,16}$/;
-	const reName  = /^[가-힣]{2,10}$/ 
-	const reNick  = /^[a-zA-Zㄱ-힣0-9][a-zA-Zㄱ-힣0-9]*$/;
-	const reEmail = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
-	const reHp    = /^01(?:0|1|[6-9])-(?:\d{4})-\d{4}$/;
+function postcode() {
+    new daum.Postcode({
+        oncomplete: function(data) {
+            // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
 
-	
-	window.onload = function(){
-		
-		// 문서객체 생성
-		const form = document.formRegister;
-		const btnCheckUid  = document.getElementById('btnCheckUid');
-		const btnCheckNick = document.getElementById('btnCheckNick');
-		const btnSendEmail = document.getElementById('btnSendEmail');
-		const btnAuthEmail = document.getElementById('btnAuthEmail');
-		const fieldAuth = document.getElementsByClassName('auth')[0];
-		
-		const btnCheckHp   = document.getElementById('btnCheckHp');
-		const btnZip = document.getElementById('btnZip');
-		
-		const resultUid = document.getElementsByClassName('resultUid')[0];
-		const resultPass = document.getElementsByClassName('resultPass')[0];
-		const resultName = document.getElementsByClassName('resultName')[0];
-		const resultNick = document.getElementsByClassName('resultNick')[0];
-		const resultEmail = document.getElementsByClassName('resultEmail')[0];
-		const resultHp = document.getElementsByClassName('resultHp')[0];
-		
-		
-		// 1) 아이디 유효성 검사(중복체크 포함)
-		btnCheckUid.onclick = function(){
-			
-			const value = form.uid.value;
-			
-			// 유효성 검사
-			if(!value.match(reUid)){
-				resultUid.innerText = '아이디 형식이 맞지 않습니다.';
-				resultUid.style.color = 'red';
-				isUidOk = false;
-				return;
-			}
-			
-			// 중복체크
-			fetch('/jboard2/user/checkUser.do?type=uid&value='+value)
-			.then((response) => response.json())
-			.then((data)=>{
-				console.log(data);
-				
-				if(data.result > 0){
-					resultUid.innerText = '이미 사용중인 아이디 입니다.';
-					resultUid.style.color = 'red';
-					isUidOk = false;
-				}else{
-					resultUid.innerText = '사용 가능한 아이디 입니다.';
-					resultUid.style.color = 'green';
-					isUidOk = true;
-				}
-			}).catch((err)=>{
-				console.log(err);
-			});
-			
-		}
-		
-		// 2) 비밀번호 유효성 검사
-		form.pass2.addEventListener('focusout', ()=>{
-			
-			const pass1 = form.pass1.value;
-			const pass2 = form.pass2.value;
-			
-			if(pass1 == pass2){
-				
-				if(!pass1.match(rePass)){
-					resultPass.innerText = '비밀번호 형식에 맞지 않습니다.';
-					resultPass.style.color = 'red';
-					isPassOk = false;
-				}else{
-					resultPass.innerText = '사용 가능한 비밀번호 입니다.';
-					resultPass.style.color = 'green';
-					isPassOk = true;
-				}
-			}else{
-				resultPass.innerText = '비밀번호가 일치하지 않습니다.';
-				resultPass.style.color = 'red';
-				isPassOk = false;
-			}
-		});
-		
-		// 3) 이름 유효성 검사
-		form.name.addEventListener('focusout', ()=>{
-			
-			const value = form.name.value;
-			
-			if(!value.match(reName)){
-				resultName.innerText = '이름 형식에 맞지 않습니다.';
-				resultName.style.color = 'red';
-				isNameOk = false;
-			}else{
-				resultName.innerText = '';				
-				isNameOk = true;
-			}
-		});
-		
-		// 4) 별명 유효성 검사(중복체크 포함)
-		btnCheckNick.onclick = function(){
-			
-			const value = form.nick.value;
-			
-			// 유효성 검사
-			if(!value.match(reNick)){
-				resultNick.innerText = '이름 형식이 맞지 않습니다.';
-				resultNick.style.color = 'red';
-				isNickOk = false;
-				return;
-			}
-			
-			// 중복체크
-			fetch('/jboard2/user/checkUser.do?type=nick&value='+value)
-			.then((response) => response.json())
-			.then((data)=>{
-				console.log(data);
-				
-				if(data.result > 0){
-					resultNick.innerText = '이미 사용중인 닉네임 입니다.';
-					resultNick.style.color = 'red';
-					isNickOk = false;
-				}else{
-					resultNick.innerText = '사용 가능한 닉네임 입니다.';
-					resultNick.style.color = 'green';
-					isNickOk = true;
-				}
-			}).catch((err)=>{
-				console.log(err);
-			});
-			
-		}
-		
-		// 5) 이메일 유효성 검사(인증번호 처리)
-		btnSendEmail.onclick = function(){
-			
-			const value = form.email.value;
-			
-			// 유효성 검사
-			if(!value.match(reEmail)){
-				resultEmail.innerText = '이메일 형식이 맞지 않습니다.';
-				resultEmail.style.color = 'red';
-				isEmailOk = false;
-				return;
-			}
-			
-			resultEmail.innerText = '이메일 인증코드 전송 중...';
-			
-			// 중복체크 & 인증코드 전송
-			fetch('/jboard2/user/checkUser.do?type=email&value='+value)
-			.then((response) => response.json())
-			.then((data)=>{
-				console.log(data);
-				
-				if(data.result > 0){
-					resultEmail.innerText = '이미 사용중인 이메일 입니다.';
-					resultEmail.style.color = 'red';
-					isEmailOk = false;
-				}else{
-					// 인증코드 입력필드 활성화
-					fieldAuth.style.display = 'block';
-					resultEmail.innerText = '이메일 인증코드 6자리 입력하세요.';
-				}
-			}).catch((err)=>{
-				console.log(err);
-			});
-		}
-		
-		// 이메일 인증코드 전송 버튼 클릭
-		btnAuthEmail.onclick = function(){
-			
-			const value = form.auth.value;
-			
-			fetch('/jboard2/user/checkUser.do', {
-				method: 'POST',
-				body: JSON.stringify({"code": value}) 
-			})
-			.then((response) => response.json())
-			.then((data)=>{
-				console.log(data);
-				
-				if(data.result > 0){
-					resultEmail.innerText = '이메일이 인증 되었습니다.';
-					resultEmail.style.color = 'green';
-					isEmailOk = true;
-				}else{
-					resultEmail.innerText = '이메일이 인증코드가 일치 않습니다.';
-					resultEmail.style.color = 'red';
-					isEmailOk = false;
-				}
-				
-			}).catch((err)=>{
-				console.log(err);
-			});
-		}
-		
-		// 6) 휴대폰 번호 유효성 검사(중복체크 포함)
-		btnCheckHp.onclick = function(){
-			
-			const value = form.hp.value;
-			
-			// 유효성 검사
-			if(!value.match(reHp)){
-				resultHp.innerText = '휴대폰 형식이 맞지 않습니다.';
-				resultHp.style.color = 'red';
-				isHpOk = false;
-				return;
-			}
-			
-			// 중복체크
-			fetch('/jboard2/user/checkUser.do?type=hp&value='+value)
-			.then((response) => response.json())
-			.then((data)=>{
-				console.log(data);
-				
-				if(data.result > 0){
-					resultHp.innerText = '이미 사용중인 휴대폰번호 입니다.';
-					resultHp.style.color = 'red';
-					isHpOk = false;
-				}else{
-					resultHp.innerText = '사용 가능한 휴대폰번호 입니다.';
-					resultHp.style.color = 'green';
-					isHpOk = true;
-				}
-			}).catch((err)=>{
-				console.log(err);
-			});
-			
-		}
-		
-		// 최종 전송하기
-		form.onsubmit = function(){
-			
-			alert('전송!!!');
-			
-			return false;
-		} 
-	}
+            // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+            // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+            var addr = ''; // 주소 변수
+            var extraAddr = ''; // 참고항목 변수
+
+            //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+            if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+                addr = data.roadAddress;
+            } else { // 사용자가 지번 주소를 선택했을 경우(J)
+                addr = data.jibunAddress;
+            }
+
+            // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
+            if(data.userSelectedType === 'R'){
+                // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+                // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+                if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+                    extraAddr += data.bname;
+                }
+                // 건물명이 있고, 공동주택일 경우 추가한다.
+                if(data.buildingName !== '' && data.apartment === 'Y'){
+                    extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                }
+                // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+                if(extraAddr !== ''){
+                    extraAddr = ' (' + extraAddr + ')';
+                }
+                // 조합된 참고항목을 해당 필드에 넣는다.
+                //document.getElementById("sample6_extraAddress").value = extraAddr;
+            
+            } else {
+                //document.getElementById("sample6_extraAddress").value = '';
+            }
+
+            // 우편번호와 주소 정보를 해당 필드에 넣는다.
+            document.getElementById('zip').value = data.zonecode;
+            document.getElementById("addr1").value = addr;
+            // 커서를 상세주소 필드로 이동한다.
+            document.getElementById("addr2").focus();
+        }
+    }).open();
+}
 
 
 
@@ -324,10 +123,10 @@
                 <tr>
                     <td>주소</td>
                     <td>
-                        <input type="text" name="zip" placeholder="우편번호"/>
-                        <button type="button" id="btnZip"><img src="../img/chk_post.gif" alt="우편번호찾기"/></button>
-                        <input type="text" name="addr1" placeholder="주소 검색"/>
-                        <input type="text" name="addr2" placeholder="상세주소 입력"/>
+                        <input type="text" name="zip" id="zip" placeholder="우편번호" readonly/>
+                        <button type="button" id="btnZip" onclick="postcode()"><img src="../img/chk_post.gif" alt="우편번호찾기"/></button>
+                        <input type="text" name="addr1" id="addr1" readonly placeholder="주소 검색"/>
+                        <input type="text" name="addr2" id="addr2" placeholder="상세주소 입력"/>
                     </td>
                 </tr>
             </table>
