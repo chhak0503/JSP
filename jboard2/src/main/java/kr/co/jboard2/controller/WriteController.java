@@ -42,19 +42,12 @@ public class WriteController extends HttpServlet {
 		String title   = req.getParameter("title");
 		String content = req.getParameter("content");
 		String writer  = req.getParameter("writer");
-		String regip   = req.getRemoteAddr();
 		*/
+		String regip   = req.getRemoteAddr();
 		
-		
-		
-		
-		
-		
-		ArticleDTO articleDTO = new ArticleDTO();
-		articleDTO.setTitle(title);
-		articleDTO.setContent(content);
-		articleDTO.setWriter(writer);
+		ArticleDTO articleDTO = service.fileUpload(req);
 		articleDTO.setRegip(regip);
+		
 		logger.debug(""+articleDTO);
 		
 		service.insertArticle(articleDTO);
