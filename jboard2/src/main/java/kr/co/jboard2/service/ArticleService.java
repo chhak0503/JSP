@@ -65,10 +65,15 @@ public class ArticleService {
 		try {
 			List<FileItem> items = upload.parseRequest(req);
 			
+			// 첨부파일 갯수
+			int count = 0;
+			
 			for(FileItem item : items) {
 				
 				if(!item.isFormField()) {
 					// 첨부 파일일 경우
+					count++;
+					
 					String fname = item.getName();
 					int idx = fname.lastIndexOf(".");
 					String ext = fname.substring(idx);
@@ -92,6 +97,8 @@ public class ArticleService {
 					}
 				}
 			}
+			
+			articleDTO.setFile(count);
 			
 		}catch (Exception e) {
 			logger.error("fileUpload : " + e.getMessage());
