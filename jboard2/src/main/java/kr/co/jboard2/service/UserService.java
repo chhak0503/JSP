@@ -38,6 +38,9 @@ public class UserService {
 	public List<UserDTO> selectUsers() {
 		return dao.selectUsers();
 	}
+	public UserDTO selectUserForLogin(String uid, String pass) {
+		return dao.selectUserForLogin(uid, pass);
+	}
 	public void updateUser(UserDTO userDTO) {
 		dao.updateUser(userDTO);
 	}
