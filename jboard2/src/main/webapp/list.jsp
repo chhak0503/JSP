@@ -38,7 +38,7 @@
             <a href="#" class="num">3</a>
             <a href="#" class="next">다음</a>
         </div>
-        <a href="./write.html" class="btn btnWrite">글쓰기</a>
+        <a href="./write.do" class="btn btnWrite">글쓰기</a>
     </section>
 </main>
 <%@ include file="./_footer.jsp" %>
