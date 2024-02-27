@@ -3,7 +3,6 @@ package kr.co.jboard2.service;
 import java.util.List;
 
 import kr.co.jboard2.dao.FileDAO;
-import kr.co.jboard2.db.SQL;
 import kr.co.jboard2.dto.FileDTO;
 
 public class FileService {

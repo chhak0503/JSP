@@ -32,8 +32,8 @@ public class ArticleService {
 	
 	private ArticleDAO dao = ArticleDAO.getInstance();
 	
-	public void insertArticle(ArticleDTO articleDTO) {
-		dao.insertArticle(articleDTO);
+	public int insertArticle(ArticleDTO articleDTO) {
+		return dao.insertArticle(articleDTO);
 	}
 	public ArticleDTO selectArticle(int no) {
 		return dao.selectArticle(no);

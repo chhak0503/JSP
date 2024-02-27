@@ -1,5 +1,6 @@
 package kr.co.jboard2.dao;
 
+import java.sql.Statement;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -19,10 +20,15 @@ public class ArticleDAO extends DBHelper {
 
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 	
-	public void insertArticle(ArticleDTO articleDTO) {
+	public int insertArticle(ArticleDTO articleDTO) {
+		
+		int pk = 0;
+		
 		try {
 			conn = getConnection();
-			psmt = conn.prepareStatement(SQL.INSERT_ARTICLE);
+			
+			// INSERT가 실행되고 자동 생성되는 PK값을 리턴하는 옵션
+			psmt = conn.prepareStatement(SQL.INSERT_ARTICLE, Statement.RETURN_GENERATED_KEYS);
 			psmt.setString(1, articleDTO.getTitle());
 			psmt.setString(2, articleDTO.getContent());
 			psmt.setInt(3, articleDTO.getFile());
@@ -30,12 +36,22 @@ public class ArticleDAO extends DBHelper {
 			psmt.setString(5, articleDTO.getRegip());
 			logger.info("insertArticle : " + psmt);
 			
+			// INSERT 실행
 			psmt.executeUpdate();
+			
+			// 생성된 PK 가져오기
+			rs = psmt.getGeneratedKeys();
+			if(rs.next()) {
+				pk = rs.getInt(1);
+			}
+			
 			closeAll();
 			
 		}catch (Exception e) {
 			logger.error("insertArticle : " + e.getMessage());
 		}
+		
+		return pk;
 	}
 	public ArticleDTO selectArticle(int no) {
 		return null;

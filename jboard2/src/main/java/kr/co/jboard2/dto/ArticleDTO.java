@@ -26,7 +26,6 @@ public class ArticleDTO {
 		this.fileDTOs = fileDTOs;
 	}
 	
-	
 	public int getNo() {
 		return no;
 	}

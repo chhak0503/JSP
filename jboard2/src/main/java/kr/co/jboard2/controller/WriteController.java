@@ -41,7 +41,6 @@ public class WriteController extends HttpServlet {
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-	
 		/*
 		// Multipart/form-data는 getParameter 수신 안됨
 		String title   = req.getParameter("title");
@@ -50,18 +49,21 @@ public class WriteController extends HttpServlet {
 		*/
 		String regip   = req.getRemoteAddr();
 		
+		// 파일 업로드
 		ArticleDTO articleDTO = articleService.fileUpload(req);
-		articleDTO.setRegip(regip);
-		
+		articleDTO.setRegip(regip);		
 		logger.debug(""+articleDTO);
 		
 		// 글 등록
-		articleService.insertArticle(articleDTO);
+		int pk = articleService.insertArticle(articleDTO);
 		
 		// 파일 등록
 		List<FileDTO> files = articleDTO.getFileDTOs();
 		
 		for(FileDTO fileDTO : files) {
+			fileDTO.setAno(pk);
+			logger.debug(""+fileDTO);
+			
 			fileService.insertFile(fileDTO);
 		}
 		
