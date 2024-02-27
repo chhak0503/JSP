@@ -1,6 +1,7 @@
 package kr.co.jboard2.controller;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -12,15 +13,19 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import kr.co.jboard2.dao.FileDAO;
 import kr.co.jboard2.dto.ArticleDTO;
+import kr.co.jboard2.dto.FileDTO;
 import kr.co.jboard2.service.ArticleService;
+import kr.co.jboard2.service.FileService;
 
 @WebServlet("/write.do")
 public class WriteController extends HttpServlet {
 	private static final long serialVersionUID = -1583953554011146813L;
 	
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
-	private ArticleService service = ArticleService.getInstance();
+	private ArticleService articleService = ArticleService.getInstance();
+	private FileService fileService = FileService.getInstance();
 
 	@Override
 	public void init() throws ServletException {
@@ -45,12 +50,20 @@ public class WriteController extends HttpServlet {
 		*/
 		String regip   = req.getRemoteAddr();
 		
-		ArticleDTO articleDTO = service.fileUpload(req);
+		ArticleDTO articleDTO = articleService.fileUpload(req);
 		articleDTO.setRegip(regip);
 		
 		logger.debug(""+articleDTO);
 		
-		service.insertArticle(articleDTO);
+		// 글 등록
+		articleService.insertArticle(articleDTO);
+		
+		// 파일 등록
+		List<FileDTO> files = articleDTO.getFileDTOs();
+		
+		for(FileDTO fileDTO : files) {
+			fileService.insertFile(fileDTO);
+		}
 		
 		resp.sendRedirect("/jboard2/list.do");
 	}

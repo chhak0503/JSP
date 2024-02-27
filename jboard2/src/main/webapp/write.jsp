@@ -19,9 +19,8 @@
                 <tr>
                     <th>파일</th>
                     <td>
-                    	<p>최대 2개 파일 첨부</p>
-                        <input type="file" name="fname1"/><br>
-                        <input type="file" name="fname2"/><br>
+                    	<p>최대 2개 파일 첨부 가능</p>
+                        <input type="file" name="fname" multiple="multiple"/><br>
                     </td>
                 </tr>
             </table>

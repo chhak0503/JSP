@@ -40,6 +40,13 @@ public class SQL {
 												+ "`regip`=?,"
 												+ "`rdate`=NOW()";
 	
+	public static final String INSERT_FILE = "INSERT INTO `File` SET "
+											+ "`ano`=?,"
+											+ "`oName`=?,"
+											+ "`sName`=?,"
+											+ "`rdate`=NOW()";
+	
+	
 	public static final String SELECT_COUNT_TOTAL = "SELECT COUNT(*) FROM `Article` WHERE `parent`=0 ";
 	
 	public static final String SELECT_ARTICLES = "SELECT a.*, b.`nick` FROM `Article` AS a "
