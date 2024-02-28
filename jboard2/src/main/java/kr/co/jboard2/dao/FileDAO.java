@@ -40,11 +40,20 @@ public class FileDAO extends DBHelper {
 		FileDTO fileDTO = null;
 		try {
 			conn = getConnection();
+			conn.setAutoCommit(false); // 트랜잭션 시작
+			
 			psmt = conn.prepareStatement(SQL.SELECT_FILE);
 			psmt.setString(1, fno);
 			logger.info("selectFile : " + psmt);
 			
+			psmtEtc1 = conn.prepareStatement(SQL.UPDATE_FILE_DOWNLOAD);
+			psmtEtc1.setString(1, fno);
+			logger.info("selectFile : " + psmtEtc1);
+			
 			rs = psmt.executeQuery();
+			psmtEtc1.executeUpdate();
+			
+			conn.commit();
 			
 			if(rs.next()) {
 				fileDTO = new FileDTO();
@@ -61,7 +70,8 @@ public class FileDAO extends DBHelper {
 		}
 		
 		return fileDTO;
-	} 
+	}
+	
 	public List<FileDTO> selectFiles() {
 		return null;
 	} 

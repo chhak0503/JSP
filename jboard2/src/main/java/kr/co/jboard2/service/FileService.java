@@ -6,6 +6,7 @@ import kr.co.jboard2.dao.FileDAO;
 import kr.co.jboard2.dto.FileDTO;
 
 public class FileService {
+	
 	private static FileService instance = new FileService();
 	public static FileService getInstance() {
 		return instance;
