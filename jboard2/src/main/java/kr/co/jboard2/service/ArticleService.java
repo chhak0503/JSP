@@ -53,6 +53,10 @@ public class ArticleService {
 	public void updateArticle(ArticleDTO articleDTO) {
 		dao.updateArticle(articleDTO);
 	}
+	public void updateArticleForFileCount(int no) {
+		dao.updateArticleForFileCount(no);
+	}
+	
 	public void deleteArticle(int no) {
 		dao.deleteArticle(no);
 	}
@@ -116,6 +120,8 @@ public class ArticleService {
 						articleDTO.setContent(fieldValue);
 					}else if(fieldName.equals("writer")) {
 						articleDTO.setWriter(fieldValue);
+					}else if(fieldName.equals("no")) {
+						articleDTO.setNo(fieldValue);
 					}
 				}
 			}

@@ -154,7 +154,7 @@ public class ArticleDAO extends DBHelper {
 			}
 			closeAll();
 		}catch (Exception e) {
-			e.printStackTrace();
+			logger.error("selectCountTotal" + e.getMessage());
 		}
 		
 		return total;
@@ -162,7 +162,39 @@ public class ArticleDAO extends DBHelper {
 
 	public void updateArticle(ArticleDTO articleDTO) {
 		
+		try {
+			conn = getConnection();
+			psmt = conn.prepareStatement(SQL.UPDATE_ARTICLE);
+			psmt.setString(1, articleDTO.getTitle());
+			psmt.setString(2, articleDTO.getContent());
+			psmt.setInt(3, articleDTO.getFile());
+			psmt.setInt(4, articleDTO.getNo());
+			logger.info("updateArticle : " + psmt);
+			
+			psmt.executeUpdate();		
+			closeAll();			
+			
+		}catch (Exception e) {
+			logger.error("updateArticle : " + e.getMessage());
+		}
 	}
+	
+	public void updateArticleForFileCount(int no) {
+		
+		try {
+			conn = getConnection();
+			psmt = conn.prepareStatement(SQL.UPDATE_ARTICLE_FOR_FILE_COUNT);
+			psmt.setInt(1, no);
+			logger.info("updateArticleForFileCount : " + psmt);
+			
+			psmt.executeUpdate();		
+			closeAll();			
+			
+		}catch (Exception e) {
+			logger.error("updateArticleForFileCount : " + e.getMessage());
+		}
+	}
+	
 	public void deleteArticle(int no) {
 		
 	}

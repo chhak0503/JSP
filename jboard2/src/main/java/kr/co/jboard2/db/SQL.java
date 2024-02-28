@@ -71,8 +71,10 @@ public class SQL {
 												+ "ORDER BY `no` ASC";
 	
 	public static final String SELECT_FILE = "SELECT * FROM `File` WHERE `fno`=?";
+	public static final String SELECT_FILE_FOR_ANO = "SELECT `ano` FROM `File` WHERE `fno`=?";
 
-	public static final String UPDATE_ARTICLE = "UPDATE `Article` SET `title`=?, `content`=? WHERE `no`=?";
+	public static final String UPDATE_ARTICLE = "UPDATE `Article` SET `title`=?, `content`=?, `file`=? WHERE `no`=?";
+	public static final String UPDATE_ARTICLE_FOR_FILE_COUNT = "UPDATE `Article` SET `file`=`file`-1 WHERE `no`=?";
 	public static final String UPDATE_COMMENT = "UPDATE `Article` SET `content`=? WHERE `no`=?";
 	public static final String UPDATE_HIT_COUNT = "UPDATE `Article` SET `hit` = `hit` + 1 WHERE `no`=?";
 	public static final String UPDATE_COMMENT_PLUS  = "UPDATE `Article` SET `comment` = `comment` + 1 WHERE `no`=?";
@@ -83,6 +85,7 @@ public class SQL {
 	
 	public static final String DELETE_ARTICLE = "DELETE FROM `Article` WHERE `no`=? OR `parent`=?";
 	public static final String DELETE_COMMENT = "DELETE FROM `Article` WHERE `no`=?";
+	public static final String DELETE_FILE = "DELETE FROM `File` WHERE `fno`=?";
 	
 }
 
