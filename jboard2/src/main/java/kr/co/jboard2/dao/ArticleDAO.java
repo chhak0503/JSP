@@ -69,18 +69,22 @@ public class ArticleDAO extends DBHelper {
 			rs = psmt.executeQuery();
 			
 			while(rs.next()) {
-				articleDTO = new ArticleDTO();
-				articleDTO.setNo(rs.getInt(1));
-				articleDTO.setParent(rs.getInt(2));
-				articleDTO.setComment(rs.getInt(3));
-				articleDTO.setCate(rs.getString(4));
-				articleDTO.setTitle(rs.getString(5));
-				articleDTO.setContent(rs.getString(6));
-				articleDTO.setFile(rs.getInt(7));
-				articleDTO.setHit(rs.getInt(8));
-				articleDTO.setWriter(rs.getString(9));
-				articleDTO.setRegip(rs.getString(10));
-				articleDTO.setRdate(rs.getString(11));
+				
+				// 글 하나당 파일이 여러개일 경우 글객체(ArticleDTO)는 여러개 생성할 필요가 없기 때문에 1개만 생성 되도록 조건처리
+				if(articleDTO == null) {
+					articleDTO = new ArticleDTO();
+					articleDTO.setNo(rs.getInt(1));
+					articleDTO.setParent(rs.getInt(2));
+					articleDTO.setComment(rs.getInt(3));
+					articleDTO.setCate(rs.getString(4));
+					articleDTO.setTitle(rs.getString(5));
+					articleDTO.setContent(rs.getString(6));
+					articleDTO.setFile(rs.getInt(7));
+					articleDTO.setHit(rs.getInt(8));
+					articleDTO.setWriter(rs.getString(9));
+					articleDTO.setRegip(rs.getString(10));
+					articleDTO.setRdate(rs.getString(11));
+				}
 				
 				FileDTO fileDTO = new FileDTO();
 				fileDTO.setFno(rs.getInt(12));

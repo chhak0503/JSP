@@ -18,7 +18,7 @@ public class FileService {
 		dao.insertFile(fileDTO);
 	} 
 	
-	public FileDTO selectFile(int fno) {
+	public FileDTO selectFile(String fno) {
 		return dao.selectFile(fno);
 	} 
 	public List<FileDTO> selectFiles() {

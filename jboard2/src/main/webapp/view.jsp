@@ -15,7 +15,7 @@
                 <th>파일</th>
                 <td>
                 	<c:forEach var="file" items="${articleDTO.fileDTOs}">
-                	<a href="#">${file.oName}</a>&nbsp;<span>${file.download}</span>회 다운로드<br>
+                	<p><a href="/jboard2/fileDownload.do?fno=${file.fno}">${file.oName}</a>&nbsp;<span>${file.download}</span>회 다운로드</p>
                 	</c:forEach>
                 </td>
             </tr>
@@ -31,7 +31,7 @@
         <div>
             <a href="#" class="btn btnRemove">삭제</a>
             <a href="./modify.html" class="btn btnModify">수정</a>
-            <a href="./list.html" class="btn btnList">목록</a>
+            <a href="./list.do" class="btn btnList">목록</a>
         </div>
 
         <!-- 댓글목록 -->

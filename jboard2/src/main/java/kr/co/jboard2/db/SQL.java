@@ -61,14 +61,16 @@ public class SQL {
 	public static final String SELECT_ARTICLES_ORDER_LIMIT = "ORDER BY `no` DESC LIMIT ?, 10";
 	
 	public static final String SELECT_ARTICLE = "SELECT * FROM `Article` as a "
-												+ "JOIN `File` as b ON a.no = b.ano "
-												+ " WHERE `no`=?";
+												+ "LEFT JOIN `File` as b ON a.no = b.ano "
+												+ "WHERE `no`=?";
 	
 	
 	public static final String SELECT_COMMENTS = "SELECT a.*, b.`nick` FROM `Article` as a "
 												+ "JOIN `User` AS b ON a.writer = b.uid "
 												+ "WHERE `parent`=? "
 												+ "ORDER BY `no` ASC";
+	
+	public static final String SELECT_FILE = "SELECT * FROM `File` WHERE `fno`=?";
 
 	public static final String UPDATE_ARTICLE = "UPDATE `Article` SET `title`=?, `content`=? WHERE `no`=?";
 	public static final String UPDATE_COMMENT = "UPDATE `Article` SET `content`=? WHERE `no`=?";
