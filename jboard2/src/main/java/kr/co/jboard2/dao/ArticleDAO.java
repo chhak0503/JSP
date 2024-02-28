@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import kr.co.jboard2.db.DBHelper;
 import kr.co.jboard2.db.SQL;
 import kr.co.jboard2.dto.ArticleDTO;
+import kr.co.jboard2.dto.FileDTO;
 
 public class ArticleDAO extends DBHelper {
 	
@@ -54,8 +55,52 @@ public class ArticleDAO extends DBHelper {
 		
 		return pk;
 	}
-	public ArticleDTO selectArticle(int no) {
-		return null;
+	public ArticleDTO selectArticle(String no) {
+		
+		ArticleDTO articleDTO = null;
+		List<FileDTO> files = new ArrayList<>();
+		
+		try {
+			conn = getConnection();
+			psmt = conn.prepareStatement(SQL.SELECT_ARTICLE);
+			psmt.setString(1, no);
+			logger.info("selectArticle : " + psmt);
+			
+			rs = psmt.executeQuery();
+			
+			while(rs.next()) {
+				articleDTO = new ArticleDTO();
+				articleDTO.setNo(rs.getInt(1));
+				articleDTO.setParent(rs.getInt(2));
+				articleDTO.setComment(rs.getInt(3));
+				articleDTO.setCate(rs.getString(4));
+				articleDTO.setTitle(rs.getString(5));
+				articleDTO.setContent(rs.getString(6));
+				articleDTO.setFile(rs.getInt(7));
+				articleDTO.setHit(rs.getInt(8));
+				articleDTO.setWriter(rs.getString(9));
+				articleDTO.setRegip(rs.getString(10));
+				articleDTO.setRdate(rs.getString(11));
+				
+				FileDTO fileDTO = new FileDTO();
+				fileDTO.setFno(rs.getInt(12));
+				fileDTO.setAno(rs.getInt(13));
+				fileDTO.setoName(rs.getString(14));
+				fileDTO.setsName(rs.getString(15));
+				fileDTO.setDownload(rs.getInt(16));
+				fileDTO.setRdate(rs.getString(17));
+				files.add(fileDTO);
+			}
+			
+			articleDTO.setFileDTOs(files);
+			
+			closeAll();
+			
+		}catch (Exception e) {
+			logger.error("selectArticle : " + e.getMessage());
+		}
+		
+		return articleDTO;
 	}
 	public List<ArticleDTO> selectArticles(int start) {
 		List<ArticleDTO> articles = new ArrayList<>();

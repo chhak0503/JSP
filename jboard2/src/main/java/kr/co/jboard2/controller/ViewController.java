@@ -9,10 +9,19 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import kr.co.jboard2.dto.ArticleDTO;
+import kr.co.jboard2.service.ArticleService;
+
 @WebServlet("/view.do")
 public class ViewController extends HttpServlet {
 	private static final long serialVersionUID = -4302286311604205457L;
 
+	private Logger logger = LoggerFactory.getLogger(this.getClass());
+	private ArticleService service = ArticleService.getInstance();
+	
 	@Override
 	public void init() throws ServletException {
 		
@@ -20,6 +29,14 @@ public class ViewController extends HttpServlet {
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		
+		String no = req.getParameter("no");
+		
+		// 글 조회
+		ArticleDTO articleDTO = service.selectArticle(no);
+
+		// view 참조 공유
+		req.setAttribute("articleDTO", articleDTO);
 		
 		RequestDispatcher dispatcher = req.getRequestDispatcher("/view.jsp");
 		dispatcher.forward(req, resp);

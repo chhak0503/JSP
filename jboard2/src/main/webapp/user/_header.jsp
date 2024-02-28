@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>로그인</title>
-    <link rel="stylesheet" href="../css/style.css"/>
+    <link rel="stylesheet" href="/jboard2/css/style.css"/>
 </head>
 <body>
     <div id="wrapper">

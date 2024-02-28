@@ -35,7 +35,7 @@ public class ArticleService {
 	public int insertArticle(ArticleDTO articleDTO) {
 		return dao.insertArticle(articleDTO);
 	}
-	public ArticleDTO selectArticle(int no) {
+	public ArticleDTO selectArticle(String no) {
 		return dao.selectArticle(no);
 	}
 	public List<ArticleDTO> selectArticles(int start) {

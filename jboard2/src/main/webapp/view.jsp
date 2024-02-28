@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ include file="./_header.jsp" %>
 <main id="board">
     <section class="view">
@@ -7,16 +8,22 @@
             <caption>글보기</caption>
             <tr>
                 <th>제목</th>
-                <td><input type="text" name="title" value="제목입니다." readonly/></td>
+                <td><input type="text" name="title" value="${requestScope.articleDTO.title}" readonly/></td>
             </tr>
+            <c:if test="${articleDTO.file > 0}">
             <tr>
                 <th>파일</th>
-                <td><a href="#">2020년 상반기 매출자료.xls</a>&nbsp;<span>7</span>회 다운로드</td>
+                <td>
+                	<c:forEach var="file" items="${articleDTO.fileDTOs}">
+                	<a href="#">${file.oName}</a>&nbsp;<span>${file.download}</span>회 다운로드<br>
+                	</c:forEach>
+                </td>
             </tr>
+            </c:if>
             <tr>
                 <th>내용</th>
                 <td>
-                    <textarea name="content" readonly>내용 샘플입니다.</textarea>
+                    <textarea name="content" readonly>${articleDTO.content}</textarea>
                 </td>
             </tr>                    
         </table>

@@ -60,7 +60,11 @@ public class SQL {
 												
 	public static final String SELECT_ARTICLES_ORDER_LIMIT = "ORDER BY `no` DESC LIMIT ?, 10";
 	
-	public static final String SELECT_ARTICLE = "SELECT * FROM `Article` WHERE `no`=?";
+	public static final String SELECT_ARTICLE = "SELECT * FROM `Article` as a "
+												+ "JOIN `File` as b ON a.no = b.ano "
+												+ " WHERE `no`=?";
+	
+	
 	public static final String SELECT_COMMENTS = "SELECT a.*, b.`nick` FROM `Article` as a "
 												+ "JOIN `User` AS b ON a.writer = b.uid "
 												+ "WHERE `parent`=? "
