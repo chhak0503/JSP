@@ -52,6 +52,10 @@ public class ArticleService {
 		return dao.selectArticles(start);
 	}
 	
+	public List<ArticleDTO> selectComments(String parent) {
+		return dao.selectComments(parent);
+	}
+	
 	public int selectCountTotal() {
 		return dao.selectCountTotal();
 	}
