@@ -33,12 +33,21 @@ public class CommentController extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 	
+		String type = req.getParameter("type");
+		String no = req.getParameter("no");
+		String parent = req.getParameter("parent");
+		
+		if(type.equals("remove")) {
+			service.deleteComment(no);
+		}
+		
+		resp.sendRedirect("/jboard2/view.do?no="+parent);
 	}
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-		// AJAX(fetch함수) POST 데이터 스트림 수신처리
+		// AJAX(fetch) POST 데이터 스트림 수신처리
 		BufferedReader reader = req.getReader();
 		StringBuilder requestBody = new StringBuilder();
 		String line;

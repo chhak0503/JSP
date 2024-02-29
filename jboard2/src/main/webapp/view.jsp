@@ -4,6 +4,7 @@
 <script>
 	window.onload = function(){
 		
+		const commentList = document.getElementsByClassName('commentList')[0];
 		const btnSubmit = document.commentForm.submit;
 		const form = document.commentForm;
 		
@@ -32,9 +33,26 @@
 				.then((data) => {
 					console.log(data);
 					
-					// 태그 동적 생성
+					const today = new Date();
+					const year = today.getFullYear();
+					const month = today.getMonth() + 1;
+					const date = today.getDate();
 					
+					// 태그 문자열 생성
+					let commentArticle = "<article>";
+					commentArticle += "<span class='nick'>${sessUser.nick}</span>";
+					commentArticle += "<span class='date'>"+year+"-"+month+"-"+date+"</span>";
+					commentArticle += "<p class='content'>"+content+"</p>";
+					commentArticle += "<div>";
+					commentArticle += "<a href='#' class='remove'>삭제</a>";
+					commentArticle += "<a href='#' class='modify'>수정</a>";
+					commentArticle += "</div>";
+					commentArticle += "</article>";
 					
+					console.log(commentArticle);
+					
+					// 태그 문자열 삽입
+					commentList.insertAdjacentHTML('beforeend', commentArticle);
 					
 				})
 				.catch((err) => {
@@ -95,7 +113,7 @@
 	                <span class="date">${comment.rdate.substring(2,10)}</span>
 	                <p class="content">${comment.content}</p>
 	                <div>
-	                    <a href="#" class="remove">삭제</a>
+	                    <a href="/jboard2/comment.do?type=remove&no=${comment.no}&parent=${comment.parent}" class="remove">삭제</a>
 	                    <a href="#" class="modify">수정</a>
 	                </div>
 	            </article>

@@ -70,6 +70,11 @@ public class ArticleService {
 		dao.deleteArticle(no);
 	}
 	
+	public void deleteComment(String no) {
+		dao.deleteComment(no);
+	}
+	
+	
 	public ArticleDTO fileUpload(HttpServletRequest req) {
 		// 파일 업로드 경로 설정
 		ServletContext ctx = req.getServletContext();
