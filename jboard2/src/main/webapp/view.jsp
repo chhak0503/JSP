@@ -12,6 +12,7 @@
 		document.addEventListener('click', function(e){
 			e.preventDefault();
 			
+			// 이벤트 대상의 클래스값이 remove일 경우
 			if(e.target.classList == 'remove'){
 				
 				// 해당 삭제에서 가장 가까운 부모 article 문서객체 생성
