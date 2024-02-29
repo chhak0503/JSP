@@ -37,11 +37,19 @@ public class CommentController extends HttpServlet {
 		String no = req.getParameter("no");
 		String parent = req.getParameter("parent");
 		
+		int result = 0;
+		
 		if(type.equals("remove")) {
-			service.deleteComment(no);
+			result = service.deleteComment(no);
 		}
 		
-		resp.sendRedirect("/jboard2/view.do?no="+parent);
+		// 결과 JSON 생성
+		JsonObject json = new JsonObject();
+		json.addProperty("result", result);
+		
+		// JSON 출력
+		PrintWriter writer = resp.getWriter();
+		writer.print(json);
 	}
 	
 	@Override

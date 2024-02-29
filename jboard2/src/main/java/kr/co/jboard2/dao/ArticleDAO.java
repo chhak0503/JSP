@@ -261,7 +261,9 @@ public class ArticleDAO extends DBHelper {
 		
 	}
 	
-	public void deleteComment(String no) {
+	public int deleteComment(String no) {
+		
+		int result = 0;
 		
 		try {
 			conn = getConnection();
@@ -269,14 +271,14 @@ public class ArticleDAO extends DBHelper {
 			psmt.setString(1, no);
 			logger.info("deleteComment : " + psmt);
 			
-			psmt.executeUpdate();		
+			result = psmt.executeUpdate();		
 			closeAll();			
 			
 		}catch (Exception e) {
 			logger.error("deleteComment : " + e.getMessage());
 		}
 		
-		
+		return result;
 	}
 
 }

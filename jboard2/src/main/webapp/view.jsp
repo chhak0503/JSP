@@ -5,8 +5,44 @@
 	window.onload = function(){
 		
 		const commentList = document.getElementsByClassName('commentList')[0];
+		const btnsRemove = commentList.getElementsByClassName('remove');
 		const btnSubmit = document.commentForm.submit;
 		const form = document.commentForm;
+		
+		// 댓글 삭제
+		for(const btnRemove of btnsRemove){
+			btnRemove.onclick = function(e){
+				e.preventDefault();
+				
+				// 해당 삭제에서 가장 가까운 부모 article 문서객체 생성
+				const article = this.closest('article');
+				
+				// 사용자 정의 속성 data-no 참조
+				const no     = this.dataset.no;
+				const parent = this.dataset.parent;
+				console.log('no : ' + no); 
+				console.log('parent : ' + parent); 
+				
+				fetch('/jboard2/comment.do?type=remove&no='+no+'&parent='+parent)
+					.then((resp) => resp.json())
+					.then((data) => {
+						
+						if(data.result > 0){
+							alert('삭제 되었습니다.');
+							
+							// 삭제 동적 처리
+							article.remove();
+						}
+						
+					})
+					.catch((err) => {
+						console.log(err);
+					});
+			}	
+		}
+		
+		
+				
 		
 		// 댓글 입력
 		btnSubmit.onclick = function(e){
@@ -38,18 +74,16 @@
 					const month = today.getMonth() + 1;
 					const date = today.getDate();
 					
-					// 태그 문자열 생성
-					let commentArticle = "<article>";
-					commentArticle += "<span class='nick'>${sessUser.nick}</span>";
-					commentArticle += "<span class='date'>"+year+"-"+month+"-"+date+"</span>";
-					commentArticle += "<p class='content'>"+content+"</p>";
-					commentArticle += "<div>";
-					commentArticle += "<a href='#' class='remove'>삭제</a>";
-					commentArticle += "<a href='#' class='modify'>수정</a>";
-					commentArticle += "</div>";
-					commentArticle += "</article>";
-					
-					console.log(commentArticle);
+					// 태그 문자열 생성(JSP 표현언어와 Javascritp 템플릿 문자열의 간섭으로 \ 이스케이프 처리)					
+					const commentArticle = `<article>
+								                <span class="nick">${sessUser.nick}</span>
+								                <span class="date">\${year}-\${month}-\${date}</span>
+								                <p class="content">\${content}</p>
+								                <div>
+								                    <a href="#" class="remove">삭제</a>
+								                    <a href="#" class="modify">수정</a>
+								                </div>
+								            </article>`;
 					
 					// 태그 문자열 삽입
 					commentList.insertAdjacentHTML('beforeend', commentArticle);
@@ -113,7 +147,7 @@
 	                <span class="date">${comment.rdate.substring(2,10)}</span>
 	                <p class="content">${comment.content}</p>
 	                <div>
-	                    <a href="/jboard2/comment.do?type=remove&no=${comment.no}&parent=${comment.parent}" class="remove">삭제</a>
+	                    <a href="#" data-no="${comment.no}" data-parent="${comment.parent}" class="remove">삭제</a>
 	                    <a href="#" class="modify">수정</a>
 	                </div>
 	            </article>

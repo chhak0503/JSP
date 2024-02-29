@@ -70,8 +70,8 @@ public class ArticleService {
 		dao.deleteArticle(no);
 	}
 	
-	public void deleteComment(String no) {
-		dao.deleteComment(no);
+	public int deleteComment(String no) {
+		return dao.deleteComment(no);
 	}
 	
 	
