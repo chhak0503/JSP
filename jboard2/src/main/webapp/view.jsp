@@ -5,21 +5,21 @@
 	window.onload = function(){
 		
 		const commentList = document.getElementsByClassName('commentList')[0];
-		const btnsRemove = commentList.getElementsByClassName('remove');
 		const btnSubmit = document.commentForm.submit;
 		const form = document.commentForm;
 		
-		// 댓글 삭제
-		for(const btnRemove of btnsRemove){
-			btnRemove.onclick = function(e){
-				e.preventDefault();
+		// 댓글 삭제(동적 이벤트 처리)
+		document.addEventListener('click', function(e){
+			e.preventDefault();
+			
+			if(e.target.classList == 'remove'){
 				
 				// 해당 삭제에서 가장 가까운 부모 article 문서객체 생성
-				const article = this.closest('article');
+				const article = e.target.closest('article');
 				
 				// 사용자 정의 속성 data-no 참조
-				const no     = this.dataset.no;
-				const parent = this.dataset.parent;
+				const no     = e.target.dataset.no;
+				const parent = e.target.dataset.parent;
 				console.log('no : ' + no); 
 				console.log('parent : ' + parent); 
 				
@@ -38,11 +38,19 @@
 					.catch((err) => {
 						console.log(err);
 					});
+			}
+			
+		});
+		
+		/*
+		for(const btnRemove of btnsRemove){
+			btnRemove.onclick = function(e){
+				e.preventDefault();
+				
+				
 			}	
 		}
-		
-		
-				
+		*/
 		
 		// 댓글 입력
 		btnSubmit.onclick = function(e){
@@ -69,24 +77,26 @@
 				.then((data) => {
 					console.log(data);
 					
-					const today = new Date();
-					const year = today.getFullYear();
-					const month = today.getMonth() + 1;
-					const date = today.getDate();
-					
-					// 태그 문자열 생성(JSP 표현언어와 Javascritp 템플릿 문자열의 간섭으로 \ 이스케이프 처리)					
-					const commentArticle = `<article>
-								                <span class="nick">${sessUser.nick}</span>
-								                <span class="date">\${year}-\${month}-\${date}</span>
-								                <p class="content">\${content}</p>
-								                <div>
-								                    <a href="#" class="remove">삭제</a>
-								                    <a href="#" class="modify">수정</a>
-								                </div>
-								            </article>`;
-					
-					// 태그 문자열 삽입
-					commentList.insertAdjacentHTML('beforeend', commentArticle);
+					if(data.pk > 0){
+						const today = new Date();
+						const year = today.getFullYear();
+						const month = today.getMonth() + 1;
+						const date = today.getDate();
+						
+						// 태그 문자열 생성(JSP 표현언어와 Javascritp 템플릿 문자열의 간섭으로 \ 이스케이프 처리)					
+						const commentArticle = `<article>
+									                <span class="nick">${sessUser.nick}</span>
+									                <span class="date">\${year}-\${month}-\${date}</span>
+									                <p class="content">\${content}</p>
+									                <div>
+									                    <a href="#" data-no="\${data.pk}" data-parent="\${data.parent}" class="remove">삭제</a>
+									                    <a href="#" class="modify">수정</a>
+									                </div>
+									            </article>`;
+						
+						// 태그 문자열 삽입
+						commentList.insertAdjacentHTML('beforeend', commentArticle);
+					}
 					
 				})
 				.catch((err) => {

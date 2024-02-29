@@ -58,25 +58,32 @@ public class ArticleDAO extends DBHelper {
 	
 	public int insertComment(ArticleDTO articleDTO) {
 		
-		int result = 0;
+		int pk = 0;
 		
 		try {
 			conn = getConnection();
-			psmt = conn.prepareStatement(SQL.INSERT_COMMENT);
+			psmt = conn.prepareStatement(SQL.INSERT_COMMENT, Statement.RETURN_GENERATED_KEYS);
 			psmt.setInt(1, articleDTO.getParent());
 			psmt.setString(2, articleDTO.getContent());
 			psmt.setString(3, articleDTO.getWriter());
 			psmt.setString(4, articleDTO.getRegip());
 			logger.info("insertComment : " + psmt);
 			
-			result = psmt.executeUpdate();
+			psmt.executeUpdate();
+			
+			// INSERT 해서 부여된 AUTO_INCREMENT PK값 가져오기
+			rs = psmt.getGeneratedKeys();
+			if(rs.next()) {
+				pk = rs.getInt(1);
+			}
+			
 			closeAll();
 			
 		}catch (Exception e) {
 			logger.error("insertComment : " + e.getMessage());
 		}
 		
-		return result;
+		return pk;
 	}
 	
 	

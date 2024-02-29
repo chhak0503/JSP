@@ -74,12 +74,12 @@ public class CommentController extends HttpServlet {
 		logger.debug("articleDTO : " + articleDTO);
 		
 		// 댓글 입력
-		int result = service.insertComment(articleDTO);
+		int pk = service.insertComment(articleDTO);
 		int parent = articleDTO.getParent();
 		
 		// 결과 JSON 생성
 		JsonObject json = new JsonObject();
-		json.addProperty("result", result);
+		json.addProperty("pk", pk);
 		json.addProperty("parent", parent);
 		
 		// JSON 출력

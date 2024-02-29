@@ -8,6 +8,16 @@ public class FileDTO {
 	private String sName;
 	private int download;
 	private String rdate;
+	
+	public FileDTO() {
+		
+	}
+	
+	public FileDTO(int ano, String sName) {
+		this.ano = ano;
+		this.sName = sName;
+	}
+	
 	public int getFno() {
 		return fno;
 	}
