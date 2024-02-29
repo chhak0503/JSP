@@ -40,6 +40,11 @@ public class ArticleService {
 	public int insertArticle(ArticleDTO articleDTO) {
 		return dao.insertArticle(articleDTO);
 	}
+	
+	public void insertComment(ArticleDTO articleDTO) {
+		dao.insertComment(articleDTO);
+	}
+	
 	public ArticleDTO selectArticle(String no) {
 		return dao.selectArticle(no);
 	}

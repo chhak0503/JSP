@@ -40,7 +40,6 @@
 								fileInput.setAttribute('multiple', 'multiple');
 								td.appendChild(fileInput);
 							}
-							
 						})
 						.catch((err)=>{
 							console.log(err);

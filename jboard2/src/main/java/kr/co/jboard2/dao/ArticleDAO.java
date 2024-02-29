@@ -55,6 +55,27 @@ public class ArticleDAO extends DBHelper {
 		
 		return pk;
 	}
+	
+	public void insertComment(ArticleDTO articleDTO) {
+		
+		try {
+			conn = getConnection();
+			psmt = conn.prepareStatement(SQL.INSERT_COMMENT);
+			psmt.setInt(1, articleDTO.getParent());
+			psmt.setString(2, articleDTO.getContent());
+			psmt.setString(3, articleDTO.getWriter());
+			psmt.setString(4, articleDTO.getRegip());
+			logger.info("insertComment : " + psmt);
+			
+			psmt.executeUpdate();
+			closeAll();
+			
+		}catch (Exception e) {
+			logger.error("insertComment : " + e.getMessage());
+		}
+	}
+	
+	
 	public ArticleDTO selectArticle(String no) {
 		
 		ArticleDTO articleDTO = null;
