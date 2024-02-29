@@ -1,6 +1,56 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ include file="./_header.jsp" %>
+<script>
+	window.onload = function(){
+		
+		const btnSubmit = document.commentForm.submit;
+		const form = document.commentForm;
+		
+		// 댓글 입력
+		btnSubmit.onclick = function(e){
+			e.preventDefault();
+			
+			const parent = form.parent.value;
+			const writer = form.writer.value;
+			const content = form.content.value;
+			
+			const jsonData = {
+				"parent": parent, 	
+				"writer": writer, 	
+				"content": content
+			};
+			
+			console.log(jsonData);
+			
+			fetch('/jboard2/comment.do', {
+					method: 'POST',
+					headers: {"Content-type": "application/json"},
+					body: JSON.stringify(jsonData)
+				})
+				.then((resp) => resp.json())
+				.then((data) => {
+					console.log(data);
+					
+					// 태그 동적 생성
+					
+					
+					
+				})
+				.catch((err) => {
+					console.log(err);
+				});
+		}
+		
+		
+		
+		
+	}
+
+
+</script>
+
+
 <main id="board">
     <section class="view">
         
@@ -38,13 +88,12 @@
 
         <!-- 댓글목록 -->
         <section class="commentList">
-            <h3>댓글목록</h3>                   
-			
+            <h3>댓글목록</h3>
 			<c:forEach var="comment" items="${comments}">
 	            <article>
 	                <span class="nick">${comment.nick}</span>
 	                <span class="date">${comment.rdate.substring(2,10)}</span>
-	                <p class="content">${comment.content}</p>                        
+	                <p class="content">${comment.content}</p>
 	                <div>
 	                    <a href="#" class="remove">삭제</a>
 	                    <a href="#" class="modify">수정</a>
@@ -60,13 +109,13 @@
         <!-- 댓글쓰기 -->
         <section class="commentForm">
             <h3>댓글쓰기</h3>
-            <form action="/jboard2/comment.do" method="post">
+            <form name="commentForm" action="#" method="post">
             	<input type="hidden" name="parent" value="${articleDTO.no}">
             	<input type="hidden" name="writer" value="${sessionScope.sessUser.uid}">
                 <textarea name="content" placeholder="댓글 입력"></textarea>
                 <div>
                     <a href="#" class="btn btnCancel">취소</a>
-                    <input type="submit" value="작성완료" class="btn btnComplete"/>
+                    <input type="submit" name="submit" value="작성완료" class="btn btnComplete"/>
                 </div>
             </form>
         </section>

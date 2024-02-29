@@ -41,8 +41,8 @@ public class ArticleService {
 		return dao.insertArticle(articleDTO);
 	}
 	
-	public void insertComment(ArticleDTO articleDTO) {
-		dao.insertComment(articleDTO);
+	public int insertComment(ArticleDTO articleDTO) {
+		return dao.insertComment(articleDTO);
 	}
 	
 	public ArticleDTO selectArticle(String no) {

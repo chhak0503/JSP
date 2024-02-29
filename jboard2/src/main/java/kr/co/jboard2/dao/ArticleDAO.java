@@ -56,7 +56,10 @@ public class ArticleDAO extends DBHelper {
 		return pk;
 	}
 	
-	public void insertComment(ArticleDTO articleDTO) {
+	public int insertComment(ArticleDTO articleDTO) {
+		
+		int result = 0;
+		
 		try {
 			conn = getConnection();
 			psmt = conn.prepareStatement(SQL.INSERT_COMMENT);
@@ -66,12 +69,14 @@ public class ArticleDAO extends DBHelper {
 			psmt.setString(4, articleDTO.getRegip());
 			logger.info("insertComment : " + psmt);
 			
-			psmt.executeUpdate();
+			result = psmt.executeUpdate();
 			closeAll();
 			
 		}catch (Exception e) {
 			logger.error("insertComment : " + e.getMessage());
 		}
+		
+		return result;
 	}
 	
 	

@@ -1,6 +1,8 @@
 package kr.co.jboard2.controller;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,6 +12,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 
 import kr.co.jboard2.dto.ArticleDTO;
 import kr.co.jboard2.service.ArticleService;
@@ -33,20 +38,36 @@ public class CommentController extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-		String parent = req.getParameter("parent");
-		String content = req.getParameter("content");
-		String writer = req.getParameter("writer");
-		String regip = req.getRemoteAddr();
+		// AJAX(fetch함수) POST 데이터 스트림 수신처리
+		BufferedReader reader = req.getReader();
+		StringBuilder requestBody = new StringBuilder();
+		String line;
+		while((line = reader.readLine()) != null){
+			requestBody.append(line);
+		}
+		reader.close();
+		logger.debug("requestBody : " + requestBody);
 		
-		ArticleDTO articleDTO = new ArticleDTO();
-		articleDTO.setParent(parent);
-		articleDTO.setContent(content);
-		articleDTO.setWriter(writer);
+		// JSON 파싱
+		Gson gson = new Gson();
+		ArticleDTO articleDTO = gson.fromJson(requestBody.toString(), ArticleDTO.class);
+		String regip = req.getRemoteAddr();
 		articleDTO.setRegip(regip);
 		
-		service.insertComment(articleDTO);
+		logger.debug("articleDTO : " + articleDTO);
 		
-		resp.sendRedirect("/jboard2/view.do?no="+parent);
+		// 댓글 입력
+		int result = service.insertComment(articleDTO);
+		int parent = articleDTO.getParent();
+		
+		// 결과 JSON 생성
+		JsonObject json = new JsonObject();
+		json.addProperty("result", result);
+		json.addProperty("parent", parent);
+		
+		// JSON 출력
+		PrintWriter writer = resp.getWriter();
+		writer.print(json);
 	}
 	
 }
